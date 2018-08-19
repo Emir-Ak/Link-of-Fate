@@ -48,15 +48,17 @@ public class SwordCollider : MonoBehaviour {
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Attackable"))
+        if (!collision.gameObject.CompareTag("Player") && collision.gameObject.layer == 8)
         {
-
+            Alive livingThing = collision.GetComponent<Alive>();
+            float damage = FindObjectOfType<PlayerController>().damage;
+            livingThing.ReceiveDamage(damage, true);
         }
     }
 
 
 
-   
+
 }   

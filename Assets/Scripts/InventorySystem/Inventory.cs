@@ -45,7 +45,6 @@ public class Inventory : MonoBehaviour {
     public void AddItem(Item itemToAdd) { 
         for (int i = 0; i < items.Length; i++)
         {
-            Debug.Log("Iterating...");
             if (items[i]  == null)
             {
                 Debug.Log("Added");
@@ -69,7 +68,16 @@ public class Inventory : MonoBehaviour {
 
     private void GetSelectionIndex()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+
+        //}
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+
+
+        //}
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.E)) // forward
         {
             ResetScaledSlot();
             if (selectionIndex == 3)
@@ -80,9 +88,9 @@ public class Inventory : MonoBehaviour {
             {
                 selectionIndex++;
             }
-            SelectItemSlot();
+            SelectItemSlot(); ;
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.Q)) // backwards
         {
             ResetScaledSlot();
             if (selectionIndex == 0)
@@ -110,7 +118,7 @@ public class Inventory : MonoBehaviour {
     }
     private void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.F) && items[selectionIndex] != null)
+        if (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(2) && items[selectionIndex] != null)
         {
             int i = selectionIndex;
             interactionController.ApplyInteraction(items[i]);

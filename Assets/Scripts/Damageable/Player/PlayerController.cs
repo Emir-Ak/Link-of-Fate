@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
-public class PlayerController : Damageable
+public class PlayerController : Alive
 {
 
     #region variables
@@ -12,14 +12,16 @@ public class PlayerController : Damageable
     [Header("Player Variables")]
     [Space(8)]
     #region Player_Stats
-    public int swordDamage = 20;
-
+    public float shieldRechargeTime = 3f;
+    public float shieldUseTime = 0.25f;
+    private bool shieldIsUsed = false;
     #endregion
 
     [SerializeField]
     private GameObject SwordAttackPrefab;
 
     private GameObject attackCollder;
+
 
     #region Movement_Variables
     //Movement values
@@ -53,16 +55,27 @@ public class PlayerController : Damageable
     // Update is called once per frame
     void Update()
     {
+        
 
         if (health <= 0)
         {
             Destroy(gameObject, 0.4f);
         }
 
+        #region Player_Shield
+
+        if (Input.GetMouseButtonDown(1) && !shieldIsUsed)
+        {
+            StartCoroutine(RechargeShield());
+            ReceiveNoDamage(shieldUseTime);
+        }
+
+        #endregion
+
         #region Player_Movement   
-        
-        
-            hInput = Input.GetAxisRaw("Horizontal");
+
+
+        hInput = Input.GetAxisRaw("Horizontal");
             vInput = Input.GetAxisRaw("Vertical");
 
 
@@ -124,9 +137,8 @@ public class PlayerController : Damageable
 
         #region Player_Attack
 
-        if (!isPlayerAttacking && Input.GetKeyDown(KeyCode.Z) && !isPlayerMoving)
+        if (!isPlayerAttacking && Input.GetMouseButtonDown(0) && !isPlayerMoving)
         {
-            Debug.Log("Starting Animation");
             isPlayerAttacking = true;
             StartAttackAnim();
         }
@@ -134,13 +146,14 @@ public class PlayerController : Damageable
         //animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f
         if (isPlayerAttacking && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && !animator.IsInTransition(0))
         {
-            Debug.Log("Ending Animation");
             EndAttackAnim();
             isPlayerAttacking = false;
         }
 
 
         #endregion
+
+
 
         #region Animator_params
         animator.SetFloat("MoveX", hInput);
@@ -150,6 +163,13 @@ public class PlayerController : Damageable
         animator.SetFloat("LastMoveY", lastMove.y);
         #endregion
 
+    }
+
+    IEnumerator RechargeShield()
+    {
+        shieldIsUsed = true;
+        yield return new WaitForSeconds(shieldRechargeTime);
+        shieldIsUsed = false;
     }
 
     void StartAttackAnim()

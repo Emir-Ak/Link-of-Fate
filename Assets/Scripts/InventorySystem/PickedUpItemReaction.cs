@@ -24,7 +24,6 @@ public class PickedUpItemReaction : MonoBehaviour
             {
                 if (item == null)
                 {
-                    Debug.Log("Triggered");
                     Destroy(gameObject);
                     ImmediateReaction();
                     return;

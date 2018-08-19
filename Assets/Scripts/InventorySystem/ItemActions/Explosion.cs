@@ -8,19 +8,8 @@ public class Explosion : MonoBehaviour
 
         if (collision.gameObject.layer == 8 && wasTouched == false)
         {
-            collision.GetComponent<Damageable>().ReceiveDamage(20f);
-
-            StartCoroutine(KnockBack(collision));
-
+            collision.GetComponent<Alive>().ReceiveDamage(20f, false);
             wasTouched = true;
-        }
-    }
-    IEnumerator KnockBack(Collider2D other)
-    {
-        while (true && other != null)
-        {
-            other.gameObject.GetComponent<Damageable>().ApplyKnockback();
-            yield return new WaitForEndOfFrame();
         }
     }
 }
