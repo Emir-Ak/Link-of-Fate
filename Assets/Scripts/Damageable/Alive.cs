@@ -13,7 +13,7 @@ public class Alive : Damageable {
     Vector2 randomDir;
     Vector3 velocityDir;
     private bool isLocked;
-    private bool isInvincible = false;
+    protected bool isInvincible = false;
     public float knockbackForce = 10f;
     public float knockbackTime = 0.3f;
     public float speed = 3f;
@@ -46,7 +46,7 @@ public class Alive : Damageable {
     }
 
 
-    IEnumerator Invincibility(float invTime)
+    protected IEnumerator Invincibility(float invTime)
     {
         isInvincible = true;
         yield return new WaitForSeconds(invTime);

@@ -11,41 +11,49 @@ public class PlayerController : Alive
 
     [Header("Player Variables")]
     [Space(8)]
+
     #region Player_Stats
-    public float shieldRechargeTime = 3f;
-    public float shieldUseTime = 0.25f;
-    private bool shieldIsUsed = false;
+
+    #region For_Shield
+    public float rechargeAmount = 2; //Amount of health the shield regenarates at one step of regenerating
+    public float currentShieldHealth; //Current health of the shield
+    public float maxShieldHealth = 100; //Used to clamp the current shield health
+    public float shieldRechargeDelay = 5;//Time to start regenerating after beign hit
+
+    private bool isShielding = false; //Is player currently using shield?
+    private bool isShieldBroken = false; //Is the Shield broken?
     #endregion
 
+    #endregion
+
+    #region For_Attack
     [SerializeField]
-    private GameObject SwordAttackPrefab;
-
-    private GameObject attackCollder;
-
+    private GameObject SwordAttackPrefab; // prefab for sword collider
+    private GameObject attackCollder; //needed so that the collider is allocated to this variable
+    #endregion
 
     #region Movement_Variables
-    //Movement values
-    public float standardMoveSpeed;
+    public float standardMoveSpeed; //The normal speed of the player (used to freeze or for some effects e.t.c)
     #endregion
 
     #region Animator_Variables
     //values for animations
-    private Animator animator;
+    private Animator animator; //Animator of the player
 
-    private bool isPlayerMoving;
-    private bool isPlayerAttacking;
-    private Vector2 lastMove;
+    private bool isPlayerMoving;//Is the player currently moving?
+    private bool isPlayerAttacking;//Is the player currently attacking?
+    private Vector2 lastMove;//shows the last direction that the player is was facing (current direction)
+
+    #endregion
+
+    float hInput; //Horizontal input
+    float vInput; //Veretical Input
 
     #endregion
 
-    float hInput;
-    float vInput;
-
-    #endregion
-    // Use this for initialization
     void Start()
     {
-
+        currentShieldHealth = maxShieldHealth;
         standardMoveSpeed = speed;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -55,7 +63,7 @@ public class PlayerController : Alive
     // Update is called once per frame
     void Update()
     {
-        
+
 
         if (health <= 0)
         {
@@ -64,10 +72,14 @@ public class PlayerController : Alive
 
         #region Player_Shield
 
-        if (Input.GetMouseButtonDown(1) && !shieldIsUsed)
+        if (Input.GetMouseButton(1) && !isShieldBroken)
         {
-            StartCoroutine(RechargeShield());
-            ReceiveNoDamage(shieldUseTime);
+            isShielding = true;
+            StartCoroutine(UseShield(shieldRechargeDelay,rechargeAmount));
+        } 
+        else if(Input.GetMouseButtonUp(1))
+        {
+            isShielding = false;
         }
 
         #endregion
@@ -76,7 +88,7 @@ public class PlayerController : Alive
 
 
         hInput = Input.GetAxisRaw("Horizontal");
-            vInput = Input.GetAxisRaw("Vertical");
+        vInput = Input.GetAxisRaw("Vertical");
 
 
         if (hInput > .5f || hInput < -.5f)
@@ -165,11 +177,12 @@ public class PlayerController : Alive
 
     }
 
-    IEnumerator RechargeShield()
+    #region Other_Methods
+    IEnumerator RechargeShield(float rechargeTime)
     {
-        shieldIsUsed = true;
-        yield return new WaitForSeconds(shieldRechargeTime);
-        shieldIsUsed = false;
+        isShielding = true;
+        yield return new WaitForSeconds(rechargeTime);
+        isShielding = false;
     }
 
     void StartAttackAnim()
@@ -192,5 +205,19 @@ public class PlayerController : Alive
 
         isPlayerMoving = false;
     }
+    #endregion
 
+    #region Overrides
+
+    private  IEnumerator UseShield(float rechargeDelay, float regenAmount)
+    {
+        Debug.Log("isShielding" + isShielding);
+        isInvincible = true;
+        yield return new WaitUntil(() => !isShielding);
+        isInvincible = false;
+        Debug.Log("isShielding" + isShielding);
+
+    }
+
+    #endregion
 }
