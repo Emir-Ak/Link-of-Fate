@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50766599335741830}
   m_Layer: 8
   m_Name: Monster
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455683079688080}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   health: 100
   sprite: {fileID: 212348095239480234}
   rb: {fileID: 50766599335741830}
+  isInvincible: 0
   knockbackForce: 5
   knockbackTime: 0.3
   speed: 2
@@ -109,6 +110,7 @@ MonoBehaviour:
   isHit: 0
   target: {fileID: 0}
   followRange: 5
+  maxRange: 20
 --- !u!212 &212348095239480234
 SpriteRenderer:
   m_ObjectHideFlags: 1

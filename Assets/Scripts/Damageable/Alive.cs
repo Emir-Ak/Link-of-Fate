@@ -13,13 +13,12 @@ public class Alive : Damageable {
     Vector2 randomDir;
     Vector3 velocityDir;
     private bool isLocked;
-    private bool isInvincible = false;
+    public bool isInvincible = false;
     public float knockbackForce = 10f;
     public float knockbackTime = 0.3f;
     public float speed = 3f;
     public float damage = 20f;
 
-    
     public bool isHit = false;
     public override void ReceiveDamage(float damageTaken, bool isEnemy)
     {

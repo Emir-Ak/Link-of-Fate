@@ -50,6 +50,7 @@ public class SwordCollider : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+       
         if (!collision.gameObject.CompareTag("Player") && collision.gameObject.layer == 8)
         {
             Alive livingThing = collision.GetComponent<Alive>();

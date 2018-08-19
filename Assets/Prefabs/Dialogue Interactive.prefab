@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114017361086316098}
   m_Layer: 0
   m_Name: Dialogue Interactive
-  m_TagString: Untagged
+  m_TagString: Dialogue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1253639506374768}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -179.48145}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -70,8 +70,17 @@ MonoBehaviour:
   dialogueBox: {fileID: 1728815751787150, guid: bbc176f3ba134a54fb60423eb85f6338,
     type: 2}
   dialogue:
-    name: kek
+    name: Head of the village
     sentences:
-    - asdwas
-    - asgwasg
-    - asgwssssssssss
+    - Oh.. you finally woke up....,
+    - Don't stand up yet you are still too weak.
+    - Unfortunately when we  found you in the cave we had to abandon your equipment.
+    - But don't worry, i will give you one of these 3 weapons.
+    - For there is something else i need you to do..
+    - You are no fucking legend yet, so what would I just suggest? You know, we boys
+      are always upto marazm...
+    - You know what I mean right?
+    - '*KOUGH*'
+    - You have to save the princess called K/D? Anyway its up to you how to do it.
+    - "(Press: f = fight, m = money, k = kidnap her from kidnappers -* Lol what?*)
+      \n"

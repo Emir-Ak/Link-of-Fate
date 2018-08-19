@@ -12,9 +12,12 @@ public class PlayerController : Alive
     [Header("Player Variables")]
     [Space(8)]
     #region Player_Stats
-    public float shieldRechargeTime = 3f;
-    public float shieldUseTime = 0.25f;
-    private bool shieldIsUsed = false;
+    [SerializeField]
+    private float shieldRechargeTime = 3f;
+    [SerializeField]
+    private float shieldUseTime = 0.25f;
+    private bool shieldIsRecharging = false;
+
     #endregion
 
     [SerializeField]
@@ -64,7 +67,7 @@ public class PlayerController : Alive
 
         #region Player_Shield
 
-        if (Input.GetMouseButtonDown(1) && !shieldIsUsed)
+        if (Input.GetMouseButtonDown(1) && !shieldIsRecharging)
         {
             StartCoroutine(RechargeShield());
             ReceiveNoDamage(shieldUseTime);
@@ -167,9 +170,9 @@ public class PlayerController : Alive
 
     IEnumerator RechargeShield()
     {
-        shieldIsUsed = true;
+        shieldIsRecharging = true;
         yield return new WaitForSeconds(shieldRechargeTime);
-        shieldIsUsed = false;
+        shieldIsRecharging = false;
     }
 
     void StartAttackAnim()
