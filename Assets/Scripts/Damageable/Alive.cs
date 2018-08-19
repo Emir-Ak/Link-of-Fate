@@ -53,7 +53,7 @@ public class Alive : Damageable {
         isInvincible = false;
     }
 
-    IEnumerator Damaged()
+    protected IEnumerator Damaged()
     {
         sprite.color = new Color32(255, 143, 143, 255);
         yield return new WaitForSeconds(0.25f);
@@ -62,7 +62,7 @@ public class Alive : Damageable {
     }
 
 
-    private void ApplyStates()
+    protected void ApplyStates()
     {
 
         if (rb.velocity == Vector2.zero)

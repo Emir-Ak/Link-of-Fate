@@ -65,6 +65,8 @@ public class PlayerController : Alive
     void Update()
     {
 
+        Mathf.Clamp(currentShieldHealth,0,maxShieldHealth);
+
 
         if (health <= 0)
         {
@@ -88,8 +90,8 @@ public class PlayerController : Alive
         #region Player_Movement   
 
         
-            hInput = Input.GetAxisRaw("Horizontal");
-            vInput = Input.GetAxisRaw("Vertical");
+        hInput = Input.GetAxisRaw("Horizontal");
+        vInput = Input.GetAxisRaw("Vertical");
         
         
         if (hInput > .5f || hInput < -.5f)
@@ -228,7 +230,13 @@ public class PlayerController : Alive
         animator.SetBool("IsShielding", isShielding);
         animator.SetBool("IsShieldBroken", isShieldBroken);
 
-        yield return new WaitUntil(() => !isShielding);
+
+        if (currentShieldHealth <= 0)
+        {
+            isShieldBroken = true;
+        }
+
+        yield return new WaitUntil(() => !isShielding || isShieldBroken);
 
         isInvincible = false;
         isAnimationLocked = false;
@@ -238,6 +246,28 @@ public class PlayerController : Alive
 
         Debug.Log("isShielding" + isShielding);
 
+    }
+
+    public override void ReceiveDamage(float damageTaken, bool isEnemy)
+    {
+        if (isEnemy == false)
+        {
+            ApplyStates();
+        }
+        if (isInvincible == false)
+        {
+            health -= damageTaken;
+            StartCoroutine(Damaged());
+            Debug.Log("-" + damageTaken + "hp");
+        }
+        else if(isShielding && !isShieldBroken)
+        {
+            currentShieldHealth -= damageTaken;
+            
+
+
+            Debug.Log("Shield is damaged by " + damageTaken + "hp");
+        }
     }
 
     #endregion
