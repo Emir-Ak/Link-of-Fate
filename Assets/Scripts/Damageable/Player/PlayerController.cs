@@ -33,7 +33,8 @@ public class PlayerController : Alive
     #endregion
 
     #region Movement_Variables
-    public float standardMoveSpeed; //The normal speed of the player (used to freeze or for some effects e.t.c)
+    public float standardMoveSpeed; //The normal speed of the player (used to freeze or for some effects e.t.c)\
+    private bool isAnimationLocked = false; //Is the direction of animation locked?
     #endregion
 
     #region Animator_Variables
@@ -86,11 +87,11 @@ public class PlayerController : Alive
 
         #region Player_Movement   
 
-
-        hInput = Input.GetAxisRaw("Horizontal");
-        vInput = Input.GetAxisRaw("Vertical");
-
-
+        
+            hInput = Input.GetAxisRaw("Horizontal");
+            vInput = Input.GetAxisRaw("Vertical");
+        
+        
         if (hInput > .5f || hInput < -.5f)
         {
             if (isPlayerAttacking && animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack"))
@@ -106,7 +107,10 @@ public class PlayerController : Alive
             speed = standardMoveSpeed;
             rb.velocity = new Vector2(hInput * speed, rb.velocity.y);
             isPlayerMoving = true;
-            lastMove = new Vector2(hInput, 0);
+            if (!isAnimationLocked)
+            {
+                lastMove = new Vector2(hInput, 0);
+            }
 
         }
         else
@@ -132,8 +136,11 @@ public class PlayerController : Alive
             speed = standardMoveSpeed;
             rb.velocity = new Vector2(rb.velocity.x, vInput * speed);
             isPlayerMoving = true;
-            lastMove = new Vector2(0, vInput);
 
+            if (!isAnimationLocked)
+            {
+                lastMove = new Vector2(0, vInput);
+            }
         }
         else
         {
@@ -171,6 +178,8 @@ public class PlayerController : Alive
         animator.SetFloat("MoveX", hInput);
         animator.SetFloat("MoveY", vInput);
         animator.SetBool("IsMoving", isPlayerMoving);
+        animator.SetBool("IsShielding", isShielding);
+        animator.SetBool("IsShieldBroken", isShieldBroken);
         animator.SetFloat("LastMoveX", lastMove.x);
         animator.SetFloat("LastMoveY", lastMove.y);
         #endregion
@@ -212,9 +221,21 @@ public class PlayerController : Alive
     private  IEnumerator UseShield(float rechargeDelay, float regenAmount)
     {
         Debug.Log("isShielding" + isShielding);
+
         isInvincible = true;
+        isAnimationLocked = true;
+
+        animator.SetBool("IsShielding", isShielding);
+        animator.SetBool("IsShieldBroken", isShieldBroken);
+
         yield return new WaitUntil(() => !isShielding);
+
         isInvincible = false;
+        isAnimationLocked = false;
+
+        animator.SetBool("IsShielding", isShielding);
+        animator.SetBool("IsShieldBroken", isShieldBroken);
+
         Debug.Log("isShielding" + isShielding);
 
     }
