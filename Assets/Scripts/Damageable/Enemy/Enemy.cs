@@ -4,13 +4,29 @@ using UnityEngine;
 
 public class Enemy : Alive {
 
+    [Tooltip("Target to follow |:-/")]
     [SerializeField]
     Transform target;
 
+    [Space(10)]
+    [Header("Range values")]
+
+    [Tooltip("Range in which AI follows player")]
     public float followRange = 5f;
+
+    [Tooltip("Range of the bounds that the AI will never pass")]
     public float maxRange = 20f;
-    [Header("Time AI will return to spawn after maxRange is reached")]
-    public float returnoSpawnTime = 4f;
+
+    [Space(10)]
+    [Header("Time values")]
+
+    [Tooltip("Time AI will return to spawn after maxRange is reached")]
+    public float returnToSpawnTime = 4f;
+
+    [Tooltip("Time AI will maneuver after hit")]
+    public float maneuverTime = 0.4f;
+    [Tooltip("Normal speed during maneuvers is multiplied by this value")]
+    public float speedMultiplier = 1.5f;
 
     private Vector3 spawnPoint;
     private bool wasTouched = false;
@@ -22,7 +38,6 @@ public class Enemy : Alive {
 
     }
 
-    //usually it will be put into update of the Orc etc class.
     private void Update()
     {
         FollowTarget();
@@ -32,29 +47,19 @@ public class Enemy : Alive {
         }
         
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Player") && collision.gameObject && wasTouched == false && collision.gameObject != null)
-    //    {
-    //        wasTouched = true;
-    //        collision.GetComponent<PlayerController>().ReceiveDamage(damage, true);
-    //        StartCoroutine(PushPlayer(collision.gameObject));
-    //    }
 
-    //}
-    private void OnCollisionStay2D(Collision2D collision)
+    
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && collision.gameObject && wasTouched == false && collision.gameObject != null)
         {
-            Debug.Log("hi");
             wasTouched = true;
-            collision.gameObject.GetComponent<PlayerController>().ReceiveDamage(damage, true);
-            StartCoroutine(PushPlayer(collision.gameObject));
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.ReceiveDamage(damage);
+            player.ReceiveKnockBack(transform.position);
+            StartCoroutine(Maneuver());
         }
-        else if (collision.gameObject.CompareTag("Enemy"))
-        {
 
-        }
         rb.velocity = Vector3.zero;
     }
 
@@ -65,9 +70,8 @@ public class Enemy : Alive {
 
         if (spawnDistance >= maxRange)
         {
-            
-            var step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, spawnPoint, step);
+
+            Move(spawnPoint);
             isReturning = true;
           
         }
@@ -76,43 +80,44 @@ public class Enemy : Alive {
             StartCoroutine(BackToSpawn());
         }
         else if (playerDistance < followRange && wasTouched == false && returnToSpawn == false)
-        {           
-            var step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+        {
+            Move(target.position);
+        }
+        else if (wasTouched == true)
+        {
+
+            Vector3 direction = transform.position - target.position;
+            direction.Normalize();
+            Move(direction);
         }
 
         else if (Vector3.Distance(transform.position, spawnPoint) > 0.5f)
         {
+            Move(spawnPoint);
 
-            var step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, spawnPoint, step);
         }
 
+    }
+
+    void Move(Vector3 aimPos)
+    {
+        var step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, aimPos, step);
     }
     IEnumerator BackToSpawn()
     {
         returnToSpawn = true;
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(returnToSpawnTime);
         returnToSpawn = false;
     }
 
 
-    IEnumerator PushPlayer(GameObject player)
+    IEnumerator Maneuver()
     {
-        StartCoroutine(KnockBackTime());
-        PlayerController playerController = player.GetComponent<PlayerController>();
-        bool isShielded = playerController.isInvincible;
-        while (isHit)
-        {
-            
-
-            Vector3 direction = transform.position - player.transform.position;
-            direction.Normalize();
-            player.GetComponent<Rigidbody2D>().AddForce(-1 * direction * ( isShielded ? 5f : 10f), ForceMode2D.Impulse);
-
-            yield return new WaitForEndOfFrame();
-        }
+        speed *= speedMultiplier;
+        yield return new WaitForSeconds(maneuverTime);
         wasTouched = false;
+        speed /= speedMultiplier;
     }
     
 }

@@ -13,6 +13,8 @@ public class SwordCollider : MonoBehaviour {
     private static Vector2 colliderOffsetDown = new Vector2(-0.05f, -0.4f);
     #endregion
 
+    private GameObject enemy = null;
+    
     public void ChangeOffset(Vector2 lastDirection)
     {
 
@@ -50,16 +52,14 @@ public class SwordCollider : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       
-        if (!collision.gameObject.CompareTag("Player") && collision.gameObject.layer == 8)
+
+        if (collision.gameObject.CompareTag("Enemy") && enemy != collision.gameObject)
         {
-            Alive livingThing = collision.GetComponent<Alive>();
+            enemy = collision.gameObject;
+            Alive livingThing = collision.GetComponent<Enemy>();
             float damage = FindObjectOfType<PlayerController>().damage;
-            livingThing.ReceiveDamage(damage, true);
+            livingThing.ReceiveDamage(damage);
+            livingThing.ReceiveKnockBack(transform.position);
         }
     }
-
-
-
-
 }   

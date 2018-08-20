@@ -7,7 +7,7 @@ public class Damageable : MonoBehaviour {
 
     public float health = 100f;
         
-    public virtual void ReceiveDamage(float damageTaken, bool isEnemy)
+    public virtual void ReceiveDamage(float damageTaken)
     {
         health -= damageTaken;
     }
