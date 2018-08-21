@@ -3,9 +3,8 @@ guid: f395b7b21f0f1a94c9e1b22d4ee5bc18
 timeCreated: 1506364210
 licenseType: Free
 TrueTypeFontImporter:
-  externalObjects: {}
   serializedVersion: 4
-  fontSize: 100
+  fontSize: 16
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
@@ -14,12 +13,11 @@ TrueTypeFontImporter:
   fontNames:
   - Carter One
   fallbackFontReferences:
-  - {instanceID: 0}
-  - {instanceID: 0}
+  - {fileID: 12800000, guid: 166c6ac382baf394dae35637b8b134cd, type: 3}
+  - {fileID: 12800000, guid: a5af445d3598e794385618f00a594089, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
-  useLegacyBoundsCalculation: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

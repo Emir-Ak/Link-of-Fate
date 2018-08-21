@@ -7,127 +7,120 @@ public class Alive : Damageable {
     #region Variables
     [Header("Living Object Variables")]
     [Space(8)]
+    [SerializeField]
+    TextInstantiator textInst;
     public SpriteRenderer sprite;
     public Rigidbody2D rb;
 
     [Space(10)]
-    Vector2 randomDir;
-    Vector3 velocityDir;
-    private bool isLocked;
-    protected bool _isInvincible = false;
     public float knockbackForce = 10f;
     public float knockbackTime = 0.3f;
     public float speed = 3f;
     public float damage = 20f;
 
-    
-    public bool isHit = false;
 
-    #region Properties
-    public bool IsInvincible { get { return this._isInvincible; } set { this._isInvincible = value; } }
+    protected bool isInvincible = false;
+
+    protected bool isKnocked = false;
     #endregion
-    #endregion
-    public override void ReceiveDamage(float damageTaken, bool isEnemy)
+
+    protected virtual void Initialize()
     {
-        if (isEnemy == false)
+        if(textInst == null)
         {
-            ApplyStates();
+            textInst = FindObjectOfType<TextInstantiator>();
         }
-        if (_isInvincible == false)
+     
+    }
+    #region ReceiveDamage
+    /// <summary>
+    /// Alive object (referred to as "creature" later on) which the component is on will receive damage and may be knockbacked.
+    /// </summary>
+    /// <param name="damageTaken">Speaks for itseld (Damage the creature will take)</param>
+    /// <param name="relativeTransform">Transform of GameObject that will push the creature (assign "null" if it won't)</param>
+    public override void ReceiveDamage(float damageTaken)
+    {
+        Initialize();
+        string instantiatedText;
+           
+        if (isInvincible == false)
         {
-            health -= damageTaken;
-            StartCoroutine(Damaged());
-            Debug.Log("-" +  damageTaken + "hp");
+            base.ReceiveDamage(damageTaken);
+            instantiatedText = "-" + damageTaken.ToString();
+            StartCoroutine(ApplyRedColor());
+            if (transform.CompareTag("Player"))
+            {
+                textInst.InstantiateText(instantiatedText, transform.position, new Color32(255, 0, 0, 255));
+            }
         }
         else
         {
-            Debug.Log("Immortal object...");
-        }   
+            instantiatedText = "Immortal Object";
+            if (transform.CompareTag("Player"))
+            {
+                textInst.InstantiateText(instantiatedText, transform.position, new Color32(125, 20, 130, 255));
+            }
+        }
+
     }
 
-    protected virtual void ReceiveNoDamage(float invTime)
-    {
-        StartCoroutine(Invincibility(invTime));
-        Debug.Log("The Object is now invincible for: " + invTime + " sec");
-    }
-
-
-    protected IEnumerator Invincibility(float invTime)
-    {
-        _isInvincible = true;
-        yield return new WaitForSeconds(invTime);
-        _isInvincible = false;
-    }
-
-    internal IEnumerator Damaged()
+    IEnumerator ApplyRedColor()
     {
         sprite.color = new Color32(255, 143, 143, 255);
         yield return new WaitForSeconds(0.25f);
         sprite.color = new Color32(255, 255, 255, 255);
+    }
+    #endregion
 
+    #region Knockback
+    ///
+    public void ReceiveKnockBack(Vector3 relativePos)
+    {
+        if (relativePos != null)
+        {
+            StartCoroutine(RechargeKnockBackTime());
+            StartCoroutine(ApplyKnockback(relativePos));
+        }
+        else{
+            Debug.Log("Pushing GameObject is not existing...");
+        }
     }
 
-
-    internal void ApplyStates()
+    IEnumerator ApplyKnockback(Vector3 relatve)
     {
 
-        if (rb.velocity == Vector2.zero)
+        bool isShielded = isInvincible;
+        while (isKnocked)
         {
-            randomDir = Random.onUnitSphere;
-            isLocked = false;
-        }
-        else
-        {
-
-            velocityDir = rb.velocity * -1;
-            isLocked = true;
-        }
-        StartCoroutine(KnockBackTime());
-        StartCoroutine(KnockBack());       
-
-    }
-
-    public IEnumerator KnockBackTime()
-    {
-        isHit = true;
-        if (!rb.gameObject.CompareTag("Player"))
-        {
-            yield return new WaitForSeconds(knockbackTime/2);
-        }
-        else
-        {
-            yield return new WaitForSeconds(knockbackTime);
-        }
-            isHit = false;
-    }
-     IEnumerator KnockBack()
-    {
-        while (isHit)
-        {
-            ApplyKnockback();
+            Vector3 direction = transform.position - relatve;
+            direction.Normalize();
+            rb.AddForce(direction * (isInvincible ? knockbackForce / 5f : knockbackForce / 2.5f), ForceMode2D.Impulse);
             yield return new WaitForEndOfFrame();
         }
-        if (!rb.gameObject.CompareTag("Player"))
-        {
-            rb.velocity = Vector2.zero;
-        }
-
+        rb.velocity = Vector2.zero;
     }
 
-    private void ApplyKnockback()
+    IEnumerator RechargeKnockBackTime()
     {
-        if (isLocked == false)
-        {
-            rb.AddForce(randomDir * (_isInvincible ? knockbackForce / 2f : knockbackForce), ForceMode2D.Impulse);
-            isLocked = false;
-        }
-        else
-        {
-
-            rb.AddForce(velocityDir * (_isInvincible ? knockbackForce / 5f : knockbackForce / 2.5f), ForceMode2D.Impulse);
-            isLocked = true;
-        }
-        
-
+        isKnocked = true;
+        yield return new WaitForSeconds(knockbackTime);
+        isKnocked = false;
     }
+#endregion
+
+    #region Invincibility
+    protected virtual void ReceiveNoDamage(float invTime)
+    {
+        StartCoroutine(ApplyInvincibility(invTime));
+        Debug.Log("The Object is now invincible for: " + invTime + " sec");
+    }
+
+
+    IEnumerator ApplyInvincibility(float invTime)
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(invTime);
+        isInvincible = false;
+    }
+    #endregion
 }
