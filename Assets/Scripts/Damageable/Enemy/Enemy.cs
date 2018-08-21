@@ -32,18 +32,21 @@ public class Enemy : Alive {
     private bool wasTouched = false;
     private bool returnToSpawn = false;
     private bool isReturning = false;
-    private void Start()
+
+    private void Awake()
     {
         spawnPoint = transform.position;
-
     }
-
     private void Update()
     {
         FollowTarget();
         if(health <= 0)
         {
             Destroy(gameObject,0.1f);
+        }
+        if(isKnocked == false && rb.velocity != Vector2.zero)
+        {
+            rb.velocity = Vector2.zero;
         }
         
     }

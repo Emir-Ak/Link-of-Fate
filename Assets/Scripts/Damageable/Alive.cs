@@ -6,6 +6,8 @@ public class Alive : Damageable {
     #region Variables
     [Header("Living Object Variables")]
     [Space(8)]
+    [SerializeField]
+    TextInstantiator textInst;
     public SpriteRenderer sprite;
     public Rigidbody2D rb;
 
@@ -15,11 +17,20 @@ public class Alive : Damageable {
     public float speed = 3f;
     public float damage = 20f;
 
+
     public bool isInvincible = false;
 
-    private bool isKnocked = false;
+    protected bool isKnocked = false;
     #endregion
 
+    protected virtual void Initialize()
+    {
+        if(textInst == null)
+        {
+            textInst = FindObjectOfType<TextInstantiator>();
+        }
+     
+    }
     #region ReceiveDamage
     /// <summary>
     /// Alive object (referred to as "creature" later on) which the component is on will receive damage and may be knockbacked.
@@ -28,18 +39,28 @@ public class Alive : Damageable {
     /// <param name="relativeTransform">Transform of GameObject that will push the creature (assign "null" if it won't)</param>
     public override void ReceiveDamage(float damageTaken)
     {
-
+        Initialize();
+        string instantiatedText;
            
         if (isInvincible == false)
         {
-            health -= damageTaken;
+            base.ReceiveDamage(damageTaken);
+            instantiatedText = "-" + damageTaken.ToString();
             StartCoroutine(ApplyRedColor());
-            Debug.Log("-" +  damageTaken + "hp");
+            if (transform.CompareTag("Player"))
+            {
+                textInst.InstantiateText(instantiatedText, transform.position, new Color32(255, 0, 0, 255));
+            }
         }
         else
         {
-            Debug.Log("Immortal object...");
-        }   
+            instantiatedText = "Immortal Object";
+            if (transform.CompareTag("Player"))
+            {
+                textInst.InstantiateText(instantiatedText, transform.position, new Color32(125, 20, 130, 255));
+            }
+        }
+
     }
 
     IEnumerator ApplyRedColor()
@@ -75,6 +96,7 @@ public class Alive : Damageable {
             rb.AddForce(direction * (isInvincible ? knockbackForce / 5f : knockbackForce / 2.5f), ForceMode2D.Impulse);
             yield return new WaitForEndOfFrame();
         }
+        rb.velocity = Vector2.zero;
     }
 
     IEnumerator RechargeKnockBackTime()
@@ -82,7 +104,6 @@ public class Alive : Damageable {
         isKnocked = true;
         yield return new WaitForSeconds(knockbackTime);
         isKnocked = false;
-        rb.velocity = Vector2.zero;
     }
 #endregion
 
