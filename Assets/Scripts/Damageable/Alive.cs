@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Alive : Damageable {
 
+    #region Variables
     [Header("Living Object Variables")]
     [Space(8)]
     public SpriteRenderer sprite;
@@ -13,7 +14,7 @@ public class Alive : Damageable {
     Vector2 randomDir;
     Vector3 velocityDir;
     private bool isLocked;
-    protected bool isInvincible = false;
+    protected bool _isInvincible = false;
     public float knockbackForce = 10f;
     public float knockbackTime = 0.3f;
     public float speed = 3f;
@@ -21,13 +22,18 @@ public class Alive : Damageable {
 
     
     public bool isHit = false;
+
+    #region Properties
+    public bool IsInvincible { get { return this._isInvincible; } set { this._isInvincible = value; } }
+    #endregion
+    #endregion
     public override void ReceiveDamage(float damageTaken, bool isEnemy)
     {
         if (isEnemy == false)
         {
             ApplyStates();
         }
-        if (isInvincible == false)
+        if (_isInvincible == false)
         {
             health -= damageTaken;
             StartCoroutine(Damaged());
@@ -48,12 +54,12 @@ public class Alive : Damageable {
 
     protected IEnumerator Invincibility(float invTime)
     {
-        isInvincible = true;
+        _isInvincible = true;
         yield return new WaitForSeconds(invTime);
-        isInvincible = false;
+        _isInvincible = false;
     }
 
-    protected IEnumerator Damaged()
+    internal IEnumerator Damaged()
     {
         sprite.color = new Color32(255, 143, 143, 255);
         yield return new WaitForSeconds(0.25f);
@@ -62,7 +68,7 @@ public class Alive : Damageable {
     }
 
 
-    protected void ApplyStates()
+    internal void ApplyStates()
     {
 
         if (rb.velocity == Vector2.zero)
@@ -112,13 +118,13 @@ public class Alive : Damageable {
     {
         if (isLocked == false)
         {
-            rb.AddForce(randomDir * (isInvincible ? knockbackForce / 2f : knockbackForce), ForceMode2D.Impulse);
+            rb.AddForce(randomDir * (_isInvincible ? knockbackForce / 2f : knockbackForce), ForceMode2D.Impulse);
             isLocked = false;
         }
         else
         {
 
-            rb.AddForce(velocityDir * (isInvincible ? knockbackForce / 5f : knockbackForce / 2.5f), ForceMode2D.Impulse);
+            rb.AddForce(velocityDir * (_isInvincible ? knockbackForce / 5f : knockbackForce / 2.5f), ForceMode2D.Impulse);
             isLocked = true;
         }
         

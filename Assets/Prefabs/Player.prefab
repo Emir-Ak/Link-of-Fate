@@ -36,11 +36,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4514023778430806}
   - component: {fileID: 212005908117570422}
-  - component: {fileID: 114316787627921560}
-  - component: {fileID: 114504224936476202}
   - component: {fileID: 50415790869954380}
   - component: {fileID: 95423823805361104}
   - component: {fileID: 61987559130966770}
+  - component: {fileID: 114316787627921560}
+  - component: {fileID: 114504224936476202}
+  - component: {fileID: 114141574226935268}
+  - component: {fileID: 114171317359238338}
+  - component: {fileID: 114150043383220876}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -163,6 +166,53 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114141574226935268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920461803130750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270da9502446464409f8736da352e784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 0}
+  playerController: {fileID: 0}
+  SwordAttackPrefab: {fileID: 0}
+--- !u!114 &114150043383220876
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920461803130750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd90b070e2d8bf4cb42ab2ebb5ee65f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerShieldComponent: {fileID: 0}
+  playerAttackComponent: {fileID: 0}
+  animator: {fileID: 0}
+--- !u!114 &114171317359238338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920461803130750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9586bb950f009e34989024eab82d81f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  playerAttackComponent: {fileID: 0}
+  playerAnimatorController: {fileID: 0}
+  playerController: {fileID: 0}
+  currentShieldHealth: 0
+  maxShieldHealth: 100
+  shieldRechargeDelay: 5
+  regenAmount: 2
 --- !u!114 &114316787627921560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,14 +235,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c876fd66fe995640955589496b1eda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
-  speed: 3
-  damage: 20
-  knockbackForce: 100
+  health: 100
   sprite: {fileID: 212005908117570422}
   rb: {fileID: 50415790869954380}
-  swordAttackPrefab: {fileID: 1976126685712854, guid: 436e31e5ad3bcc343b37590a1ad65f07,
-    type: 2}
+  knockbackForce: 10
+  knockbackTime: 0.1
+  speed: 3
+  damage: 25
+  isHit: 0
+  playerShieldComponent: {fileID: 0}
+  playerAttackComponent: {fileID: 0}
+  playerAnimatorController: {fileID: 0}
   standardMoveSpeed: 0
 --- !u!212 &212005908117570422
 SpriteRenderer:

@@ -28,11 +28,20 @@ public class Enemy : Alive {
     {
         if (collision.CompareTag("Player") && collision.gameObject && wasTouched == false && collision.gameObject != null)
         {
+            var playerController = collision.GetComponent<PlayerController>();
             wasTouched = true;
-            collision.GetComponent<PlayerController>().ReceiveDamage(damage, true);
+            if (playerController.playerShieldComponent.IsUsingShield)
+            {
+                playerController.playerShieldComponent.ReceiveShieldDamage(damage, true);
+            }
+            else
+            {
+                playerController.ReceiveDamage(damage, true);
+            }
             StartCoroutine(PushPlayer(collision.gameObject));
+
         }
-       
+
     }
 
     protected virtual void FollowTarget()
