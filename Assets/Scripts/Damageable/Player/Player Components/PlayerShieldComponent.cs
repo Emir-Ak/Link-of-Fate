@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShieldComponent : MonoBehaviour {
+public class PlayerShieldComponent : Damageable {
 
     #region Variables
 
@@ -15,13 +15,16 @@ public class PlayerShieldComponent : MonoBehaviour {
     private PlayerController playerController; //Player Controller .-. (I want a cute waifu girlfriend D: (like inori or 02 ;/))
     #endregion
 
+    private float maxShieldHealth; //Used to clamp the current shield health
+
     public float currentShieldHealth; //Current health of the shield
-    public float maxShieldHealth = 100; //Used to clamp the current shield health
+
     public float shieldRechargeDelay = 5;//Time to start regenerating after beign hit
     public float regenAmount = 2; //Amount of health the shield regenarates at one step of regenerating
 
-    private bool isShieldRegenerated = true; //Has shield finished  regenerating?
-    private bool isShieldRegenerating = false; //Is shield regenerating right now?\
+
+    private bool hasShieldRegenerated = true; //Has shield finished  regenerating?
+    private bool isShieldRegenerating = false; //Is shield regenerating right now?
 
     [SerializeField]
     private bool _isUsingShield = false; //Is player currently using shield?
@@ -48,6 +51,7 @@ public class PlayerShieldComponent : MonoBehaviour {
         playerAttackComponent = GetComponent<PlayerAttackComponent>();
 
         #endregion
+        maxShieldHealth = health;
         currentShieldHealth = maxShieldHealth;
 
     }
@@ -60,20 +64,20 @@ public class PlayerShieldComponent : MonoBehaviour {
         if (!isShieldRegenerating && currentShieldHealth <= maxShieldHealth)
         {
             StartCoroutine(RegenerateShield(shieldRechargeDelay, regenAmount));
-        }
-        else if (isShieldRegenerating)
-        {
-            StopCoroutine("RegenerateShield");
+            isShieldRegenerating = true;
         }
 
 
-        if (_isShieldButtonPressed && !_isShieldBroken && isShieldRegenerated)
+        if (_isShieldButtonPressed && !_isShieldBroken && hasShieldRegenerated)
         {
+            DecreasePlayerSpeed();
+
             _isUsingShield = true;
             StartCoroutine(UseShield());
         }
         else if (!_isShieldButtonPressed)
         {
+            playerController.speed = playerController.standardMoveSpeed;
 
             _isUsingShield = false;
         }
@@ -88,12 +92,16 @@ public class PlayerShieldComponent : MonoBehaviour {
 
     }
 
-
+    void DecreasePlayerSpeed()
+    {
+        float _playerSpeed = playerController.speed;
+        _playerSpeed /= 2;
+        playerController.speed = _playerSpeed;
+    }
     private IEnumerator UseShield()
     {
-        Debug.Log("isShielding" + _isUsingShield);
 
-        playerController.IsInvincible = true;
+        playerController.isInvincible = true;
         playerAnimatorController.IsAnimationLocked = true;
 
         _isUsingShield = true;
@@ -107,7 +115,7 @@ public class PlayerShieldComponent : MonoBehaviour {
 
         yield return new WaitUntil(() => !_isUsingShield || _isShieldBroken);
 
-        playerController.IsInvincible = false;
+        playerController.isInvincible = false;
         playerAnimatorController.IsAnimationLocked = false;
 
         _isUsingShield = false;
@@ -122,38 +130,34 @@ public class PlayerShieldComponent : MonoBehaviour {
         bool hasFinishedRegenerating = false;
         while (!hasFinishedRegenerating)
         {
-            yield return new WaitForSeconds(0.2f);
-            currentShieldHealth += regenAmount;
-
             if (currentShieldHealth >= maxShieldHealth)
             {
                 hasFinishedRegenerating = true;
                 _isShieldBroken = false;
-                isShieldRegenerated = true;
+                hasShieldRegenerated = true;
                 Debug.Log("Finished regenerating shield");
+                break;
 
             }
+            yield return new WaitForSeconds(0.2f);
+            currentShieldHealth += regenAmount;
         }
+        isShieldRegenerating = false;
 
     }
 
 
-    public  void ReceiveShieldDamage(float damageTaken, bool isEnemy)
+    public  void ReceiveShieldDamage(float damageTaken)
     {
-
-        playerController.ApplyStates();
-
-        if (playerController.IsInvincible == false)
-        {
-            playerController.health -= damageTaken;
-            StartCoroutine(playerController.Damaged());
-            Debug.Log("-" + damageTaken + "hp");
-        }
-        else if (_isUsingShield && !_isShieldBroken)
+         if (_isUsingShield && !_isShieldBroken)
         {
             currentShieldHealth -= damageTaken;
-
             Debug.Log("Shield is damaged by " + damageTaken + "hp");
+
+            playerController.Initialize();
+            string instantiatedText = "-" + damageTaken.ToString();
+            playerController.textInst.InstantiateText(instantiatedText, transform.position, new Color32(122, 147, 255, 255));
+            
         }
     }
 

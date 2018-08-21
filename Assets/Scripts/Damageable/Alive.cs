@@ -7,8 +7,9 @@ public class Alive : Damageable {
     #region Variables
     [Header("Living Object Variables")]
     [Space(8)]
-    [SerializeField]
-    TextInstantiator textInst;
+
+    [HideInInspector]
+    public TextInstantiator textInst;
     public SpriteRenderer sprite;
     public Rigidbody2D rb;
 
@@ -19,18 +20,17 @@ public class Alive : Damageable {
     public float damage = 20f;
 
 
-    protected bool isInvincible = false;
+    public bool isInvincible = false;
 
     protected bool isKnocked = false;
     #endregion
 
-    protected virtual void Initialize()
+    public virtual void Initialize()
     {
         if(textInst == null)
         {
             textInst = FindObjectOfType<TextInstantiator>();
         }
-     
     }
     #region ReceiveDamage
     /// <summary>

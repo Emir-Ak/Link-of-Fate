@@ -14,9 +14,6 @@ public class PlayerAttackComponent : MonoBehaviour {
     public PlayerController playerController;
     #endregion
 
-
-
-
     #region For_Attack
 
     [SerializeField]
@@ -45,20 +42,36 @@ public class PlayerAttackComponent : MonoBehaviour {
     private void Update()
     {
         
-        
-
-
         if (!isPlayerAttacking && IsAttackButtonPressed && !animatorController.IsPlayerMoving)
         {
+            Debug.Log("Started");
             isPlayerAttacking = true;
             StartAttack();
         }
 
-        //animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f
-        if ((isPlayerAttacking && animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack")) && animatorController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && !animatorController.animator.IsInTransition(0))
+
+
+        //This is what I call stage debigging :3. I already know how to fix the 1 hit bug. But I though you won't like it so I leave it up to you.
+        //PS. If you ask me on Discord  I will help.
+        if (isPlayerAttacking)
         {
-            EndAttack();
-            isPlayerAttacking = false;
+            Debug.Log("Player is attacking");
+            if (animatorController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            {
+                Debug.Log("1 sec passed");
+                if (!animatorController.animator.IsInTransition(0))
+                {
+                    Debug.Log("No transition occuring");
+
+                    if (animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack"))
+                    {
+                        Debug.Log("PlayerAttack animation is running");
+                        Debug.Log("End");
+                        EndAttack();
+                        isPlayerAttacking = false;
+                    }
+                }
+            }
         }
         else if (!animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack") && !playerController.IsPlayerMoving)
         {

@@ -56,19 +56,18 @@ public class Enemy : Alive {
     {
         if (collision.gameObject.CompareTag("Player") && collision.gameObject && wasTouched == false && collision.gameObject != null)
         {
-            var playerController = collision.GetComponent<PlayerController>();
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             wasTouched = true;
-            if (playerController.playerShieldComponent.IsUsingShield)
+            if (player.playerShieldComponent.IsUsingShield)
             {
-                playerController.playerShieldComponent.ReceiveShieldDamage(damage, true);
+                Debug.Log("Shield is hit");
+                player.playerShieldComponent.ReceiveShieldDamage(damage);
             }
             else
             {
-                playerController.ReceiveDamage(damage, true);
+                player.ReceiveDamage(damage);         
             }
-       
-            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            player.ReceiveDamage(damage);
+
             player.ReceiveKnockBack(transform.position);
             StartCoroutine(Maneuver());
         }

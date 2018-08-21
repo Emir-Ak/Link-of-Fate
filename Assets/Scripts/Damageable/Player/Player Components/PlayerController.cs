@@ -20,6 +20,7 @@ public class PlayerController : Alive
     #region Movement_Variables
 
     private bool _isPlayerMoving;
+    [HideInInspector]
     public float standardMoveSpeed; //The normal speed of the player (used to freeze or for some effects e.t.c)\
 
 
@@ -79,9 +80,10 @@ public class PlayerController : Alive
         #region Player_Shield
 
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1) && playerShieldComponent.IsShieldButtonPressed == false)
         {
             playerShieldComponent.IsShieldButtonPressed = true;
+           
         }
         if (Input.GetMouseButtonUp(1))
         {
@@ -132,7 +134,6 @@ public class PlayerController : Alive
         {
             playerAnimatorController.IsPlayerMoving = false;
         }
-
         #endregion Player_Movement
 
 
