@@ -17,6 +17,9 @@ public class Enemy : Alive {
     [Tooltip("Range of the bounds that the AI will never pass")]
     public float maxRange = 20f;
 
+    [Tooltip("Range after which AI will return if in idle state")]
+    public float idleRange = 4f;
+
     [Space(10)]
     [Header("Time values")]
 
@@ -29,11 +32,17 @@ public class Enemy : Alive {
     public float speedMultiplier = 1.5f;
 
     private Vector3 spawnPoint;
+    private Vector3 spawnOffset;
+
+    private float playerDistance;
+    private float spawnDistance;
+
     private bool wasTouched = false;
     private bool returnToSpawn = false;
     private bool isReturning = false;
+    private bool isIdle = false;
 
-    private void Awake()
+    private void Start()
     {
         spawnPoint = transform.position;
     }
@@ -42,7 +51,7 @@ public class Enemy : Alive {
         FollowTarget();
         if(health <= 0)
         {
-            Destroy(gameObject,0.1f);
+            Destroy(gameObject, 0.1f);
         }
         if(isKnocked == false && rb.velocity != Vector2.zero)
         {
@@ -52,7 +61,7 @@ public class Enemy : Alive {
     }
 
     
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") && collision.gameObject && wasTouched == false && collision.gameObject != null)
         {
@@ -60,7 +69,7 @@ public class Enemy : Alive {
             wasTouched = true;
             if (player.playerShieldComponent.IsUsingShield)
             {
-                Debug.Log("Shield is hit");
+
                 player.playerShieldComponent.ReceiveShieldDamage(damage);
             }
             else
@@ -68,7 +77,7 @@ public class Enemy : Alive {
                 player.ReceiveDamage(damage);         
             }
 
-            player.ReceiveKnockBack(transform.position);
+            player.ReceiveKnockBack(transform.position, player.knockbackForce);
             StartCoroutine(Maneuver());
         }
 
@@ -77,38 +86,47 @@ public class Enemy : Alive {
 
     protected virtual void FollowTarget()
     {
-        float playerDistance = Vector3.Distance(transform.position, target.position);
-        float spawnDistance = Vector3.Distance(transform.position, spawnPoint);
-
-        if (spawnDistance >= maxRange)
+        if (target != null)
         {
+            playerDistance = Vector3.Distance(transform.position, target.position);
+            spawnDistance = Vector3.Distance(transform.position, spawnPoint);
 
-            Move(spawnPoint);
-            isReturning = true;
-          
-        }
-        else if (isReturning == true){
-            isReturning = false;
-            StartCoroutine(BackToSpawn());
-        }
-        else if (playerDistance < followRange && wasTouched == false && returnToSpawn == false)
-        {
-            Move(target.position);
-        }
-        else if (wasTouched == true)
-        {
+            if (spawnDistance >= maxRange)
+            {
 
-            Vector3 direction = transform.position - target.position;
-            direction.Normalize();
-            Move(direction);
+                Move(spawnPoint);
+                isReturning = true;
+
+            }
+            else if (isReturning == true)
+            {
+                isReturning = false;
+                StartCoroutine(BackToSpawn());
+            }
+            
+            else if (wasTouched == true)
+            {
+
+                Vector3 direction = transform.position - target.position;
+                Debug.Log(direction + "Player");
+                direction.Normalize();
+                Move(direction);
+            }
+            else if (playerDistance < followRange && wasTouched == false && returnToSpawn == false)
+            {
+                Move(target.position);
+            }
+            else if (spawnDistance <= 0.5f && isIdle == false)
+            {
+               
+                StartCoroutine(IdleMove());
+            }
+            else if(spawnDistance > 0.5f && isIdle == false)
+            {
+                Debug.Log("Started");
+                Move(spawnPoint);
+            }
         }
-
-        else if (Vector3.Distance(transform.position, spawnPoint) > 0.5f)
-        {
-            Move(spawnPoint);
-
-        }
-
     }
 
     void Move(Vector3 aimPos)
@@ -116,8 +134,57 @@ public class Enemy : Alive {
         var step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, aimPos, step);
     }
+
+    IEnumerator IdleMove()
+    {
+        isIdle = true;
+
+
+        while (playerDistance > followRange)
+        {
+            if (spawnDistance > idleRange)
+            {
+                while (spawnDistance > 0.5f)
+                {
+                    if (playerDistance <= followRange)
+                    {
+                        break;
+                    }
+                    Move(spawnPoint);
+                    yield return new WaitForEndOfFrame();
+                }
+                Debug.Log("Reached the idle bound");
+                yield return new WaitForSeconds(0.6f);
+            }
+
+            Vector2 randDir = Random.onUnitSphere;
+            
+            randDir *= Random.Range(2f, idleRange - 1f);
+            randDir += (Vector2)transform.position;
+
+           
+            while(randDir != (Vector2)transform.position)
+            {
+                if(playerDistance <= followRange)
+                {
+                    break;
+                }
+                Move(randDir);
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (playerDistance <= followRange)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(Random.Range(0.5f, 1.2f));
+        }
+        isIdle = false;
+    }
+
     IEnumerator BackToSpawn()
     {
+
         returnToSpawn = true;
         yield return new WaitForSeconds(returnToSpawnTime);
         returnToSpawn = false;

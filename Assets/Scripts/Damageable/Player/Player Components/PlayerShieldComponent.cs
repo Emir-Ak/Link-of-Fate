@@ -12,7 +12,7 @@ public class PlayerShieldComponent : Damageable {
     [SerializeField]
     private PlayerAnimatorController playerAnimatorController; //Script that controls the animations of the player and it's animaton
     [SerializeField]
-    private PlayerController playerController; //Player Controller .-. (I want a cute waifu girlfriend D: (like inori or 02 ;/))
+    private PlayerController playerController; //Player Controller .-. (I want a cute waifu girlfriend D: (like inori or 02 ;/)) ...WELP WE ALL WANT SOMETHING UNREACHABLE SOMETIMES... Dreaming isn`t bad though :\
     #endregion
 
     private float maxShieldHealth; //Used to clamp the current shield health
@@ -70,15 +70,12 @@ public class PlayerShieldComponent : Damageable {
 
         if (_isShieldButtonPressed && !_isShieldBroken && hasShieldRegenerated)
         {
-            DecreasePlayerSpeed();
-
+           
             _isUsingShield = true;
             StartCoroutine(UseShield());
         }
         else if (!_isShieldButtonPressed)
         {
-            playerController.speed = playerController.standardMoveSpeed;
-
             _isUsingShield = false;
         }
 
@@ -92,15 +89,8 @@ public class PlayerShieldComponent : Damageable {
 
     }
 
-    void DecreasePlayerSpeed()
-    {
-        float _playerSpeed = playerController.speed;
-        _playerSpeed /= 2;
-        playerController.speed = _playerSpeed;
-    }
     private IEnumerator UseShield()
     {
-
         playerController.isInvincible = true;
         playerAnimatorController.IsAnimationLocked = true;
 
@@ -117,33 +107,31 @@ public class PlayerShieldComponent : Damageable {
 
         playerController.isInvincible = false;
         playerAnimatorController.IsAnimationLocked = false;
-
         _isUsingShield = false;
-
-        Debug.Log("isShielding" + _isUsingShield);
     }
 
     private IEnumerator RegenerateShield(float rechargeDelay, float regenAmount)
     {
-        yield return new WaitForSeconds(rechargeDelay);
 
-        bool hasFinishedRegenerating = false;
-        while (!hasFinishedRegenerating)
-        {
-            if (currentShieldHealth >= maxShieldHealth)
+            yield return new WaitUntil(()=> IsUsingShield == false);
+            yield return new WaitForSeconds(rechargeDelay);
+
+            bool hasFinishedRegenerating = false;
+            while (!hasFinishedRegenerating && IsUsingShield == false)
             {
-                hasFinishedRegenerating = true;
-                _isShieldBroken = false;
-                hasShieldRegenerated = true;
-                Debug.Log("Finished regenerating shield");
-                break;
+                if (currentShieldHealth >= maxShieldHealth)
+                {
+                    hasFinishedRegenerating = true;
+                    _isShieldBroken = false;
+                    hasShieldRegenerated = true;
+                    //Debug.Log("Finished regenerating shield");
+                    break;
 
+                }
+                yield return new WaitForSeconds(0.2f);
+                currentShieldHealth += regenAmount;
             }
-            yield return new WaitForSeconds(0.2f);
-            currentShieldHealth += regenAmount;
-        }
-        isShieldRegenerating = false;
-
+            isShieldRegenerating = false;
     }
 
 
@@ -152,7 +140,7 @@ public class PlayerShieldComponent : Damageable {
          if (_isUsingShield && !_isShieldBroken)
         {
             currentShieldHealth -= damageTaken;
-            Debug.Log("Shield is damaged by " + damageTaken + "hp");
+           // Debug.Log("Shield is damaged by " + damageTaken + "hp");
 
             playerController.Initialize();
             string instantiatedText = "-" + damageTaken.ToString();

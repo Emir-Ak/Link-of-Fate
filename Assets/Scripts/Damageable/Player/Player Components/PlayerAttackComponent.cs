@@ -44,34 +44,16 @@ public class PlayerAttackComponent : MonoBehaviour {
         
         if (!isPlayerAttacking && IsAttackButtonPressed && !animatorController.IsPlayerMoving)
         {
-            Debug.Log("Started");
             isPlayerAttacking = true;
             StartAttack();
         }
 
 
 
-        //This is what I call stage debigging :3. I already know how to fix the 1 hit bug. But I though you won't like it so I leave it up to you.
-        //PS. If you ask me on Discord  I will help.
-        if (isPlayerAttacking)
+      if (isPlayerAttacking && animatorController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !animatorController.animator.IsInTransition(0) && animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack"))
         {
-            Debug.Log("Player is attacking");
-            if (animatorController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            {
-                Debug.Log("1 sec passed");
-                if (!animatorController.animator.IsInTransition(0))
-                {
-                    Debug.Log("No transition occuring");
-
-                    if (animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack"))
-                    {
-                        Debug.Log("PlayerAttack animation is running");
-                        Debug.Log("End");
-                        EndAttack();
-                        isPlayerAttacking = false;
-                    }
-                }
-            }
+            EndAttack();
+            isPlayerAttacking = false;
         }
         else if (!animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack") && !playerController.IsPlayerMoving)
         {

@@ -59,7 +59,7 @@ public class SwordCollider : MonoBehaviour {
             Alive livingThing = collision.GetComponent<Enemy>();
             float damage = FindObjectOfType<PlayerController>().damage;
             livingThing.ReceiveDamage(damage);
-            livingThing.ReceiveKnockBack(transform.position);
+            livingThing.ReceiveKnockBack(transform.position, livingThing.knockbackForce);
         }
     }
 }   

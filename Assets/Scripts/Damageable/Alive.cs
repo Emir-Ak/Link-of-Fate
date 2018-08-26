@@ -59,6 +59,7 @@ public class Alive : Damageable {
             if (transform.CompareTag("Player"))
             {
                 textInst.InstantiateText(instantiatedText, transform.position, new Color32(125, 20, 130, 255));
+                
             }
         }
 
@@ -74,19 +75,19 @@ public class Alive : Damageable {
 
     #region Knockback
     ///
-    public void ReceiveKnockBack(Vector3 relativePos)
+    public void ReceiveKnockBack(Vector3 relativePos, float force)
     {
         if (relativePos != null)
         {
             StartCoroutine(RechargeKnockBackTime());
-            StartCoroutine(ApplyKnockback(relativePos));
+            StartCoroutine(ApplyKnockback(relativePos, force));
         }
         else{
             Debug.Log("Pushing GameObject is not existing...");
         }
     }
 
-    IEnumerator ApplyKnockback(Vector3 relatve)
+    IEnumerator ApplyKnockback(Vector3 relatve , float force)
     {
 
         bool isShielded = isInvincible;
@@ -94,7 +95,7 @@ public class Alive : Damageable {
         {
             Vector3 direction = transform.position - relatve;
             direction.Normalize();
-            rb.AddForce(direction * (isInvincible ? knockbackForce / 5f : knockbackForce / 2.5f), ForceMode2D.Impulse);
+            rb.AddForce(direction * (isInvincible ? force / 3.25f : force / 2.5f), ForceMode2D.Impulse);
             yield return new WaitForEndOfFrame();
         }
         rb.velocity = Vector2.zero;

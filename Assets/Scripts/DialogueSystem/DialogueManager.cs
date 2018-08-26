@@ -68,32 +68,15 @@ public class DialogueManager : MonoBehaviour {
         StopAllCoroutines();
         if (first)
         {
-            StartCoroutine(TypeSentence(sentence, 0.05f));
+            first = false;
+            StartCoroutine(AZAnim.TypeWrite(dialogueText, sentence, 0.5f));
 
         }
         else
         {
-            StartCoroutine(TypeSentence(sentence, 0.03f));
-        }
-
-
-        
-    }
-
-
-    IEnumerator TypeSentence(string sentence,float rate)
-    {
-
-
-        first = false;
-        dialogueText.text = "";
-
-        foreach (char letter in sentence.ToCharArray())
-        {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(rate);
-        }
-
+            first = false;
+            StartCoroutine(AZAnim.TypeWrite(dialogueText, sentence, 0.03f));
+        }  
     }
 
     private void EndDialogue()

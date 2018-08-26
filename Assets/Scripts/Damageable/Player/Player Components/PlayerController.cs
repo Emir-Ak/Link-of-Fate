@@ -57,7 +57,10 @@ public class PlayerController : Alive
     private void Update()
     {
 
-
+        if (playerShieldComponent.IsUsingShield == true)
+            speed = standardMoveSpeed/2;
+        else
+            speed = standardMoveSpeed;
 
         if (health <= 0)
         {
@@ -66,11 +69,11 @@ public class PlayerController : Alive
 
         #region Player_Attack
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && playerShieldComponent.IsUsingShield == false)
         {
             playerAttackComponent.IsAttackButtonPressed = true;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0) || playerShieldComponent.IsUsingShield == true)
         {
             playerAttackComponent.IsAttackButtonPressed = false;
         }
@@ -80,15 +83,19 @@ public class PlayerController : Alive
         #region Player_Shield
 
 
-        if (Input.GetMouseButton(1) && playerShieldComponent.IsShieldButtonPressed == false)
+        if (Input.GetMouseButtonDown(1) && playerShieldComponent.IsShieldButtonPressed == false)
         {
+            
             playerShieldComponent.IsShieldButtonPressed = true;
            
         }
         if (Input.GetMouseButtonUp(1))
         {
+            
             playerShieldComponent.IsShieldButtonPressed = false;
         }
+
+
 
         #endregion Player_Shield
 
@@ -100,7 +107,6 @@ public class PlayerController : Alive
         if (hInput > .5f || hInput < -.5f)
         {
 
-            speed = standardMoveSpeed;
             rb.velocity = new Vector2(hInput * speed, rb.velocity.y);
             _isPlayerMoving = true;
             if (!playerAnimatorController.IsAnimationLocked)
@@ -116,7 +122,7 @@ public class PlayerController : Alive
         if (vInput > .5f || vInput < -.5f)
         {
 
-            speed = standardMoveSpeed;
+
             rb.velocity = new Vector2(rb.velocity.x, vInput * speed);
             _isPlayerMoving = true;
 

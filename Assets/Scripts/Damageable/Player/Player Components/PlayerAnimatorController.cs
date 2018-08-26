@@ -58,11 +58,11 @@ public class PlayerAnimatorController : MonoBehaviour {
 
     public void StartAttackAnimation()
     {
-        animator.SetTrigger("AttackStart");
+        animator.SetBool("isAttacking", true);
     }
 
     public void EndAttackAnimation()
     {
-        animator.SetTrigger("AttackEnd");
+        animator.SetBool("isAttacking", false);
     }
 }

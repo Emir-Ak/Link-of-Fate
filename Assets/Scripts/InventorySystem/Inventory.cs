@@ -47,7 +47,7 @@ public class Inventory : MonoBehaviour {
         {
             if (items[i]  == null)
             {
-                Debug.Log("Added");
+         //       Debug.Log("Added");
                 items[i] = itemToAdd;
                 itemImages[i].sprite = itemToAdd.sprite;
                 itemImages[i].enabled = true;
@@ -118,10 +118,13 @@ public class Inventory : MonoBehaviour {
     }
     private void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(2) && items[selectionIndex] != null)
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            int i = selectionIndex;
-            interactionController.ApplyInteraction(items[i]);
+            if (items[selectionIndex] != null)
+            {
+                int i = selectionIndex;
+                interactionController.ApplyInteraction(items[i]);
+            }
         }
     }
 }
