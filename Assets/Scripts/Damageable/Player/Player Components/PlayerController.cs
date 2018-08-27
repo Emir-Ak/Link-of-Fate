@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerController : Alive
@@ -8,6 +8,12 @@ public class PlayerController : Alive
     [Header("Player Variables")]
     [Space(8)]
 
+    [SerializeField]
+    private Stat barHealth;
+
+    [SerializeField]
+    private Text barValueText;
+
     #region Components
     [SerializeField]
     internal PlayerShieldComponent playerShieldComponent;//Component that has the functions for the shield :3
@@ -15,7 +21,9 @@ public class PlayerController : Alive
     private PlayerAttackComponent playerAttackComponent;//Component that has the functions for the Attack :3
     [SerializeField]
     private PlayerAnimatorController playerAnimatorController; //Script that controls the animations of the player and it's animator
+
     #endregion
+
 
     #region Movement_Variables
 
@@ -25,8 +33,6 @@ public class PlayerController : Alive
 
 
     #endregion Movement_Variables
-
-
     private float hInput; //Horizontal input
     private float vInput; //Vertical Input
 
@@ -44,19 +50,25 @@ public class PlayerController : Alive
         playerAnimatorController = GetComponent<PlayerAnimatorController>();
         playerShieldComponent = GetComponent<PlayerShieldComponent>();
         playerAttackComponent = GetComponent<PlayerAttackComponent>();
+        rb = GetComponent<Rigidbody2D>();
         #endregion
 
+        standardHealth = health;
+        standardMoveSpeed = speed;
 
-        standardMoveSpeed = speed;  
-        rb = GetComponent<Rigidbody2D>();
-
-
+        barHealth.Initialize();
+        barHealth.CurrentVal = health;
+        barValueText.text = health.ToString();
     }
-
+    public override void ReceiveDamage(float damageTaken)
+    {
+        base.ReceiveDamage(damageTaken);
+        barHealth.CurrentVal = health;
+        barValueText.text = health.ToString();
+    }
     // Update is called once per frame
     private void Update()
     {
-
         if (playerShieldComponent.IsUsingShield == true)
             speed = standardMoveSpeed/2;
         else
@@ -95,7 +107,14 @@ public class PlayerController : Alive
             playerShieldComponent.IsShieldButtonPressed = false;
         }
 
-
+        if(health < standardHealth/2 - (standardHealth/10) && barValueText.color != Color.red)
+        {
+            barValueText.color = Color.red;
+        }
+        else if(health >= standardHealth/2 - (standardHealth/10) && barValueText.color != Color.white)
+        {
+            barValueText.color = Color.white;
+        }
 
         #endregion Player_Shield
 
@@ -142,9 +161,11 @@ public class PlayerController : Alive
         }
         #endregion Player_Movement
 
-
-
-
+        if(isRegenerating == true)
+        {
+            barHealth.CurrentVal = health;
+            barValueText.text = health.ToString();
+        }
     }
 
 

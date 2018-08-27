@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Alive : Damageable {
+public class Alive : Damageable
+{
 
     #region Variables
     [Header("Living Object Variables")]
@@ -19,15 +20,25 @@ public class Alive : Damageable {
     public float speed = 3f;
     public float damage = 20f;
 
+    public float regenDelay = 5f;
+    public float regenTimeStep = 1f;
+    public float regenAmount = 1f;
+
+    protected bool isRegenerating = false;
 
     public bool isInvincible = false;
 
     protected bool isKnocked = false;
+
+    [HideInInspector]
+    public float standardHealth;
     #endregion
+
+    Coroutine regenerateHealth;
 
     public virtual void Initialize()
     {
-        if(textInst == null)
+        if (textInst == null)
         {
             textInst = FindObjectOfType<TextInstantiator>();
         }
@@ -46,17 +57,26 @@ public class Alive : Damageable {
         if (isInvincible == false)
         {
             base.ReceiveDamage(damageTaken);
+
             instantiatedText = "-" + damageTaken.ToString();
             StartCoroutine(ApplyRedColor());
             if (transform.CompareTag("Player"))
             {
                 textInst.InstantiateText(instantiatedText, transform.position, new Color32(255, 0, 0, 255));
             }
+
+            if(regenerateHealth != null)
+            {
+                StopCoroutine(regenerateHealth);
+            }
+           
+            regenerateHealth = StartCoroutine(RegenerateHealth());
         }
         else if (transform.CompareTag("Player"))
         {
 
             base.ReceiveDamage(damageTaken);
+
             instantiatedText = "-" + damageTaken.ToString();
             textInst.InstantiateText(instantiatedText, transform.position, new Color32(193, 40, 29, 255));
 
@@ -80,7 +100,7 @@ public class Alive : Damageable {
         StartCoroutine(ApplyKnockback(relativePos, force));
     }
 
-    IEnumerator ApplyKnockback(Vector3 relatve , float force)
+    IEnumerator ApplyKnockback(Vector3 relatve, float force)
     {
         while (isKnocked)
         {
@@ -98,7 +118,7 @@ public class Alive : Damageable {
         yield return new WaitForSeconds(knockbackTime);
         isKnocked = false;
     }
-#endregion
+    #endregion
 
     #region Invincibility
     protected virtual void ReceiveNoDamage(float invTime)
@@ -114,5 +134,21 @@ public class Alive : Damageable {
         yield return new WaitForSeconds(invTime);
         isInvincible = false;
     }
-    #endregion
+
+    IEnumerator RegenerateHealth()
+    {
+        
+        yield return new WaitForSeconds(regenDelay);
+
+        isRegenerating = true;
+        while (health < standardHealth)
+        {
+
+            health += regenAmount;            
+            yield return new WaitForSeconds(regenTimeStep);
+
+        }
+        isRegenerating = false;
+        #endregion
+    }
 }

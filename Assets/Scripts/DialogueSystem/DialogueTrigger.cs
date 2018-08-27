@@ -18,7 +18,7 @@ public class DialogueTrigger : MonoBehaviour {
     public void TriggerDialogue()
     {
 
-        var dialogueManager = Instantiate(dialogueBox, new Vector3(0, 4.5f, 0), Quaternion.identity).GetComponentInChildren<DialogueManager>();
+        var dialogueManager = Instantiate(dialogueBox, transform.position, Quaternion.identity).GetComponentInChildren<DialogueManager>();
         
         dialogueManager.StartDialogue(dialogue);
     }

@@ -51,7 +51,7 @@ public class Enemy : Alive {
         FollowTarget();
         if(health <= 0)
         {
-            Destroy(gameObject, 0.1f);
+            Destroy(gameObject, knockbackTime);
         }
         if(isKnocked == false && rb.velocity != Vector2.zero)
         {

@@ -10,6 +10,7 @@ TagManager:
   - PlayerTrigger
   - Enemy
   - SwordCollider
+  - WhiteBorder
   layers:
   - Default
   - TransparentFX

@@ -43,16 +43,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1532956085147242
+--- !u!1 &1340414226298484
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 224115118134680044}
-  m_Layer: 5
-  m_Name: Text Goal
+  - component: {fileID: 4636955545342896}
+  m_Layer: 0
+  m_Name: TextGoal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,13 +102,26 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920461803130750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.95, y: -10.26, z: 0}
+  m_LocalPosition: {x: 3.42, y: -1.01, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
+  - {fileID: 4636955545342896}
   - {fileID: 4715259473857464}
-  - {fileID: 224115118134680044}
   - {fileID: 4074735857114290}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4636955545342896
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340414226298484}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4514023778430806}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4715259473857464
@@ -122,7 +135,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4514023778430806}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50415790869954380
 Rigidbody2D:
@@ -251,7 +264,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textPrefab: {fileID: 1027029068858564, guid: cb261f56b7ccd4346b28c82e4ad6a10c, type: 2}
   persistentCanvas: {fileID: 0}
-  positionAnimationTarget: {fileID: 224115118134680044}
+  textGoal: {fileID: 4636955545342896}
+  textMoveSpeed: 5
 --- !u!114 &114523972729856290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -284,8 +298,17 @@ MonoBehaviour:
   knockbackForce: 10
   knockbackTime: 0.3
   speed: 3
-  damage: 20
+  damage: 10
+  regenDelay: 5
+  regenTimeStep: 1
+  regenAmount: 1
   isInvincible: 0
+  standardHealth: 100
+  barHealth:
+    bar: {fileID: 0}
+    maxVal: 100
+    currentVal: 100
+  barValueText: {fileID: 0}
   playerShieldComponent: {fileID: 114917375496413858}
   playerAttackComponent: {fileID: 114327237463783436}
   playerAnimatorController: {fileID: 114523972729856290}
@@ -302,12 +325,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  barValueAnimator: {fileID: 0}
+  barShieldHealth:
+    bar: {fileID: 0}
+    maxVal: 50
+    currentVal: 50
+  barValueText: {fileID: 0}
   playerAttackComponent: {fileID: 114327237463783436}
   playerAnimatorController: {fileID: 114523972729856290}
   playerController: {fileID: 114728376858697630}
   currentShieldHealth: 0
-  shieldRechargeDelay: 5
-  regenAmount: 20
+  shieldRechargeDelay: 2.5
+  regenAmount: 1
   _isUsingShield: 0
   _isShieldButtonPressed: 0
 --- !u!212 &212005908117570422
@@ -356,21 +385,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!224 &224115118134680044
-RectTransform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1532956085147242}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 95.9}
-  m_LocalScale: {x: 0.0050000004, y: 0.0050000004, z: 0.0075000003}
-  m_Children: []
-  m_Father: {fileID: 4514023778430806}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.96}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}

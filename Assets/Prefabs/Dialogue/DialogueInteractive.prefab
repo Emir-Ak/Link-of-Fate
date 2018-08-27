@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 58269059768032496}
   - component: {fileID: 114017361086316098}
   m_Layer: 0
-  m_Name: Dialogue Interactive
+  m_Name: DialogueInteractive
   m_TagString: Dialogue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c551d524314986d47a11bf47a33b55e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueBox: {fileID: 1728815751787150, guid: bbc176f3ba134a54fb60423eb85f6338,
+  dialogueBox: {fileID: 1242769618483852, guid: bbc176f3ba134a54fb60423eb85f6338,
     type: 2}
   dialogue:
     name: Head of the village

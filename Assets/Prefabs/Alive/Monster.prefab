@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455683079688080}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9, y: -7.34, z: 0}
+  m_LocalPosition: {x: -5.3, y: -7.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,7 +126,11 @@ MonoBehaviour:
   knockbackTime: 0.05
   speed: 3
   damage: 10
+  regenDelay: 5
+  regenTimeStep: 1
+  regenAmount: 1
   isInvincible: 0
+  standardHealth: 100
   target: {fileID: 0}
   followRange: 5
   maxRange: 10

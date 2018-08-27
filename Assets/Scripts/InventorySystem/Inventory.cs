@@ -6,11 +6,13 @@ public class Inventory : MonoBehaviour {
 
     public const int numItemSlots = 4;
 
+    GameObject whiteBorder;
+
     public Image[] itemImages = new Image [numItemSlots];
     public Item[] items = new Item[numItemSlots];
     public GameObject[] itemSlots = new GameObject[numItemSlots];
 
-    public float slotScaleFactor = 1.25f;
+    public float slotScaleFactor = 1.1f;
     //private static bool created = false;
     private int selectionIndex = 0;
 
@@ -29,6 +31,10 @@ public class Inventory : MonoBehaviour {
     private void Start()
     {
         interactionController = FindObjectOfType<InteractionController>();
+      
+        whiteBorder = GameObject.FindWithTag("WhiteBorder");
+        whiteBorder.SetActive(false);
+
         SelectItemSlot();
     }
 
@@ -109,12 +115,14 @@ public class Inventory : MonoBehaviour {
     private void SelectItemSlot()
     {
         int i = selectionIndex;
-        itemSlots[i].transform.localScale *= slotScaleFactor;
+        whiteBorder.SetActive(true);
+        whiteBorder.transform.position = itemSlots[i].transform.position;
+
     }
     private void ResetScaledSlot()
     {
-        int i = selectionIndex;
-        itemSlots[i].transform.localScale /= slotScaleFactor;
+
+        whiteBorder.SetActive(false);    
     }
     private void Interact()
     {

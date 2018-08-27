@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerShieldComponent : Damageable
@@ -8,6 +8,13 @@ public class PlayerShieldComponent : Damageable
     #region Variables
 
     #region Components
+    [SerializeField]
+    private Animator barValueAnimator; 
+    [SerializeField]
+    private Stat barShieldHealth;
+    [SerializeField]
+    public Text barValueText;
+
     [SerializeField]
     private PlayerAttackComponent playerAttackComponent;//Component that has the functions for the Attack :3
     [SerializeField]
@@ -43,6 +50,7 @@ public class PlayerShieldComponent : Damageable
     public bool IsShieldButtonPressed { get { return this._isShieldButtonPressed; } set { this._isShieldButtonPressed = value; } }
     #endregion
 
+
     // Use this for initialization
     void Start()
     {
@@ -54,6 +62,10 @@ public class PlayerShieldComponent : Damageable
         #endregion
         maxShieldHealth = health;
         currentShieldHealth = maxShieldHealth;
+
+        barShieldHealth.Initialize();
+        barShieldHealth.CurrentVal = health;
+        barValueText.text = health.ToString();
 
     }
 
@@ -100,7 +112,8 @@ public class PlayerShieldComponent : Damageable
 
         if (currentShieldHealth <= 0)
         {
-            _isShieldBroken = true;
+          
+  IsShieldBroken = true;
             playerController.Initialize();
 
         }
@@ -124,16 +137,33 @@ public class PlayerShieldComponent : Damageable
             if (currentShieldHealth >= maxShieldHealth)
             {
                 hasFinishedRegenerating = true;
-                _isShieldBroken = false;
+                IsShieldBroken = false;
                 hasShieldRegenerated = true;
                 //Debug.Log("Finished regenerating shield");
                 break;
 
             }
-            yield return new WaitForSeconds(0.2f);
+
             currentShieldHealth += regenAmount;
+            barShieldHealth.CurrentVal = (int)currentShieldHealth;
+
+            if(IsShieldBroken == false)
+            {
+                barValueText.text = currentShieldHealth.ToString();
+            }
+
+            if (currentShieldHealth >= regenAmount && barValueAnimator.GetBool("isShieldBroken") == true)
+            {
+                barValueAnimator.SetBool("isShieldBroken", false);
+            }
+
+            yield return new WaitForSeconds(0.2f);
+              
         }
+
         isShieldRegenerating = false;
+
+        barValueText.text = currentShieldHealth.ToString();
     }
 
 
@@ -144,6 +174,8 @@ public class PlayerShieldComponent : Damageable
             if (currentShieldHealth > damageTaken)
             {
                 currentShieldHealth -= damageTaken;
+                barShieldHealth.CurrentVal = currentShieldHealth;
+                barValueText.text = currentShieldHealth.ToString();
 
                 playerController.Initialize();
                 string instantiatedText = "-" + damageTaken.ToString();
@@ -152,18 +184,20 @@ public class PlayerShieldComponent : Damageable
             else
             {
                 playerController.Initialize();
-                if (currentShieldHealth == damageTaken)
+                if (currentShieldHealth < damageTaken)
                 {
-                    string instantiatedText = "BROKEN";
-                    playerController.textInst.InstantiateText(instantiatedText, transform.position, new Color32(125, 20, 130, 255));
-                }
-                else
-                {
-                    float playerDamage = damageTaken - currentShieldHealth;
-                    playerController.ReceiveDamage(playerDamage);
+                   float playerDamage = damageTaken - currentShieldHealth;
+                   playerController.ReceiveDamage(playerDamage);
+
+                    string instantiatedText = "-" + (playerDamage).ToString();
+                   playerController.textInst.InstantiateText(instantiatedText, transform.position, new Color32(125, 20, 130, 255));
                 }
 
                 currentShieldHealth = 0;
+                IsShieldBroken = true;
+                barValueText.text = "BROKEN";
+                barValueAnimator.SetBool("isShieldBroken", true);
+                barShieldHealth.CurrentVal = currentShieldHealth;
             }
 
         }
