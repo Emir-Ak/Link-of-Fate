@@ -42,7 +42,7 @@ public class Alive : Damageable {
     {
         Initialize();
         string instantiatedText;
-           
+
         if (isInvincible == false)
         {
             base.ReceiveDamage(damageTaken);
@@ -53,14 +53,13 @@ public class Alive : Damageable {
                 textInst.InstantiateText(instantiatedText, transform.position, new Color32(255, 0, 0, 255));
             }
         }
-        else
+        else if (transform.CompareTag("Player"))
         {
-            instantiatedText = "Immortal Object";
-            if (transform.CompareTag("Player"))
-            {
-                textInst.InstantiateText(instantiatedText, transform.position, new Color32(125, 20, 130, 255));
-                
-            }
+
+            base.ReceiveDamage(damageTaken);
+            instantiatedText = "-" + damageTaken.ToString();
+            textInst.InstantiateText(instantiatedText, transform.position, new Color32(193, 40, 29, 255));
+
         }
 
     }
@@ -77,20 +76,12 @@ public class Alive : Damageable {
     ///
     public void ReceiveKnockBack(Vector3 relativePos, float force)
     {
-        if (relativePos != null)
-        {
-            StartCoroutine(RechargeKnockBackTime());
-            StartCoroutine(ApplyKnockback(relativePos, force));
-        }
-        else{
-            Debug.Log("Pushing GameObject is not existing...");
-        }
+        StartCoroutine(RechargeKnockBackTime());
+        StartCoroutine(ApplyKnockback(relativePos, force));
     }
 
     IEnumerator ApplyKnockback(Vector3 relatve , float force)
     {
-
-        bool isShielded = isInvincible;
         while (isKnocked)
         {
             Vector3 direction = transform.position - relatve;

@@ -241,9 +241,9 @@ public class AZAnim
 
         //Wait before starting
         yield return new WaitForSeconds(delay);
-
         while (obj.transform.position != targetPoition)
         {
+            Debug.Log("animating pos");
             obj.transform.position = Vector3.MoveTowards(obj.transform.position, targetPoition, Time.deltaTime * speed); ;
             yield return new WaitForFixedUpdate();
         }

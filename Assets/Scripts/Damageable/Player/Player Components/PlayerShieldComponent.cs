@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShieldComponent : Damageable {
+public class PlayerShieldComponent : Damageable
+{
 
     #region Variables
 
@@ -43,7 +44,7 @@ public class PlayerShieldComponent : Damageable {
     #endregion
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         #region GetComponent
         playerController = GetComponent<PlayerController>();
@@ -55,9 +56,9 @@ public class PlayerShieldComponent : Damageable {
         currentShieldHealth = maxShieldHealth;
 
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         currentShieldHealth = Mathf.Clamp(currentShieldHealth, 0, maxShieldHealth);
 
@@ -70,7 +71,7 @@ public class PlayerShieldComponent : Damageable {
 
         if (_isShieldButtonPressed && !_isShieldBroken && hasShieldRegenerated)
         {
-           
+
             _isUsingShield = true;
             StartCoroutine(UseShield());
         }
@@ -79,7 +80,7 @@ public class PlayerShieldComponent : Damageable {
             _isUsingShield = false;
         }
 
-        
+
 
 
         #region Animator_Controller_Values_Refresh
@@ -95,11 +96,12 @@ public class PlayerShieldComponent : Damageable {
         playerAnimatorController.IsAnimationLocked = true;
 
         _isUsingShield = true;
-        
+
 
         if (currentShieldHealth <= 0)
         {
             _isShieldBroken = true;
+            playerController.Initialize();
 
         }
 
@@ -113,41 +115,57 @@ public class PlayerShieldComponent : Damageable {
     private IEnumerator RegenerateShield(float rechargeDelay, float regenAmount)
     {
 
-            yield return new WaitUntil(()=> IsUsingShield == false);
-            yield return new WaitForSeconds(rechargeDelay);
+        yield return new WaitUntil(() => IsUsingShield == false);
+        yield return new WaitForSeconds(rechargeDelay);
 
-            bool hasFinishedRegenerating = false;
-            while (!hasFinishedRegenerating && IsUsingShield == false)
+        bool hasFinishedRegenerating = false;
+        while (!hasFinishedRegenerating && IsUsingShield == false)
+        {
+            if (currentShieldHealth >= maxShieldHealth)
             {
-                if (currentShieldHealth >= maxShieldHealth)
-                {
-                    hasFinishedRegenerating = true;
-                    _isShieldBroken = false;
-                    hasShieldRegenerated = true;
-                    //Debug.Log("Finished regenerating shield");
-                    break;
+                hasFinishedRegenerating = true;
+                _isShieldBroken = false;
+                hasShieldRegenerated = true;
+                //Debug.Log("Finished regenerating shield");
+                break;
 
-                }
-                yield return new WaitForSeconds(0.2f);
-                currentShieldHealth += regenAmount;
             }
-            isShieldRegenerating = false;
+            yield return new WaitForSeconds(0.2f);
+            currentShieldHealth += regenAmount;
+        }
+        isShieldRegenerating = false;
     }
 
 
-    public  void ReceiveShieldDamage(float damageTaken)
+    public override void ReceiveDamage(float damageTaken)
     {
-         if (_isUsingShield && !_isShieldBroken)
+        if (_isUsingShield && !_isShieldBroken)
         {
-            currentShieldHealth -= damageTaken;
-           // Debug.Log("Shield is damaged by " + damageTaken + "hp");
+            if (currentShieldHealth > damageTaken)
+            {
+                currentShieldHealth -= damageTaken;
 
-            playerController.Initialize();
-            string instantiatedText = "-" + damageTaken.ToString();
-            playerController.textInst.InstantiateText(instantiatedText, transform.position, new Color32(122, 147, 255, 255));
-            
+                playerController.Initialize();
+                string instantiatedText = "-" + damageTaken.ToString();
+                playerController.textInst.InstantiateText(instantiatedText, transform.position, new Color32(122, 147, 255, 255));
+            }
+            else
+            {
+                playerController.Initialize();
+                if (currentShieldHealth == damageTaken)
+                {
+                    string instantiatedText = "BROKEN";
+                    playerController.textInst.InstantiateText(instantiatedText, transform.position, new Color32(125, 20, 130, 255));
+                }
+                else
+                {
+                    float playerDamage = damageTaken - currentShieldHealth;
+                    playerController.ReceiveDamage(playerDamage);
+                }
+
+                currentShieldHealth = 0;
+            }
+
         }
     }
-
-
 }

@@ -42,7 +42,7 @@ public class PlayerAttackComponent : MonoBehaviour {
     private void Update()
     {
         
-        if (!isPlayerAttacking && IsAttackButtonPressed && !animatorController.IsPlayerMoving)
+        if (!isPlayerAttacking && IsAttackButtonPressed && !animatorController.IsPlayerMoving )
         {
             isPlayerAttacking = true;
             StartAttack();

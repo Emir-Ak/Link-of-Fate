@@ -70,7 +70,7 @@ public class Enemy : Alive {
             if (player.playerShieldComponent.IsUsingShield)
             {
 
-                player.playerShieldComponent.ReceiveShieldDamage(damage);
+                player.playerShieldComponent.ReceiveDamage(damage);
             }
             else
             {
@@ -108,7 +108,6 @@ public class Enemy : Alive {
             {
 
                 Vector3 direction = transform.position - target.position;
-                Debug.Log(direction + "Player");
                 direction.Normalize();
                 Move(direction);
             }
@@ -122,8 +121,7 @@ public class Enemy : Alive {
                 StartCoroutine(IdleMove());
             }
             else if(spawnDistance > 0.5f && isIdle == false)
-            {
-                Debug.Log("Started");
+            {;
                 Move(spawnPoint);
             }
         }
@@ -153,7 +151,6 @@ public class Enemy : Alive {
                     Move(spawnPoint);
                     yield return new WaitForEndOfFrame();
                 }
-                Debug.Log("Reached the idle bound");
                 yield return new WaitForSeconds(0.6f);
             }
 

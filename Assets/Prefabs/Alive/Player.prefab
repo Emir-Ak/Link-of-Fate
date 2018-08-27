@@ -11,6 +11,22 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1920461803130750}
   m_IsPrefabAsset: 1
+--- !u!1 &1044621414332248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4074735857114290}
+  - component: {fileID: 114428087636319808}
+  m_Layer: 0
+  m_Name: PlayerTextInstantiator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1100490019385664
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +74,7 @@ GameObject:
   - component: {fileID: 114523972729856290}
   - component: {fileID: 114327237463783436}
   - component: {fileID: 114917375496413858}
+  - component: {fileID: 114066387952715236}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -65,6 +82,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4074735857114290
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1044621414332248}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.3115585, y: -4.8849654, z: -0.98621583}
+  m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4514023778430806}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4514023778430806
 Transform:
   m_ObjectHideFlags: 1
@@ -72,11 +102,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920461803130750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.26, y: 0, z: 0}
+  m_LocalPosition: {x: 9.95, y: -10.26, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4715259473857464}
   - {fileID: 224115118134680044}
+  - {fileID: 4074735857114290}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -181,6 +212,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114066387952715236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920461803130750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b6ca2a1a2d45b45b3f4e0b083da93d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114327237463783436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -194,7 +236,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorController: {fileID: 114523972729856290}
   playerController: {fileID: 114728376858697630}
-  SwordAttackPrefab: {fileID: 0}
+  SwordAttackPrefab: {fileID: 1976126685712854, guid: 436e31e5ad3bcc343b37590a1ad65f07,
+    type: 2}
+--- !u!114 &114428087636319808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1044621414332248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18098e8145bbac4e86fe1f21271dda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textPrefab: {fileID: 1027029068858564, guid: cb261f56b7ccd4346b28c82e4ad6a10c, type: 2}
+  persistentCanvas: {fileID: 0}
+  positionAnimationTarget: {fileID: 224115118134680044}
 --- !u!114 &114523972729856290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,6 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  textInst: {fileID: 0}
   sprite: {fileID: 212005908117570422}
   rb: {fileID: 50415790869954380}
   knockbackForce: 10
@@ -243,13 +301,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9586bb950f009e34989024eab82d81f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  playerAttackComponent: {fileID: 0}
-  playerAnimatorController: {fileID: 0}
-  playerController: {fileID: 0}
+  health: 50
+  playerAttackComponent: {fileID: 114327237463783436}
+  playerAnimatorController: {fileID: 114523972729856290}
+  playerController: {fileID: 114728376858697630}
   currentShieldHealth: 0
   shieldRechargeDelay: 5
-  regenAmount: 2
+  regenAmount: 20
   _isUsingShield: 0
   _isShieldButtonPressed: 0
 --- !u!212 &212005908117570422
