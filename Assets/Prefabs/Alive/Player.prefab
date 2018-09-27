@@ -43,6 +43,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1186616881428824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4712859038888000}
+  - component: {fileID: 61990475789296874}
+  m_Layer: 9
+  m_Name: IdentificatorCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1340414226298484
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,9 +91,25 @@ GameObject:
   - component: {fileID: 114327237463783436}
   - component: {fileID: 114917375496413858}
   - component: {fileID: 114066387952715236}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1981849860414668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4995934498029584}
+  - component: {fileID: 61655923363245540}
+  m_Layer: 8
+  m_Name: Shield
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,12 +134,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920461803130750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.42, y: -1.01, z: 0}
+  m_LocalPosition: {x: -9.3, y: -19.5, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4636955545342896}
   - {fileID: 4715259473857464}
   - {fileID: 4074735857114290}
+  - {fileID: 4995934498029584}
+  - {fileID: 4712859038888000}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124,6 +158,19 @@ Transform:
   m_Father: {fileID: 4514023778430806}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4712859038888000
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1186616881428824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4514023778430806}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4715259473857464
 Transform:
   m_ObjectHideFlags: 1
@@ -136,6 +183,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4514023778430806}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4995934498029584
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981849860414668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4514023778430806}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50415790869954380
 Rigidbody2D:
@@ -157,6 +217,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!61 &61655923363245540
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981849860414668}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!61 &61938450466228676
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -206,6 +291,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
+  m_EdgeRadius: 0
+--- !u!61 &61990475789296874
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1186616881428824}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.15}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.8}
   m_EdgeRadius: 0
 --- !u!95 &95423823805361104
 Animator:
@@ -291,23 +401,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c876fd66fe995640955589496b1eda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 500
   textInst: {fileID: 0}
   sprite: {fileID: 212005908117570422}
   rb: {fileID: 50415790869954380}
   knockbackForce: 10
   knockbackTime: 0.3
-  speed: 3
-  damage: 10
-  regenDelay: 5
-  regenTimeStep: 1
-  regenAmount: 1
+  speed: 7
+  damage: 50
+  regenDelay: 1
+  regenTimeStep: 0.5
+  regenAmount: 10
   isInvincible: 0
   standardHealth: 100
+  hostileTo: 00000000
+  LivingBeingType: 0
   barHealth:
     bar: {fileID: 0}
-    maxVal: 100
-    currentVal: 100
+    maxVal: 500
+    currentVal: 500
   barValueText: {fileID: 0}
   playerShieldComponent: {fileID: 114917375496413858}
   playerAttackComponent: {fileID: 114327237463783436}
@@ -324,19 +436,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9586bb950f009e34989024eab82d81f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  health: 1000
   barValueAnimator: {fileID: 0}
   barShieldHealth:
     bar: {fileID: 0}
-    maxVal: 50
-    currentVal: 50
+    maxVal: 1000
+    currentVal: 1000
   barValueText: {fileID: 0}
   playerAttackComponent: {fileID: 114327237463783436}
   playerAnimatorController: {fileID: 114523972729856290}
   playerController: {fileID: 114728376858697630}
   currentShieldHealth: 0
   shieldRechargeDelay: 2.5
-  regenAmount: 1
+  regenAmount: 20
   _isUsingShield: 0
   _isShieldButtonPressed: 0
 --- !u!212 &212005908117570422

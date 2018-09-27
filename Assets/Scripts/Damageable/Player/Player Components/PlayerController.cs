@@ -48,7 +48,6 @@ public class PlayerController : Alive
     {
         #region GetComponent
         playerAnimatorController = GetComponent<PlayerAnimatorController>();
-        playerShieldComponent = GetComponent<PlayerShieldComponent>();
         playerAttackComponent = GetComponent<PlayerAttackComponent>();
         rb = GetComponent<Rigidbody2D>();
         #endregion
@@ -60,12 +59,7 @@ public class PlayerController : Alive
         barHealth.CurrentVal = health;
         barValueText.text = health.ToString();
     }
-    public override void ReceiveDamage(float damageTaken)
-    {
-        base.ReceiveDamage(damageTaken);
-        barHealth.CurrentVal = health;
-        barValueText.text = health.ToString();
-    }
+    
     // Update is called once per frame
     private void Update()
     {
@@ -80,6 +74,7 @@ public class PlayerController : Alive
         }
 
         #region Player_Attack
+
 
         if (Input.GetMouseButtonDown(0) && playerShieldComponent.IsUsingShield == false)
         {
@@ -166,6 +161,28 @@ public class PlayerController : Alive
             barHealth.CurrentVal = health;
             barValueText.text = health.ToString();
         }
+
+
+    }
+
+    /// <summary>
+    /// takes damage into the player if doesn't collide with shield (raycast from position)
+    /// </summary>
+    /// <param name="damageTaken">damage amount</param>
+    /// <param name="positionOfAttack"> where from the attack is taking place (your(enemy)) position)</param>
+    public void ReceiveDamage(float damageTaken,Vector3 positionOfAttack)
+    {
+        if (playerShieldComponent.CheckIfDefended(positionOfAttack))
+        {
+            playerShieldComponent.ReceiveDamage(damageTaken);
+        }
+        else
+        {
+            base.ReceiveDamage(damageTaken);
+            barHealth.CurrentVal = health;
+            barValueText.text = health.ToString();
+        }
+
     }
 
 

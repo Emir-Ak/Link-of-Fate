@@ -40,7 +40,6 @@ public class PlayerAnimatorController : MonoBehaviour {
     {
         #region GetComponent
         animator = GetComponent<Animator>();
-        playerShieldComponent = GetComponent<PlayerShieldComponent>();
         playerAttackComponent = GetComponent<PlayerAttackComponent>();
         #endregion
     }
