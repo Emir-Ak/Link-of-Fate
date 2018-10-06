@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920461803130750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.42, y: -1.01, z: 0}
+  m_LocalPosition: {x: 13.5, y: 0.4, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4636955545342896}
@@ -295,12 +295,12 @@ MonoBehaviour:
   textInst: {fileID: 0}
   sprite: {fileID: 212005908117570422}
   rb: {fileID: 50415790869954380}
-  knockbackForce: 10
-  knockbackTime: 0.3
+  knockbackForce: 7
+  knockbackTime: 0.1
   speed: 3
   damage: 10
-  regenDelay: 5
-  regenTimeStep: 1
+  regenDelay: 2
+  regenTimeStep: 2.5
   regenAmount: 1
   isInvincible: 0
   standardHealth: 100
@@ -334,7 +334,7 @@ MonoBehaviour:
   playerAttackComponent: {fileID: 114327237463783436}
   playerAnimatorController: {fileID: 114523972729856290}
   playerController: {fileID: 114728376858697630}
-  currentShieldHealth: 0
+  currentShieldHealth: 50
   shieldRechargeDelay: 2.5
   regenAmount: 1
   _isUsingShield: 0

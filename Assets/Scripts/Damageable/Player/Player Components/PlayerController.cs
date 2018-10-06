@@ -38,7 +38,6 @@ public class PlayerController : Alive
 
     #region Properties
     public bool IsPlayerMoving { get { return this._isPlayerMoving; } set { this._isPlayerMoving = value; } }
-
     #endregion
 
 

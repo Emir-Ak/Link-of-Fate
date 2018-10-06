@@ -11,6 +11,8 @@ public class Inventory : MonoBehaviour {
     public Image[] itemImages = new Image [numItemSlots];
     public Item[] items = new Item[numItemSlots];
     public GameObject[] itemSlots = new GameObject[numItemSlots];
+    public Text[] itemStackNumTexts = new Text[numItemSlots];
+    public int[] itemStackNums = new int[numItemSlots]; 
 
     public float slotScaleFactor = 1.1f;
     //private static bool created = false;
@@ -36,6 +38,10 @@ public class Inventory : MonoBehaviour {
         whiteBorder.SetActive(false);
 
         SelectItemSlot();
+        for (int i = 0; i < numItemSlots; i++)
+        {
+            itemStackNumTexts[i].gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -48,15 +54,39 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    public bool Contains(Item itemToCheck, int itemAmount)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] != null && items[i].assignedID == itemToCheck.assignedID && itemStackNums[i] == itemAmount)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
     public void AddItem(Item itemToAdd) { 
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i]  == null)
+            if(items[i] != null && itemToAdd.assignedID == items[i].assignedID && items[i].isStackable)
             {
-         //       Debug.Log("Added");
+                itemStackNums[i]++;
+                itemStackNumTexts[i].text = itemStackNums[i].ToString();
+                return;
+            }
+            else if (items[i]  == null)
+            {
                 items[i] = itemToAdd;
                 itemImages[i].sprite = itemToAdd.sprite;
                 itemImages[i].enabled = true;
+                itemStackNums[i]++;
+                if (items[i].isStackable)
+                {
+                    itemStackNumTexts[i].gameObject.SetActive(true);
+                }
+                itemStackNumTexts[i].text = itemStackNums[i].ToString();
                 return;
             }
         }
@@ -65,9 +95,21 @@ public class Inventory : MonoBehaviour {
     public void RemoveItem()
     {
         int i = selectionIndex;
-        items[i] = null;
-        itemImages[i].sprite = null;
-        itemImages[i].enabled = false;
+        if (items[i].isStackable && itemStackNums[i] > 1)
+        {
+            itemStackNums[i]--;
+            itemStackNumTexts[i].text = itemStackNums[i].ToString();
+            Debug.Log(itemStackNums[i] + " of these items left");
+            return;
+        }
+        else {
+            items[i] = null;
+            itemStackNums[i]--;
+            itemImages[i].sprite = null;
+            itemImages[i].enabled = false;
+            itemStackNumTexts[i].gameObject.SetActive(false);        
+        }
+
     }
 
     

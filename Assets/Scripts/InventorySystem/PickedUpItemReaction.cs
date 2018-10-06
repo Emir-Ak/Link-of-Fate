@@ -22,7 +22,7 @@ public class PickedUpItemReaction : MonoBehaviour
         {
             foreach (Item item in inventory.items)
             {
-                if (item == null)
+                if (item == null || this.item.assignedID == item.assignedID && item.isStackable)
                 {
                     Destroy(gameObject);
                     ImmediateReaction();

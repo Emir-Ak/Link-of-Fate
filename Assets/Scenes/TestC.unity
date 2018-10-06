@@ -166,11 +166,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &60647413 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1920461803130750, guid: 02bb8ca9c11ca284684f61b67fd3b377,
-    type: 2}
-  m_PrefabInternal: {fileID: 1730071095}
 --- !u!4 &60647420 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4514023778430806, guid: 02bb8ca9c11ca284684f61b67fd3b377,
@@ -1134,6 +1129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 0
   dialogueInstantiated: 0
+  dialogueManager: {fileID: 0}
+  finished: 0
 --- !u!114 &870173800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,6 +1154,7 @@ MonoBehaviour:
   kidnapD:
   - The best possible way to save the princess....
   - Just like in Kygrgystan xD
+  isStageActive: 0
 --- !u!1001 &883060008
 Prefab:
   m_ObjectHideFlags: 0
@@ -2308,7 +2306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70938ec302664c4c83dea3febf64086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 60647413}
+  playerTransform: {fileID: 0}
   lerpSpeed: 5
 --- !u!1 &1294146958
 GameObject:
@@ -10946,6 +10944,7 @@ MonoBehaviour:
   - {fileID: 1976987933}
   - {fileID: 551917209}
   - {fileID: 341040866}
+  stackedItems: 00000000000000000000000000000000
   slotScaleFactor: 1.25
 --- !u!114 &1756999261
 MonoBehaviour:

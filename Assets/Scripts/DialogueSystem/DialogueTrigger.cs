@@ -39,15 +39,15 @@ public class DialogueTrigger : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().speed = 0;
             TriggerDialogue();
             
-            if (gameObject.GetComponentInParent<PrincessQuestController>() != null)
-            {
-                PrincessQuestController questOne = gameObject.GetComponentInParent<PrincessQuestController>();
-                questOne.dialogueInstantiated = true;
-            }
-            else
-            {
-                Debug.Log("Not Princess quest");
-            }
+            //if (gameObject.GetComponentInParent<PrincessQuestController>() != null)
+            //{
+            //    PrincessQuestController questOne = gameObject.GetComponentInParent<PrincessQuestController>();
+            //    questOne.dialogueInstantiated = true;
+            //}
+            //else
+            //{
+            //    Debug.Log("Not Princess quest");
+            //}
         }
     }
 

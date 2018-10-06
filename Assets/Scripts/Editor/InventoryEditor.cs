@@ -7,17 +7,20 @@ public class InventoryEditor : Editor {
     private SerializedProperty itemImagesProperty;
     private SerializedProperty itemsProperty;
     private SerializedProperty itemSlotsProperty;
+    private SerializedProperty itemStackNumTextsProperty;
     private bool[] showItemSlots = new bool[Inventory.numItemSlots];
 
     private const string inventoryPropItemImagesName = "itemImages";
     private const string inventoryPropItemsName = "items";
     private const string inventoryPropItemSlotsName = "itemSlots";
+    private const string inventoryPropItemStackNumTexts = "itemStackNumTexts";
 
     private void OnEnable()
     {
         itemImagesProperty = serializedObject.FindProperty(inventoryPropItemImagesName);
         itemsProperty = serializedObject.FindProperty(inventoryPropItemsName);
         itemSlotsProperty = serializedObject.FindProperty(inventoryPropItemSlotsName);
+        itemStackNumTextsProperty = serializedObject.FindProperty(inventoryPropItemStackNumTexts);
     }
 
     public override void OnInspectorGUI()
@@ -44,6 +47,7 @@ public class InventoryEditor : Editor {
             EditorGUILayout.PropertyField(itemImagesProperty.GetArrayElementAtIndex(index));
             EditorGUILayout.PropertyField(itemsProperty.GetArrayElementAtIndex(index));
             EditorGUILayout.PropertyField(itemSlotsProperty.GetArrayElementAtIndex(index));
+            EditorGUILayout.PropertyField(itemStackNumTextsProperty.GetArrayElementAtIndex(index));
         }
 
         EditorGUI.indentLevel--;

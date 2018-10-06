@@ -6,4 +6,5 @@ public class Item : ScriptableObject {
     public GameObject itemObject;
     public string itemName;
     public int assignedID;
+    public bool isStackable;
 }
