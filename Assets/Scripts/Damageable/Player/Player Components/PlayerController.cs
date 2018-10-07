@@ -152,7 +152,8 @@ public class PlayerController : Alive
 
         if (rb.velocity.x == 0f && rb.velocity.y == 0f)
         {
-            playerAnimatorController.IsPlayerMoving = false;
+            _isPlayerMoving = false;
+
         }
         #endregion Player_Movement
 
@@ -162,6 +163,8 @@ public class PlayerController : Alive
             barValueText.text = health.ToString();
         }
 
+
+        playerAnimatorController.IsPlayerMoving = _isPlayerMoving;
 
     }
 

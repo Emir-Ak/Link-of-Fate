@@ -66,9 +66,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455683079688080}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6652217, y: -19.671074, z: 0}
-  m_LocalScale: {x: 1.0594379, y: 1.0594379, z: 1.0594379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.02, y: -19.59, z: 0}
+  m_LocalScale: {x: 1.0936217, y: 1.0936217, z: 1.0936217}
   m_Children:
   - {fileID: 4226988392812344}
   m_Father: {fileID: 0}
@@ -186,9 +186,9 @@ MonoBehaviour:
   regenAmount: 1
   isInvincible: 0
   standardHealth: 100
-  hostileTo: 00000000
+  hostileTo: 01000000
   LivingBeingType: 1
-  target: {fileID: 0}
+  target: {fileID: 4954269538840304}
   identifierMask:
     serializedVersion: 2
     m_Bits: 512

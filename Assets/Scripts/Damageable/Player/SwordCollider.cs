@@ -22,37 +22,25 @@ public class SwordCollider : MonoBehaviour {
 
         if (lastDirection == new Vector2(1,0))
         {
-
-            
-
             collider.offset = colliderOffsetRight;
-
         }
         else if (lastDirection == new Vector2(-1, 0))
         {
-
             collider.offset = colliderOffsetLeft;
-
-
         }
         else if (lastDirection == new Vector2(0, 1))
         {
-
             collider.offset = colliderOffsetUp;;
-
         }
         else if (lastDirection == new Vector2(0, -1))
         {
-
             collider.offset = colliderOffsetDown;
-
         }
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.gameObject.CompareTag("Enemy") && enemy != collision.gameObject)
         {
             enemy = collision.gameObject;

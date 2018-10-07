@@ -89,23 +89,6 @@ public class Enemy : Alive
     {
         if (collision.gameObject?.transform == target && collision.gameObject && wasTouched == false && collision.gameObject != null)
         {
-            //if (collision.gameObject.CompareTag("Player"))
-            //{
-            //    PlayerController player = target.GetComponent<PlayerController>();
-            //    wasTouched = true;
-            //    if (player.playerShieldComponent.IsUsingShield)
-            //    {
-            //        player.playerShieldComponent.ReceiveDamage(damage);
-            //    }
-            //    else
-            //    {
-            //        player.ReceiveDamage(damage);
-            //    }
-
-            //    player.ReceiveKnockBack(transform.position, player.knockbackForce);
-            //    StartCoroutine(Maneuver());
-            //}
-            
             {
                 Alive livingBeing = target.GetComponent<Alive>();
                 wasTouched = true;
@@ -116,9 +99,7 @@ public class Enemy : Alive
                 livingBeing.ReceiveKnockBack(transform.position, livingBeing.knockbackForce);
                 StartCoroutine(Maneuver());
             }
-            
         }
-
         rb.velocity = Vector3.zero;
     }
 
@@ -227,6 +208,7 @@ public class Enemy : Alive
                 enemies.Add(collider.gameObject);
             }
         }
+
         Transform temptarget = transform;
         if (enemies.Count > 0)
         {
