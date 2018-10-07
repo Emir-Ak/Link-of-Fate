@@ -36,6 +36,18 @@ public class Alive : Damageable
 
     Coroutine regenerateHealth;
 
+    public enum LivingBeings
+    {
+        Player,
+        Goblin,
+        Ogre
+    }
+
+    [SerializeField]
+    public List<LivingBeings> hostileTo = new List<LivingBeings>(); // a list of creatures that this creature will be hostile to. (not for the player)
+    [Space(12)]
+    public LivingBeings LivingBeingType = new LivingBeings();// what type of living creature this object is.
+
     public virtual void Initialize()
     {
         if (textInst == null)

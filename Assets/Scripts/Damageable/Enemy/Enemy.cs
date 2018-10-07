@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Enemy : Alive {
-
+public class Enemy : Alive
+{
     [Tooltip("Target to follow |:-/")]
     [SerializeField]
-    Transform target;
+    private Transform target;
+    [SerializeField]
+    private LayerMask identifierMask;
+    #region Range_Values
 
     [Space(10)]
     [Header("Range values")]
-
     [Tooltip("Range in which AI follows player")]
     public float followRange = 5f;
 
@@ -20,19 +23,33 @@ public class Enemy : Alive {
     [Tooltip("Range after which AI will return if in idle state")]
     public float idleRange = 4f;
 
+    #endregion Range_Values
+
+    #region Time_Values
+
     [Space(10)]
     [Header("Time values")]
-
     [Tooltip("Time AI will return to spawn after maxRange is reached")]
     public float returnToSpawnTime = 4f;
 
     [Tooltip("Time AI will maneuver after hit")]
     public float maneuverTime = 0.4f;
+
     [Tooltip("Normal speed during maneuvers is multiplied by this value")]
     public float speedMultiplier = 1.5f;
 
+    #endregion Time_Values
+
+    #region Spawnpoint
+
     private Vector3 spawnPoint;
     private Vector3 spawnOffset;
+
+    #endregion Spawnpoint
+
+    #region Behaviour_Values
+
+    private LayerMask ShieldMask; //used for checking if attack touches the shield or the player.
 
     private float playerDistance;
     private float spawnDistance;
@@ -42,109 +59,104 @@ public class Enemy : Alive {
     private bool isReturning = false;
     private bool isIdle = false;
 
+    #endregion Behaviour_Values
+
     private void Start()
     {
         spawnPoint = transform.position;
     }
+
     private void Update()
     {
         FollowTarget();
-        if(health <= 0)
+
+        #region Object_Destruction
+
+        if (health <= 0)
         {
             Destroy(gameObject, knockbackTime);
         }
-        if(isKnocked == false && rb.velocity != Vector2.zero)
+
+        #endregion Object_Destruction
+
+        if (isKnocked == false && rb.velocity != Vector2.zero)
         {
             rb.velocity = Vector2.zero;
         }
-        
     }
 
-    
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && collision.gameObject && wasTouched == false && collision.gameObject != null)
+        if (collision.gameObject?.transform == target && collision.gameObject && wasTouched == false && collision.gameObject != null)
         {
-            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            wasTouched = true;
-            if (player.playerShieldComponent.IsUsingShield)
             {
+                Alive livingBeing = target.GetComponent<Alive>();
+                wasTouched = true;
 
-                player.playerShieldComponent.ReceiveDamage(damage);
-            }
-            else
-            {
-                player.ReceiveDamage(damage);         
-            }
+                if (collision.gameObject.CompareTag("Player")) target.GetComponent<PlayerController>().ReceiveDamage(damage, transform.position);
+                else livingBeing.ReceiveDamage(damage);
 
-            player.ReceiveKnockBack(transform.position, player.knockbackForce);
-            StartCoroutine(Maneuver());
+                livingBeing.ReceiveKnockBack(transform.position, livingBeing.knockbackForce);
+                StartCoroutine(Maneuver());
+            }
         }
-
         rb.velocity = Vector3.zero;
     }
 
     protected virtual void FollowTarget()
     {
-        if (target != null)
+        if (CheckForEnemies())
         {
-            playerDistance = Vector3.Distance(transform.position, target.position);
             spawnDistance = Vector3.Distance(transform.position, spawnPoint);
 
-            if (spawnDistance >= maxRange)
+            if (maxRange <= spawnDistance)
             {
-
                 Move(spawnPoint);
                 isReturning = true;
-
             }
             else if (isReturning == true)
             {
                 isReturning = false;
                 StartCoroutine(BackToSpawn());
             }
-            
             else if (wasTouched == true)
             {
-
                 Vector3 direction = transform.position - target.position;
                 direction.Normalize();
                 Move(direction);
             }
-            else if (playerDistance < followRange && wasTouched == false && returnToSpawn == false)
+            else if (CheckForEnemies() && wasTouched == false && returnToSpawn == false)
             {
                 Move(target.position);
             }
             else if (spawnDistance <= 0.5f && isIdle == false)
             {
-               
                 StartCoroutine(IdleMove());
             }
-            else if(spawnDistance > 0.5f && isIdle == false)
-            {;
+            else if (spawnDistance > 0.5f && isIdle == false)
+            {
+                ;
                 Move(spawnPoint);
             }
         }
     }
 
-    void Move(Vector3 aimPos)
+    private void Move(Vector3 aimPos)
     {
-        var step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, aimPos, step);
+        transform.position = Vector3.MoveTowards(transform.position, aimPos, speed * Time.deltaTime);
     }
 
-    IEnumerator IdleMove()
+    private IEnumerator IdleMove()
     {
         isIdle = true;
 
-
-        while (playerDistance > followRange)
+        while (!CheckForEnemies())
         {
             if (spawnDistance > idleRange)
             {
                 while (spawnDistance > 0.5f)
                 {
-                    if (playerDistance <= followRange)
+                    if (CheckForEnemies())
                     {
                         break;
                     }
@@ -155,14 +167,13 @@ public class Enemy : Alive {
             }
 
             Vector2 randDir = Random.onUnitSphere;
-            
+
             randDir *= Random.Range(2f, idleRange - 1f);
             randDir += (Vector2)transform.position;
 
-           
-            while(randDir != (Vector2)transform.position)
+            while (randDir != (Vector2)transform.position)
             {
-                if(playerDistance <= followRange)
+                if (CheckForEnemies())
                 {
                     break;
                 }
@@ -170,7 +181,7 @@ public class Enemy : Alive {
                 yield return new WaitForEndOfFrame();
             }
 
-            if (playerDistance <= followRange)
+            if (CheckForEnemies())
             {
                 break;
             }
@@ -179,21 +190,56 @@ public class Enemy : Alive {
         isIdle = false;
     }
 
-    IEnumerator BackToSpawn()
+    /// <summary>
+    /// This checks for any of the living creatures that this creature is hostile to
+    /// </summary>
+    /// <returns>
+    /// returns a bool if in range
+    /// </returns>
+    private bool CheckForEnemies()
     {
+        var colliders = Physics2D.OverlapCircleAll(transform.position, followRange,identifierMask);
+        List<GameObject> enemies = new List<GameObject>();
 
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.gameObject?.transform != transform && hostileTo.Contains(collider.gameObject.GetComponentInParent<Alive>().LivingBeingType))
+            {
+                enemies.Add(collider.gameObject);
+            }
+        }
+
+        Transform temptarget = transform;
+        if (enemies.Count > 0)
+        {
+            List<float> distanceArrays = new List<float>();
+            foreach (GameObject enemy in enemies)
+            {
+                distanceArrays.Add(Vector3.Distance(transform.position, enemy.transform.position));
+            }
+
+
+            target = enemies?[distanceArrays.IndexOf(distanceArrays.Min())].GetComponentInParent<Alive>().transform;
+            return true;
+        }
+        else return false;
+            
+
+
+    }
+
+    private IEnumerator BackToSpawn()
+    {
         returnToSpawn = true;
         yield return new WaitForSeconds(returnToSpawnTime);
         returnToSpawn = false;
     }
 
-
-    IEnumerator Maneuver()
+    private IEnumerator Maneuver()
     {
         speed *= speedMultiplier;
         yield return new WaitForSeconds(maneuverTime);
         wasTouched = false;
         speed /= speedMultiplier;
     }
-    
 }

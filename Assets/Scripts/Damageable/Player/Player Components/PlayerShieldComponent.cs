@@ -22,7 +22,7 @@ public class PlayerShieldComponent : Damageable
     [SerializeField]
     private PlayerController playerController; //Player Controller .-. (I want a cute waifu girlfriend D: (like inori or 02 ;/)) ...WELP WE ALL WANT SOMETHING UNREACHABLE SOMETIMES... Dreaming isn`t bad though :\
     #endregion
-
+    
     private float maxShieldHealth; //Used to clamp the current shield health
 
     public float currentShieldHealth; //Current health of the shield
@@ -33,6 +33,9 @@ public class PlayerShieldComponent : Damageable
 
     private bool hasShieldRegenerated = true; //Has shield finished  regenerating?
     private bool isShieldRegenerating = false; //Is shield regenerating right now?
+
+    [SerializeField]
+    LayerMask shieldMask;
 
     [SerializeField]
     private bool _isUsingShield = false; //Is player currently using shield?
@@ -55,9 +58,6 @@ public class PlayerShieldComponent : Damageable
     void Start()
     {
         #region GetComponent
-        playerController = GetComponent<PlayerController>();
-        playerAnimatorController = GetComponent<PlayerAnimatorController>();
-        playerAttackComponent = GetComponent<PlayerAttackComponent>();
 
         #endregion
         maxShieldHealth = health;
@@ -113,7 +113,7 @@ public class PlayerShieldComponent : Damageable
         if (currentShieldHealth <= 0)
         {
           
-  IsShieldBroken = true;
+            IsShieldBroken = true;
             playerController.Initialize();
 
         }
@@ -166,6 +166,19 @@ public class PlayerShieldComponent : Damageable
         barValueText.text = currentShieldHealth.ToString();
     }
 
+    /// <summary>
+    /// Checks if the attack hits the shield o the player
+    /// </summary>
+    /// <param name="positionOfAttack">Where the attack is coming from</param>
+    /// <returns></returns>
+    internal bool CheckIfDefended(Vector3 positionOfAttack)
+    {
+        Vector3 direction = (transform.position - positionOfAttack).normalized;
+        float distance = (transform.position - positionOfAttack).magnitude;
+
+        return Physics2D.Raycast(positionOfAttack, direction, distance,shieldMask) ? true : false;
+       
+    }
 
     public override void ReceiveDamage(float damageTaken)
     {
@@ -189,7 +202,7 @@ public class PlayerShieldComponent : Damageable
                    float playerDamage = damageTaken - currentShieldHealth;
                    playerController.ReceiveDamage(playerDamage);
 
-                    string instantiatedText = "-" + (playerDamage).ToString();
+                   string instantiatedText = "-" + (playerDamage).ToString();
                    playerController.textInst.InstantiateText(instantiatedText, transform.position, new Color32(125, 20, 130, 255));
                 }
 
