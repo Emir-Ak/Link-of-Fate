@@ -52,16 +52,19 @@ public class PlayerAnimatorController : MonoBehaviour {
         animator.SetBool("IsShieldBroken", _isShieldBroken);
         animator.SetFloat("LastMoveX", _lastMove.x);
         animator.SetFloat("LastMoveY", _lastMove.y);
-        #endregion Animator_params
+        #endregion Animator_params 
     }
 
     public void StartAttackAnimation()
     {
         animator.SetBool("isAttacking", true);
+
+
     }
 
     public void EndAttackAnimation()
     {
         animator.SetBool("isAttacking", false);
+
     }
 }

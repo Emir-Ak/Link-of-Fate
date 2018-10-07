@@ -50,15 +50,13 @@ public class PlayerAttackComponent : MonoBehaviour {
 
 
 
-      if (isPlayerAttacking && animatorController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !animatorController.animator.IsInTransition(0) && animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack"))
+        if (isPlayerAttacking && animatorController.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && !animatorController.animator.IsInTransition(0) && animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack"))
         {
             EndAttack();
             isPlayerAttacking = false;
         }
-        else if (!animatorController.animator.GetCurrentAnimatorStateInfo(0).IsName("PlayerAttack") && !playerController.IsPlayerMoving)
-        {
-            EndAttack();
-        }
+
+    
 
 
 
@@ -74,11 +72,13 @@ public class PlayerAttackComponent : MonoBehaviour {
 
         playerController.speed = 0;
 
+
         animatorController.StartAttackAnimation();
 
 
         attackCollder = Instantiate(SwordAttackPrefab, transform);
         attackCollder.GetComponent<SwordCollider>().ChangeOffset(animatorController.LastMove);
+
     }
 
     private void EndAttack()

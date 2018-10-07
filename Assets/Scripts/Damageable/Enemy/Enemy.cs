@@ -203,7 +203,7 @@ public class Enemy : Alive
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.gameObject?.transform != transform && hostileTo.Contains(collider.gameObject.GetComponentInParent<Alive>().LivingBeingType))
+            if (collider.gameObject?.transform != transform  && hostileTo.Contains(collider.gameObject.GetComponentInParent<Alive>().LivingBeingType))
             {
                 enemies.Add(collider.gameObject);
             }

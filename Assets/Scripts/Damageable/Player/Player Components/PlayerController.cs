@@ -1,5 +1,6 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class PlayerController : Alive
 {
@@ -33,8 +34,27 @@ public class PlayerController : Alive
 
 
     #endregion Movement_Variables
+
+    int rightKey, leftKey, upKey, downKey;
+
     private float hInput; //Horizontal input
     private float vInput; //Vertical Input
+
+    public enum PlayerControlKeys
+    {
+        AttackKey = KeyCode.Mouse0,
+        ShieldKey = KeyCode.Mouse1,
+        LeftKey = KeyCode.A,
+        RightKey = KeyCode.D,
+        UpKey = KeyCode.W,
+        DownKey = KeyCode.S,
+        IneractionKey = KeyCode.X,
+        DialogueKey = KeyCode.Space,
+        ItemUseKey = KeyCode.F,
+        
+        MenuKey = KeyCode.Escape
+
+    }
 
     #region Properties
     public bool IsPlayerMoving { get { return this._isPlayerMoving; } set { this._isPlayerMoving = value; } }
@@ -75,11 +95,12 @@ public class PlayerController : Alive
         #region Player_Attack
 
 
-        if (Input.GetMouseButtonDown(0) && playerShieldComponent.IsUsingShield == false)
+
+        if (Input.GetKeyDown((KeyCode)PlayerControlKeys.AttackKey) && playerShieldComponent.IsUsingShield == false)
         {
             playerAttackComponent.IsAttackButtonPressed = true;
         }
-        else if (Input.GetMouseButtonUp(0) || playerShieldComponent.IsUsingShield == true)
+        else if (Input.GetKeyUp((KeyCode)PlayerControlKeys.AttackKey) || playerShieldComponent.IsUsingShield == true)
         {
             playerAttackComponent.IsAttackButtonPressed = false;
         }
@@ -89,13 +110,13 @@ public class PlayerController : Alive
         #region Player_Shield
 
 
-        if (Input.GetMouseButtonDown(1) && playerShieldComponent.IsShieldButtonPressed == false)
+        if (Input.GetKeyDown((KeyCode)PlayerControlKeys.ShieldKey) && playerShieldComponent.IsShieldButtonPressed == false)
         {
             
             playerShieldComponent.IsShieldButtonPressed = true;
            
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetKeyUp((KeyCode)PlayerControlKeys.ShieldKey))
         {
             
             playerShieldComponent.IsShieldButtonPressed = false;
@@ -114,8 +135,15 @@ public class PlayerController : Alive
 
         #region Player_Movement
 
-        hInput = Input.GetAxisRaw("Horizontal");
-        vInput = Input.GetAxisRaw("Vertical");
+        #region Taking_Input
+        rightKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.RightKey));
+        leftKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.LeftKey));
+        upKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.UpKey));
+        downKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.DownKey));
+
+        hInput = rightKey - leftKey;
+        vInput = upKey - downKey;
+        #endregion
 
         if (hInput > .5f || hInput < -.5f)
         {

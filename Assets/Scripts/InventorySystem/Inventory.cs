@@ -73,7 +73,10 @@ public class Inventory : MonoBehaviour {
             if(items[i] != null && itemToAdd.assignedID == items[i].assignedID && items[i].isStackable)
             {
                 itemStackNums[i]++;
-                itemStackNumTexts[i].text = itemStackNums[i].ToString();
+                itemStackNumTexts[i]
+                    .text = 
+                    itemStackNums[i]
+                    .ToString();
                 return;
             }
             else if (items[i]  == null)
@@ -159,13 +162,13 @@ public class Inventory : MonoBehaviour {
         int i = selectionIndex;
         whiteBorder.SetActive(true);
         whiteBorder.transform.position = itemSlots[i].transform.position;
-
     }
+
     private void ResetScaledSlot()
     {
-
         whiteBorder.SetActive(false);    
     }
+
     private void Interact()
     {
         if (Input.GetKeyDown(KeyCode.F))
