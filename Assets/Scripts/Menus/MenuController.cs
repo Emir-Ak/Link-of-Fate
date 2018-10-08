@@ -11,18 +11,38 @@ public class MenuController : MonoBehaviour {
 
     [SerializeField] private AudioListener audioListener;
 
-    [SerializeField] private PlayerController playerController;
+    bool isMenuOpened = false;
 
-    private void Start()
+    private void Update()
     {
-        playerController = FindObjectOfType<PlayerController>();    
+
+        if (Input.GetKeyDown((KeyCode)PlayerControlKeys.MenuKey))
+        {
+            isMenuOpened = !isMenuOpened;
+            if (isMenuOpened)
+            {
+                MenuClose();
+            }
+            else
+            {
+                MenuOpen();
+            }
+        }
     }
 
-    void EscapeButton()
+    void MenuOpen()
     {
-        menuObject.SetActive(!menuObject.activeSelf);   
-        Time.timeScale = Convert.ToInt32(menuObject.activeSelf);
-        audioListener.enabled = menuObject.activeSelf;
+        menuObject.SetActive(true);
+        Time.timeScale = 0;
+        audioListener.enabled = false;
+        //To add Input change (to disabled)
+    }
+
+    void MenuClose()
+    {
+        menuObject.SetActive(false);
+        Time.timeScale = 1;
+        audioListener.enabled = true;
         //To add Input change (to disabled)
     }
 }

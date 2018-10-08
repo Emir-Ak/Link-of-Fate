@@ -2,6 +2,21 @@
 using UnityEngine;
 using System;
 
+public static class PlayerControlKeys
+{
+    public static int AttackKey = (int)KeyCode.Mouse0;
+    public static int ShieldKey = (int)KeyCode.Mouse1;
+    public static int LeftKey = (int)KeyCode.A;
+    public static int RightKey = (int)KeyCode.D;
+    public static int UpKey = (int)KeyCode.W;
+    public static int DownKey = (int)KeyCode.S;
+    public static int IneractionKey = (int)KeyCode.X;
+    public static int DialogueKey = (int)KeyCode.Space;
+    public static int ItemUseKey = (int)KeyCode.F;
+
+    public static int MenuKey = (int)KeyCode.Escape;
+}
+
 public class PlayerController : Alive
 {
     #region variables
@@ -40,21 +55,7 @@ public class PlayerController : Alive
     private float hInput; //Horizontal input
     private float vInput; //Vertical Input
 
-    public enum PlayerControlKeys
-    {
-        AttackKey = KeyCode.Mouse0,
-        ShieldKey = KeyCode.Mouse1,
-        LeftKey = KeyCode.A,
-        RightKey = KeyCode.D,
-        UpKey = KeyCode.W,
-        DownKey = KeyCode.S,
-        IneractionKey = KeyCode.X,
-        DialogueKey = KeyCode.Space,
-        ItemUseKey = KeyCode.F,
-        
-        MenuKey = KeyCode.Escape
-
-    }
+    
 
     #region Properties
     public bool IsPlayerMoving { get { return this._isPlayerMoving; } set { this._isPlayerMoving = value; } }
@@ -70,6 +71,7 @@ public class PlayerController : Alive
         playerAttackComponent = GetComponent<PlayerAttackComponent>();
         rb = GetComponent<Rigidbody2D>();
         #endregion
+
 
         standardHealth = health;
         standardMoveSpeed = speed;
