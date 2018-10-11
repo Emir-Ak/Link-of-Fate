@@ -89,8 +89,8 @@ GameObject:
   - component: {fileID: 114728376858697630}
   - component: {fileID: 114523972729856290}
   - component: {fileID: 114327237463783436}
-  - component: {fileID: 114917375496413858}
   - component: {fileID: 114066387952715236}
+  - component: {fileID: 81401285076663048}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4995934498029584}
   - component: {fileID: 61655923363245540}
+  - component: {fileID: 114125543183202764}
   m_Layer: 8
   m_Name: Shield
   m_TagString: Untagged
@@ -134,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920461803130750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.3, y: -19.5, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4636955545342896}
@@ -265,7 +266,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.60642564}
+  m_Size: {x: 0.4, y: 0.5}
   m_EdgeRadius: 0
 --- !u!61 &61987559130966770
 BoxCollider2D:
@@ -317,6 +318,13 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.8}
   m_EdgeRadius: 0
+--- !u!81 &81401285076663048
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920461803130750}
+  m_Enabled: 1
 --- !u!95 &95423823805361104
 Animator:
   serializedVersion: 3
@@ -346,6 +354,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b6ca2a1a2d45b45b3f4e0b083da93d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114125543183202764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981849860414668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9586bb950f009e34989024eab82d81f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1000
+  barValueAnimator: {fileID: 0}
+  barShieldHealth:
+    bar: {fileID: 0}
+    maxVal: 1000
+    currentVal: 1000
+  barValueText: {fileID: 0}
+  playerAttackComponent: {fileID: 114327237463783436}
+  playerAnimatorController: {fileID: 114523972729856290}
+  playerController: {fileID: 114728376858697630}
+  currentShieldHealth: 0
+  shieldRechargeDelay: 2.5
+  regenAmount: 20
+  shieldMask:
+    serializedVersion: 2
+    m_Bits: 256
+  _isUsingShield: 0
+  _isShieldButtonPressed: 0
 --- !u!114 &114327237463783436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -387,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd90b070e2d8bf4cb42ab2ebb5ee65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerShieldComponent: {fileID: 114917375496413858}
+  playerShieldComponent: {fileID: 114125543183202764}
   playerAttackComponent: {fileID: 114327237463783436}
   animator: {fileID: 95423823805361104}
 --- !u!114 &114728376858697630
@@ -421,36 +458,10 @@ MonoBehaviour:
     maxVal: 500
     currentVal: 500
   barValueText: {fileID: 0}
-  playerShieldComponent: {fileID: 114917375496413858}
+  playerShieldComponent: {fileID: 114125543183202764}
   playerAttackComponent: {fileID: 114327237463783436}
   playerAnimatorController: {fileID: 114523972729856290}
   standardMoveSpeed: 0
---- !u!114 &114917375496413858
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1920461803130750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9586bb950f009e34989024eab82d81f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 1000
-  barValueAnimator: {fileID: 0}
-  barShieldHealth:
-    bar: {fileID: 0}
-    maxVal: 1000
-    currentVal: 1000
-  barValueText: {fileID: 0}
-  playerAttackComponent: {fileID: 114327237463783436}
-  playerAnimatorController: {fileID: 114523972729856290}
-  playerController: {fileID: 114728376858697630}
-  currentShieldHealth: 0
-  shieldRechargeDelay: 2.5
-  regenAmount: 20
-  _isUsingShield: 0
-  _isShieldButtonPressed: 0
 --- !u!212 &212005908117570422
 SpriteRenderer:
   m_ObjectHideFlags: 1

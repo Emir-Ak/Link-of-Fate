@@ -4,6 +4,7 @@ using System;
 
 public static class PlayerControlKeys
 {
+
     public static int AttackKey = (int)KeyCode.Mouse0;
     public static int ShieldKey = (int)KeyCode.Mouse1;
     public static int LeftKey = (int)KeyCode.A;
@@ -20,6 +21,7 @@ public static class PlayerControlKeys
 public class PlayerController : Alive
 {
     #region variables
+    public static GameObject player;
 
     [Header("Player Variables")]
     [Space(8)]
@@ -63,6 +65,20 @@ public class PlayerController : Alive
 
 
     #endregion variables
+
+    private void Awake()
+    {
+        if (player == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            player = gameObject;
+        }
+        else if (player != gameObject)
+        {
+            Debug.Log("destroyed" + gameObject);
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {

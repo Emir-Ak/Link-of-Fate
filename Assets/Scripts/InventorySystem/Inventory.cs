@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
+    public static GameObject gameCanvas;
+     
     public const int numItemSlots = 4;
 
     GameObject whiteBorder;
 
+    #region Arrays_For_items
     public Image[] itemImages = new Image [numItemSlots];
     public Item[] items = new Item[numItemSlots];
     public GameObject[] itemSlots = new GameObject[numItemSlots];
     public Text[] itemStackNumTexts = new Text[numItemSlots];
-    public int[] itemStackNums = new int[numItemSlots]; 
+    public int[] itemStackNums = new int[numItemSlots];
+    #endregion
 
     public float slotScaleFactor = 1.1f;
     //private static bool created = false;
@@ -21,14 +25,19 @@ public class Inventory : MonoBehaviour {
     private InteractionController interactionController;
 
     public static bool isFull = false;
-    //void Awake()
-    //{
-    //    if (!created)
-    //    {
-    //        DontDestroyOnLoad(gameObject);
-    //        created = true;
-    //    }
-    //}
+
+    void Awake()
+    {
+        if (gameCanvas == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            gameCanvas = this.gameObject;
+        }
+        else if(gameCanvas != this.gameObject)
+        {
+            Destroy(gameObject);
+        }
+    }
     
     private void Start()
     {
