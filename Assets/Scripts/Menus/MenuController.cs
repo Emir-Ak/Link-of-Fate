@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour {
@@ -70,6 +71,15 @@ public class MenuController : MonoBehaviour {
 
     public void OpenMainMenu()
     {
-        //to add
+        /* This is only temporary code
+         * This is what should be here:
+         * 1. The data is saved to an appopriate slot (1,2,3)
+         * 2. Persistent objects are destroyed 
+         * 3. Scene is changed (With appropriate animation etc)
+        */
+        Time.timeScale = 1;
+        audioListener.enabled = true;
+        foreach (GameObject obj in Resources.FindObjectsOfTypeAll<GameObject>()) Destroy(obj);
+        SceneManager.LoadScene(0);
     }
 }
