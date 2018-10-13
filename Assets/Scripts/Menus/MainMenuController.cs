@@ -22,7 +22,7 @@ public class MainMenuController : MonoBehaviour {
 
     private void Start()
     {
-        
+        //This is to check if there are any saves in any slots (in which case the continue button appears)
         foreach(Image image in slotImages)
         {
             if (image.sprite != null)
@@ -30,8 +30,6 @@ public class MainMenuController : MonoBehaviour {
                 continueButton.SetActive(true);
             }
         }
-
-        
     }
 
     #region AchievementPanel
@@ -40,7 +38,7 @@ public class MainMenuController : MonoBehaviour {
         /* This is only temporary code
          * This is what should be here:
          * 1. the data is loaded from the achievement saving file
-         * 2. achievements are initialized and created in the content
+         * 2. achievements are initialized and created in the content 
         */
         mainMenuPanel.SetActive(false);
         achievementPanel.SetActive(true);
