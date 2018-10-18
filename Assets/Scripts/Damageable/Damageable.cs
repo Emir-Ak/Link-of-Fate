@@ -10,9 +10,5 @@ public class Damageable : MonoBehaviour {
     public virtual void ReceiveDamage(float damageTaken)
     {
         health -= damageTaken;
-
-        
     }
-
-
 }

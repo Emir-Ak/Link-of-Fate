@@ -10,6 +10,12 @@ public class Enemy : Alive
     private Transform target;
     [SerializeField]
     private LayerMask identifierMask;
+
+    
+    new TrackableFloat health = new TrackableFloat();
+
+    bool dying = false;
+
     #region Range_Values
 
     [Space(10)]
@@ -72,9 +78,10 @@ public class Enemy : Alive
 
         #region Object_Destruction
 
-        if (health <= 0)
+        if (!dying &&health <= 0)
         {
-            Destroy(gameObject, knockbackTime);
+            dying = true;
+            Death(knockbackTime);
         }
 
         #endregion Object_Destruction
@@ -208,7 +215,7 @@ public class Enemy : Alive
                 enemies.Add(collider.gameObject);
             }
         }
-
+        
         Transform temptarget = transform;
         if (enemies.Count > 0)
         {
@@ -241,5 +248,11 @@ public class Enemy : Alive
         yield return new WaitForSeconds(maneuverTime);
         wasTouched = false;
         speed /= speedMultiplier;
+    }
+
+    private void Death(float time)
+    {
+
+        Destroy(gameObject, time);
     }
 }
