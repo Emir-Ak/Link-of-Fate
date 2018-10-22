@@ -12,7 +12,7 @@ public class Enemy : Alive
     private LayerMask identifierMask;
 
     
-    new TrackableFloat health = new TrackableFloat();
+    //new TrackableFloat health = new TrackableFloat();
 
     bool dying = false;
 
@@ -78,7 +78,7 @@ public class Enemy : Alive
 
         #region Object_Destruction
 
-        if (!dying &&health <= 0)
+        if (!dying && health <= 0)
         {
             dying = true;
             Death(knockbackTime);
@@ -152,7 +152,7 @@ public class Enemy : Alive
     {
         transform.position = Vector3.MoveTowards(transform.position, aimPos, speed * Time.deltaTime);
     }
-
+        
     private IEnumerator IdleMove()
     {
         isIdle = true;
@@ -225,14 +225,10 @@ public class Enemy : Alive
                 distanceArrays.Add(Vector3.Distance(transform.position, enemy.transform.position));
             }
 
-
             target = enemies?[distanceArrays.IndexOf(distanceArrays.Min())].GetComponentInParent<Alive>().transform;
             return true;
         }
         else return false;
-            
-
-
     }
 
     private IEnumerator BackToSpawn()
@@ -250,7 +246,7 @@ public class Enemy : Alive
         speed /= speedMultiplier;
     }
 
-    private void Death(float time)
+    public void Death(float time,float s,int ss)
     {
 
         Destroy(gameObject, time);
