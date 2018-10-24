@@ -36,6 +36,8 @@ public class Alive : Damageable
 
     Coroutine regenerateHealth;
 
+    public  Color startColor;
+
     public enum LivingBeings
     {
         Player,
@@ -98,10 +100,12 @@ public class Alive : Damageable
 
     IEnumerator ApplyRedColor()
     {
+
         sprite.color = new Color32(255, 143, 143, 255);
         yield return new WaitForSeconds(0.25f);
-        sprite.color = new Color32(255, 255, 255, 255);
+        sprite.color = startColor;
     }
+
     #endregion
 
     #region Knockback
@@ -156,9 +160,14 @@ public class Alive : Damageable
         while (health < standardHealth)
         {
 
-            health += regenAmount;            
+            health += regenAmount;  
             yield return new WaitForSeconds(regenTimeStep);
 
+        }
+
+        if(health > standardHealth)
+        {
+            health = standardHealth;
         }
         isRegenerating = false;
         #endregion

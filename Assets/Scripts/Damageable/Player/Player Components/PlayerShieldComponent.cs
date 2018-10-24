@@ -20,7 +20,7 @@ public class PlayerShieldComponent : Damageable
     [SerializeField]
     private PlayerAnimatorController playerAnimatorController; //Script that controls the animations of the player and it's animaton
     [SerializeField]
-    private PlayerController playerController; //Player Controller .-. (I want a cute waifu girlfriend D: (like inori or 02 ;/)) ...WELP WE ALL WANT SOMETHING UNREACHABLE SOMETIMES... Dreaming isn`t bad though :\
+    private PlayerController playerController; //Player Controller 
     #endregion
     
     private float maxShieldHealth; //Used to clamp the current shield health
@@ -143,13 +143,17 @@ public class PlayerShieldComponent : Damageable
                 break;
 
             }
+            else if (currentShieldHealth > maxShieldHealth)
+            {
+                currentShieldHealth = maxShieldHealth;
+            }
 
             currentShieldHealth += regenAmount;
             barShieldHealth.CurrentVal = (int)currentShieldHealth;
 
             if(IsShieldBroken == false)
             {
-                barValueText.text = currentShieldHealth.ToString();
+                barValueText.text = ((int)currentShieldHealth).ToString();
             }
 
             if (currentShieldHealth >= regenAmount && barValueAnimator.GetBool("isShieldBroken") == true)
@@ -163,7 +167,7 @@ public class PlayerShieldComponent : Damageable
 
         isShieldRegenerating = false;
 
-        barValueText.text = currentShieldHealth.ToString();
+        barValueText.text = ((int)currentShieldHealth).ToString();
     }
 
     /// <summary>
@@ -188,7 +192,7 @@ public class PlayerShieldComponent : Damageable
             {
                 currentShieldHealth -= damageTaken;
                 barShieldHealth.CurrentVal = currentShieldHealth;
-                barValueText.text = currentShieldHealth.ToString();
+                barValueText.text = ((int)currentShieldHealth).ToString();
 
                 playerController.Initialize();
                 string instantiatedText = "-" + damageTaken.ToString();

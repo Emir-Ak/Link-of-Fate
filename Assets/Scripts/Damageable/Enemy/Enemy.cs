@@ -42,8 +42,7 @@ public class Enemy : Alive
 
     #region Spawnpoint
 
-    private Vector3 spawnPoint;
-    private Vector3 spawnOffset;
+    Vector3 spawnPoint;
 
     #endregion Spawnpoint
 
@@ -54,7 +53,7 @@ public class Enemy : Alive
     private float playerDistance;
     private float spawnDistance;
 
-    private bool wasTouched = false;
+    private bool isManeuvring = false;
     private bool returnToSpawn = false;
     private bool isReturning = false;
     private bool isIdle = false;
@@ -63,7 +62,9 @@ public class Enemy : Alive
 
     private void Start()
     {
+
         spawnPoint = transform.position;
+
     }
 
     private void Update()
@@ -87,17 +88,17 @@ public class Enemy : Alive
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject?.transform == target && collision.gameObject && wasTouched == false && collision.gameObject != null)
+        if (collision.gameObject?.transform == target && collision.gameObject && isManeuvring == false && collision.gameObject != null)
         {
             {
                 Alive livingBeing = target.GetComponent<Alive>();
-                wasTouched = true;
 
                 if (collision.gameObject.CompareTag("Player")) target.GetComponent<PlayerController>().ReceiveDamage(damage, transform.position);
                 else livingBeing.ReceiveDamage(damage);
 
                 livingBeing.ReceiveKnockBack(transform.position, livingBeing.knockbackForce);
                 StartCoroutine(Maneuver());
+               
             }
         }
         rb.velocity = Vector3.zero;
@@ -105,9 +106,10 @@ public class Enemy : Alive
 
     protected virtual void FollowTarget()
     {
-        if (CheckForEnemies())
+        if (!isManeuvring)
         {
             spawnDistance = Vector3.Distance(transform.position, spawnPoint);
+
 
             if (maxRange <= spawnDistance)
             {
@@ -119,24 +121,19 @@ public class Enemy : Alive
                 isReturning = false;
                 StartCoroutine(BackToSpawn());
             }
-            else if (wasTouched == true)
-            {
-                Vector3 direction = transform.position - target.position;
-                direction.Normalize();
-                Move(direction);
-            }
-            else if (CheckForEnemies() && wasTouched == false && returnToSpawn == false)
+            else if (CheckForEnemies() && returnToSpawn == false)
             {
                 Move(target.position);
+            }
+
+
+            else if (spawnDistance > 0.5f && isIdle == false)
+            {
+                Move(spawnPoint);
             }
             else if (spawnDistance <= 0.5f && isIdle == false)
             {
                 StartCoroutine(IdleMove());
-            }
-            else if (spawnDistance > 0.5f && isIdle == false)
-            {
-                ;
-                Move(spawnPoint);
             }
         }
     }
@@ -152,12 +149,14 @@ public class Enemy : Alive
 
         while (!CheckForEnemies())
         {
+           
             if (spawnDistance > idleRange)
             {
                 while (spawnDistance > 0.5f)
                 {
-                    if (CheckForEnemies())
+                    if (CheckForEnemies() || isManeuvring)
                     {
+                        isIdle = false;
                         break;
                     }
                     Move(spawnPoint);
@@ -173,7 +172,7 @@ public class Enemy : Alive
 
             while (randDir != (Vector2)transform.position)
             {
-                if (CheckForEnemies())
+                if (CheckForEnemies() || isManeuvring)
                 {
                     break;
                 }
@@ -237,9 +236,21 @@ public class Enemy : Alive
 
     private IEnumerator Maneuver()
     {
+        isManeuvring = true;
         speed *= speedMultiplier;
-        yield return new WaitForSeconds(maneuverTime);
-        wasTouched = false;
+
+        float time = 0f;
+
+        Vector3 manueverDir = transform.position - target.position;
+        manueverDir.Normalize();
+        while (time <= maneuverTime)
+        {
+            transform.position += manueverDir * speed * Time.deltaTime;
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+    
         speed /= speedMultiplier;
+        isManeuvring = false;
     }
 }

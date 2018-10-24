@@ -2,11 +2,10 @@
 using System.Collections;
 public class Explosion : MonoBehaviour
 {
-    private GameObject Object = null;
     public float damage = 50f;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 8 &&  Object != collision.gameObject)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Damageable"))
         {
 
             if (collision.CompareTag("Player"))

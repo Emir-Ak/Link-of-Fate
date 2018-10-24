@@ -96,18 +96,21 @@ public class PlayerController : Alive
         barHealth.CurrentVal = health;
         barValueText.text = health.ToString();
     }
-    
+
     // Update is called once per frame
     private void Update()
     {
         if (playerShieldComponent.IsUsingShield == true)
-            speed = standardMoveSpeed/2;
+            speed = standardMoveSpeed / 2;
         else
             speed = standardMoveSpeed;
 
         if (health <= 0)
         {
-            Destroy(gameObject, 0.4f);
+           
+            health = 0;
+            barValueText.text = "DEAD";
+            gameObject.SetActive (false);
         }
 
         #region Player_Attack
@@ -122,6 +125,10 @@ public class PlayerController : Alive
         {
             playerAttackComponent.IsAttackButtonPressed = false;
         }
+        else if (playerShieldComponent.IsShieldButtonPressed == false && (Input.GetKey((KeyCode)PlayerControlKeys.AttackKey)))
+        {
+            playerAttackComponent.IsAttackButtonPressed = true;
+        }
 
         #endregion Player_Attack
 
@@ -130,21 +137,22 @@ public class PlayerController : Alive
 
         if (Input.GetKeyDown((KeyCode)PlayerControlKeys.ShieldKey) && playerShieldComponent.IsShieldButtonPressed == false)
         {
-            
+
             playerShieldComponent.IsShieldButtonPressed = true;
-           
+
         }
-        if (Input.GetKeyUp((KeyCode)PlayerControlKeys.ShieldKey))
+        else if (Input.GetKeyUp((KeyCode)PlayerControlKeys.ShieldKey))
         {
-            
+
             playerShieldComponent.IsShieldButtonPressed = false;
         }
 
-        if(health < standardHealth/2 - (standardHealth/10) && barValueText.color != Color.red)
+
+        if (health < standardHealth / 2 - (standardHealth / 10) && barValueText.color != Color.red)
         {
             barValueText.color = Color.red;
         }
-        else if(health >= standardHealth/2 - (standardHealth/10) && barValueText.color != Color.white)
+        else if (health >= standardHealth / 2 - (standardHealth / 10) && barValueText.color != Color.white)
         {
             barValueText.color = Color.white;
         }
@@ -154,62 +162,64 @@ public class PlayerController : Alive
         #region Player_Movement
 
         #region Taking_Input
-        rightKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.RightKey));
-        leftKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.LeftKey));
-        upKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.UpKey));
-        downKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.DownKey));
+            rightKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.RightKey));
+            leftKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.LeftKey));
+            upKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.UpKey));
+            downKey = Convert.ToInt32(Input.GetKey((KeyCode)PlayerControlKeys.DownKey));
 
-        hInput = rightKey - leftKey;
-        vInput = upKey - downKey;
-        #endregion
+            hInput = rightKey - leftKey;
+            vInput = upKey - downKey;
+            #endregion
 
-        if (hInput > .5f || hInput < -.5f)
-        {
-
-            rb.velocity = new Vector2(hInput * speed, rb.velocity.y);
-            _isPlayerMoving = true;
-            if (!playerAnimatorController.IsAnimationLocked)
+            if (hInput > .5f || hInput < -.5f)
             {
-                playerAnimatorController.LastMove = new Vector2(hInput, 0);
+
+                rb.velocity = new Vector2(hInput * speed, rb.velocity.y);
+                _isPlayerMoving = true;
+                if (!playerAnimatorController.IsAnimationLocked)
+                {
+                    playerAnimatorController.LastMove = new Vector2(hInput, 0);
+                }
             }
-        }
-        else
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-
-        if (vInput > .5f || vInput < -.5f)
-        {
-
-
-            rb.velocity = new Vector2(rb.velocity.x, vInput * speed);
-            _isPlayerMoving = true;
-
-            if (!playerAnimatorController.IsAnimationLocked)
+            else
             {
-                playerAnimatorController.LastMove = new Vector2(0, vInput);
+                rb.velocity = new Vector2(0, rb.velocity.y);
             }
-        }
-        else
-        {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-        }
 
-        if (rb.velocity.x == 0f && rb.velocity.y == 0f)
-        {
-            _isPlayerMoving = false;
+            if (vInput > .5f || vInput < -.5f)
+            {
 
-        }
+
+                rb.velocity = new Vector2(rb.velocity.x, vInput * speed);
+                _isPlayerMoving = true;
+
+                if (!playerAnimatorController.IsAnimationLocked)
+                {
+                    playerAnimatorController.LastMove = new Vector2(0, vInput);
+                }
+            }
+            else
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
+
+            if (rb.velocity.x == 0f && rb.velocity.y == 0f)
+            {
+                _isPlayerMoving = false;
+
+            }
+        
         #endregion Player_Movement
 
-        if(isRegenerating == true)
+        if (isRegenerating == true)
         {
             barHealth.CurrentVal = health;
-            barValueText.text = health.ToString();
+            barValueText.text = ((int)health).ToString();
         }
 
 
         playerAnimatorController.IsPlayerMoving = _isPlayerMoving;
+
 
     }
 
@@ -220,7 +230,7 @@ public class PlayerController : Alive
     /// <param name="positionOfAttack"> where from the attack is taking place (your(enemy)) position)</param>
     public void ReceiveDamage(float damageTaken,Vector3 positionOfAttack)
     {
-        if (playerShieldComponent.CheckIfDefended(positionOfAttack))
+        if (playerShieldComponent.CheckIfDefended(positionOfAttack) && playerShieldComponent.IsShieldButtonPressed == true)
         {
             playerShieldComponent.ReceiveDamage(damageTaken);
         }

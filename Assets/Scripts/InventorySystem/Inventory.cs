@@ -111,7 +111,6 @@ public class Inventory : MonoBehaviour {
         {
             itemStackNums[i]--;
             itemStackNumTexts[i].text = itemStackNums[i].ToString();
-            Debug.Log(itemStackNums[i] + " of these items left");
             return;
         }
         else {

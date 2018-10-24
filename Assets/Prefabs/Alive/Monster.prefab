@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 61163382349218568}
   - component: {fileID: 50766599335741830}
   - component: {fileID: 95878377332830540}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Monster
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -66,8 +66,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455683079688080}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.02, y: -19.59, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.5, y: -8.6, z: 0}
   m_LocalScale: {x: 1.0936217, y: 1.0936217, z: 1.0936217}
   m_Children:
   - {fileID: 4226988392812344}
@@ -177,18 +177,19 @@ MonoBehaviour:
   textInst: {fileID: 0}
   sprite: {fileID: 212348095239480234}
   rb: {fileID: 50766599335741830}
-  knockbackForce: 15
+  knockbackForce: 3.5
   knockbackTime: 0.1
   speed: 3
-  damage: 10
+  damage: 5
   regenDelay: 5
   regenTimeStep: 1
   regenAmount: 1
   isInvincible: 0
   standardHealth: 100
-  hostileTo: 01000000
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  hostileTo: 00000000
   LivingBeingType: 1
-  target: {fileID: 4954269538840304}
+  target: {fileID: 0}
   identifierMask:
     serializedVersion: 2
     m_Bits: 512
@@ -196,8 +197,8 @@ MonoBehaviour:
   maxRange: 10
   idleRange: 4
   returnToSpawnTime: 2
-  maneuverTime: 0.25
-  speedMultiplier: 1.5
+  maneuverTime: 0.75
+  speedMultiplier: 1
 --- !u!212 &212348095239480234
 SpriteRenderer:
   m_ObjectHideFlags: 1

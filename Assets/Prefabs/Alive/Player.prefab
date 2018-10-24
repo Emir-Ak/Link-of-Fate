@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 114327237463783436}
   - component: {fileID: 114066387952715236}
   - component: {fileID: 81401285076663048}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1920461803130750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0.10000038, y: -7.9, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4636955545342896}
@@ -365,19 +365,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9586bb950f009e34989024eab82d81f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
+  health: 50
   barValueAnimator: {fileID: 0}
   barShieldHealth:
     bar: {fileID: 0}
-    maxVal: 1000
-    currentVal: 1000
+    maxVal: 50
+    currentVal: 50
   barValueText: {fileID: 0}
   playerAttackComponent: {fileID: 114327237463783436}
   playerAnimatorController: {fileID: 114523972729856290}
   playerController: {fileID: 114728376858697630}
   currentShieldHealth: 0
-  shieldRechargeDelay: 2.5
-  regenAmount: 20
+  shieldRechargeDelay: 1
+  regenAmount: 1.25
   shieldMask:
     serializedVersion: 2
     m_Bits: 256
@@ -438,25 +438,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c876fd66fe995640955589496b1eda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
+  health: 100
   textInst: {fileID: 0}
   sprite: {fileID: 212005908117570422}
   rb: {fileID: 50415790869954380}
   knockbackForce: 10
   knockbackTime: 0.3
-  speed: 7
-  damage: 50
-  regenDelay: 1
-  regenTimeStep: 0.5
-  regenAmount: 10
-  isInvincible: 0
+  speed: 3
+  damage: 10
+  regenDelay: 2.5
+  regenTimeStep: 1.5
+  regenAmount: 1
+  isInvincible: 1
   standardHealth: 100
-  hostileTo: 00000000
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  hostileTo: 01000000
   LivingBeingType: 0
   barHealth:
     bar: {fileID: 0}
-    maxVal: 500
-    currentVal: 500
+    maxVal: 100
+    currentVal: 100
   barValueText: {fileID: 0}
   playerShieldComponent: {fileID: 114125543183202764}
   playerAttackComponent: {fileID: 114327237463783436}
