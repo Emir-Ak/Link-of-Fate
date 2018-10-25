@@ -6,14 +6,25 @@ public class QuestManager : MonoBehaviour
 
     //Quests currently running 
     public List<Quest> runningQuests = new List<Quest>();
+
     //Dictionary of the quest names next to the way of completion, all referenced ways represented by int will be written down later
     public Dictionary<string, int> completedQuests = new Dictionary<string, int>();
+    //List of quest trackers to pass true to them if the corresponding quest is running
+    public List<QuestTracker> questTrackers;
 
     //Adds a quest to the list of taken quests
     public void AcceptQuest(Quest acceptedQuest)
     {
-        Debug.Log(acceptedQuest.questName + "is accepted");
+        Debug.Log(acceptedQuest.questName + " is accepted");
         runningQuests.Add(acceptedQuest);
+        foreach(QuestTracker questTracker in questTrackers)
+        {
+            if (questTracker.correspondingQuestName == acceptedQuest.name)
+            {
+                questTracker.isRunning = true;
+                questTracker.OnQuestAccept();
+            }
+        }
     }
 
     //Removes quest by referencing type of quest
@@ -24,7 +35,18 @@ public class QuestManager : MonoBehaviour
             if(runningQuests[i] == abandonedQuest)
             {
                 Debug.Log(runningQuests[i].questName + " abandoned.");
-                runningQuests.Remove(runningQuests[i]);             
+                runningQuests.Remove(runningQuests[i]);
+
+                foreach (QuestTracker questTracker in questTrackers)
+                {
+                    if (questTracker.correspondingQuestName == abandonedQuest.name)
+                    {
+                        questTracker.isRunning = false;
+                        questTracker.OnQuestAbandon();
+                    }
+                }
+
+                break;
             }
         }
     }
@@ -38,13 +60,25 @@ public class QuestManager : MonoBehaviour
                 Debug.Log(runningQuests[i].questName + " abandoned.");
                 runningQuests.Remove(runningQuests[i]);
             }
+
+            foreach (QuestTracker questTracker in questTrackers)
+            {
+                if (questTracker.correspondingQuestName == questName)
+                {
+                    questTracker.isRunning = false;
+                    questTracker.OnQuestAbandon();
+
+                }
+            }
+
+            break;
         }
     }
 
     //Adds a quest to completed quests
-    public void CompleteQuest(string questName, int wayOfCompletion)
+    public void CompleteQuest(string questName, int completionWay)
     {
-        Debug.Log(questName + " is completed!");
-        completedQuests.Add(questName, wayOfCompletion);
+        Debug.Log(questName + " is completed! " + "Completion way: " + completionWay.ToString());
+        completedQuests.Add(questName, completionWay);
     }
 }

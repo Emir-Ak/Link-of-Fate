@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : Alive
 {
+
     [Tooltip("Target to follow |:-/")]
     [SerializeField]
     private Transform target;
@@ -44,6 +45,7 @@ public class Enemy : Alive
 
     Vector3 spawnPoint;
 
+
     #endregion Spawnpoint
 
     #region Behaviour_Values
@@ -57,8 +59,13 @@ public class Enemy : Alive
     private bool returnToSpawn = false;
     private bool isReturning = false;
     private bool isIdle = false;
+    private bool isDead = false;
 
     #endregion Behaviour_Values
+
+    #region Events
+    public UnityEngine.Events.UnityEvent OnDeath;
+    #endregion
 
     private void Start()
     {
@@ -73,8 +80,10 @@ public class Enemy : Alive
 
         #region Object_Destruction
 
-        if (health <= 0)
+        if (health <= 0 && isDead == false)
         {
+            isDead = true;
+            OnDeath.Invoke();
             Destroy(gameObject, knockbackTime);
         }
 
@@ -88,7 +97,7 @@ public class Enemy : Alive
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject?.transform == target && collision.gameObject && isManeuvring == false && collision.gameObject != null)
+        if (collision.gameObject?.transform == target && collision.gameObject && isManeuvring == false && collision.gameObject != null && isDead == false)
         {
             {
                 Alive livingBeing = target.GetComponent<Alive>();
@@ -167,7 +176,7 @@ public class Enemy : Alive
 
             Vector2 randDir = Random.onUnitSphere;
 
-            randDir *= Random.Range(2f, idleRange - 1f);
+            randDir *= Random.Range(2f, idleRange <= 1.5f ? 1.5f : (idleRange - 1f));
             randDir += (Vector2)transform.position;
 
             while (randDir != (Vector2)transform.position)
@@ -211,7 +220,7 @@ public class Enemy : Alive
         Transform temptarget = transform;
         if (enemies.Count > 0)
         {
-            List<float> distanceArrays = new List<float>();
+            List<float> distanceArrays = new List<float>(); 
             foreach (GameObject enemy in enemies)
             {
                 distanceArrays.Add(Vector3.Distance(transform.position, enemy.transform.position));

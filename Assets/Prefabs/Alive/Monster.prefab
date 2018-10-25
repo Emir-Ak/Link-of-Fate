@@ -179,7 +179,7 @@ MonoBehaviour:
   rb: {fileID: 50766599335741830}
   knockbackForce: 3.5
   knockbackTime: 0.1
-  speed: 3
+  speed: 2.5
   damage: 5
   regenDelay: 5
   regenTimeStep: 1
@@ -195,10 +195,15 @@ MonoBehaviour:
     m_Bits: 512
   followRange: 5
   maxRange: 10
-  idleRange: 4
+  idleRange: 2
   returnToSpawnTime: 2
   maneuverTime: 0.75
   speedMultiplier: 1
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!212 &212348095239480234
 SpriteRenderer:
   m_ObjectHideFlags: 1
