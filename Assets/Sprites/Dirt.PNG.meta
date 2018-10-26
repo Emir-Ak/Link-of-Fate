@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: 6effb0022735ead45acf361ef8832074
-timeCreated: 1518448271
-licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: decalssheet_0
@@ -105,7 +103,7 @@ TextureImporter:
     21300196: destruct_48
     21300198: destruct_49
   externalObjects: {}
-  serializedVersion: 4
+  serializedVersion: 7
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -123,6 +121,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -133,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -145,18 +145,21 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -166,7 +169,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - buildTarget: Standalone
+  - serializedVersion: 2
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -198,6 +202,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 029c5538d6da7c24eb9226cbc2a74b94
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_1
       rect:
@@ -216,6 +226,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 52fb6caf56d0f39458f68dba2d5a5cb9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_2
       rect:
@@ -234,6 +250,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 5b189218aade33944b0ea392a3bfccce
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_3
       rect:
@@ -252,6 +274,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 0a986b0fbf901df4abccc30fedd01487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_4
       rect:
@@ -270,6 +298,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: cf3f983c6510123499cdc0eec7928b7f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_5
       rect:
@@ -288,6 +322,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 649a3941c57fb3e49a727260d5b69b89
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_6
       rect:
@@ -306,6 +346,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: bb4f3e4f04b784947bff384f7de9554d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_7
       rect:
@@ -324,6 +370,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 01fb5a8eefc62b148ac9f40cdebd68f0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_8
       rect:
@@ -342,6 +394,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 3b37fef5cf0f07c438a8102c67503ef1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_9
       rect:
@@ -360,6 +418,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 7da4befec9aedd44686e1e871749e529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_10
       rect:
@@ -378,6 +442,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 631e53bbaf0c8e048804180be542af38
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_11
       rect:
@@ -396,6 +466,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 3dbf8694b76b8d34aad2b53b9cf34498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_12
       rect:
@@ -414,6 +490,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: ad208355b7fe30f49bac676c72af3959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_13
       rect:
@@ -432,6 +514,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: ada1aed98182ce94f8368e4d11fd9e24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_14
       rect:
@@ -451,6 +539,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: fe909a5fdd6c3fd45829607b67d27070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_15
       rect:
@@ -469,6 +563,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: ffe28b9a472a9f04e90d0e73bda4cca0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_16
       rect:
@@ -487,6 +587,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: c0b37d88cbc76f24b8a34a4733956c71
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_17
       rect:
@@ -505,6 +611,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 83bc984104f36e84e9d2db10324f43bd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_18
       rect:
@@ -523,6 +635,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: d8fec99007db98c47a8d748d63584b65
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_19
       rect:
@@ -541,6 +659,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 47a4773a4f07edc489343b57efd3a047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_20
       rect:
@@ -559,6 +683,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 89e056866769d7d49b71396ebeb11d09
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_21
       rect:
@@ -577,6 +707,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: d6e3ac7b4b095fa4fb4447106cad41df
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_22
       rect:
@@ -595,6 +731,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 2466971f59fb816448b10a53e568820e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_23
       rect:
@@ -613,6 +755,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: c1eea316da81e15459cc068e68da4fc5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_24
       rect:
@@ -631,6 +779,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: f70f812e31e015840a9929cf8f59309d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_25
       rect:
@@ -649,6 +803,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: f7821ccdc2668a440ba94944c11b417a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_26
       rect:
@@ -669,6 +829,12 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: ea6eb3c032e304345a373ed0bd7f0699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_27
       rect:
@@ -687,6 +853,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 14c561dada5a85e4bae5e5238327d916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_28
       rect:
@@ -706,6 +878,12 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 0f592392b88f70f468bebff6b3167bc4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_29
       rect:
@@ -726,6 +904,12 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 6, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 02e8de2e769e24f4c93f60c74a294111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_30
       rect:
@@ -745,6 +929,12 @@ TextureImporter:
         - {x: 8, y: 6}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 260b014328a969d4c89abca77468ad06
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_31
       rect:
@@ -764,6 +954,12 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 5f95d0a71836a6247979fefb716d98a3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_32
       rect:
@@ -782,6 +978,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: b7adecb0cb9ce924cbfe6576d34cd54f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_33
       rect:
@@ -801,6 +1003,12 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: d25e60dc8fdfecc4c9e2e14d01c5a79a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_34
       rect:
@@ -823,6 +1031,12 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 91d826d79cba7be458a5eeb08936cd8d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_35
       rect:
@@ -841,6 +1055,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 6b19a8d6a6b97084f9fbefa35c11ae40
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_36
       rect:
@@ -860,6 +1080,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: d68840dfb1c526a459a49eb3362d2395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_37
       rect:
@@ -878,6 +1104,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: ac6c767b083b3e04f836013d8f6731bd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_38
       rect:
@@ -896,6 +1128,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 3c50bcf8a66836a4c8d025294dc22b2a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_39
       rect:
@@ -916,6 +1154,12 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 577ea161b04442946ba51f2ef32d1d32
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_40
       rect:
@@ -934,6 +1178,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 76aacfeafecb7dd41b25a420ceaa75c4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_41
       rect:
@@ -952,6 +1202,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: fff7baa5f6787d645bd91ef22c300715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_42
       rect:
@@ -970,6 +1226,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 154ccb84c7231ca4384812945abc518f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_43
       rect:
@@ -988,6 +1250,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 69ccaeb51277925478b3744d761a4235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_44
       rect:
@@ -1006,6 +1274,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 893abeb3a25e14e4e9a7d73db85fef82
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_45
       rect:
@@ -1025,6 +1299,12 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 57283346d9c10e1439bfa47ac6279041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_46
       rect:
@@ -1043,6 +1323,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: ec4a47fd7596cf94fbeb8f71c36ac4e8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_47
       rect:
@@ -1061,6 +1347,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 22972f4e84401374596e06057accb814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_48
       rect:
@@ -1079,6 +1371,12 @@ TextureImporter:
         - {x: 8, y: -8}
         - {x: 8, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 2ca26ff941a50754e8fd29ba00735f52
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: destruct_49
       rect:
@@ -1098,9 +1396,23 @@ TextureImporter:
         - {x: 8, y: 7}
         - {x: 7, y: 8}
       tessellationDetail: 0
+      bones: []
+      spriteID: 4a9828d76a4816f4992de0c571f4e7e5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 661f13cc09188114ab69b6fe140db4b8
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

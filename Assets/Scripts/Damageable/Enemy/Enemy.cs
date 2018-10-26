@@ -246,7 +246,7 @@ public class Enemy : Alive
         speed /= speedMultiplier;
     }
 
-    public void Death(float time,float s,int ss)
+    public void Death(float time)
     {
 
         Destroy(gameObject, time);

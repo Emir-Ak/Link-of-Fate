@@ -19792,23 +19792,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc01d95e038ebb479eec0ea68ee4486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unityEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 212348095239480234, guid: 345080241e667004bacfd315d9e31274,
-          type: 2}
-        m_MethodName: BroadcastMessage
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: kek
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  achievements:
+  - name: kek1
+    description: kek11
+    achievementImage: {fileID: 21300000, guid: 2f02bcc56b8b4ba429bec6af3d8a4ef5, type: 3}
+    progress: 0
+    progressGoal: 10
+    isCompleted: 0
 --- !u!1001 &1769605340
 Prefab:
   m_ObjectHideFlags: 0
