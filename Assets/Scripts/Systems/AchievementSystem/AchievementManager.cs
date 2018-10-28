@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -27,9 +28,14 @@ public class AchievementManager : MonoBehaviour
 
 
         SaveLoadManager.SaveAchievements(SaveLoadManager.SavingType.DefaultSave);
+        SaveLoadManager.LoadAchievements(SaveLoadManager.SavingType.DefaultSave);
 
+        achievements = new Achievement[achivementDictionary.Count];
 
-
+        for (int i = 0; i < achievements.Length; i++)
+        {
+            achievements[i] = achivementDictionary[achivementDictionary.Keys.ToArray()[i]];
+        }
         //this Stuff is going to be moved to SaveLoadManager
 
 

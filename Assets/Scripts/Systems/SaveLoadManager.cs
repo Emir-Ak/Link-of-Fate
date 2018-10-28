@@ -1,15 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 using System.IO;
-using System;
 using System.Linq;
-using UnityEngine.UI;
+using UnityEngine;
 
-public static class SaveLoadManager {
+public static class SaveLoadManager
+{
+    #region variables
 
-    static string gameSavingPath = Environment.GetFolderPath(Environment.SpecialFolder.Resources) + @"/Link Of Fate/Saves/";
-    static string achievementsSavingPath = Environment.GetFolderPath(Environment.SpecialFolder.Resources) + @"/Link Of Fate/Achievements/";
+    #region Read_Only
+
+    private static readonly string ACHIEVEMENT_ICON_PATH = "AchievementIcons";
+    private static readonly string GAME_SAVE_FOLDER = "Saves";
+    private static readonly string ACHIEVEMENTS_SAVE_FOLDER = "Achievements";
+    private static readonly string ENCRYPTION_KEY = "12345678901234567890123456789012";//this key is for testing only
+
+    #endregion Read_Only
+
+    #region Enums
 
     public enum SavingSlot
     {
@@ -24,6 +31,10 @@ public static class SaveLoadManager {
         DefaultSave
     }
 
+    #endregion Enums
+
+    #region Achievement_Structs
+
     [Serializable]
     private struct _Achievement
     {
@@ -33,24 +44,34 @@ public static class SaveLoadManager {
         [SerializeField] internal bool isCompleted;
     }
 
-    struct AchievementWrapper
+    private struct AchievementWrapper
     {
         public _Achievement[] achievements;
     }
 
-    public static void SaveAchievements(SavingType type)
+    #endregion Achievement_Structs
+
+    #endregion variables
+
+    #region Achievement_Functions
+
+    public static void SaveAchievements(SavingType savingType)
     {
-        string SavingDirectory = achievementsSavingPath;
-       
-        switch (type)
+        Debug.Log(Application.persistentDataPath);
+
+        string savingDirectory = Path.Combine(Application.persistentDataPath, ACHIEVEMENTS_SAVE_FOLDER);
+        savingDirectory = savingDirectory.Replace(@"\", @"/");
+
+        switch (savingType)
         {
             case SavingType.PlayerSave:
-                SavingDirectory += "Achievement_Save";
+                Path.Combine(savingDirectory, "Achievement_Save");
                 break;
+
             case SavingType.DefaultSave:
-                SavingDirectory += "Default_Achievemen_Save";
-                Debug.Log(SavingDirectory);
+                Path.Combine(savingDirectory, "Default_Achievement_Save");
                 break;
+
             default:
                 break;
         }
@@ -69,14 +90,57 @@ public static class SaveLoadManager {
         }
 
         string outputString = JsonUtility.ToJson(new AchievementWrapper() { achievements = achievementWrapper });
-        Debug.Log(outputString);
-        File.WriteAllText("C:\\Users\\Lenovo\\Desktop\\MyFile.json", outputString);
+
+        byte[] encryptedString = RijndaelEncryption.Encrypt(outputString, ENCRYPTION_KEY);
+
+        File.WriteAllBytes(savingDirectory, encryptedString);
     }
 
-    public static void LoadAchievements()
+    public static void LoadAchievements(SavingType savingType)
     {
-        AchievementManager.achivementDictionary["name"].isCompleted = true;
+        string loadingDirectory = Path.Combine(Application.persistentDataPath, ACHIEVEMENTS_SAVE_FOLDER);
+        byte[] encryptedJson;
+        string decryptedJson = string.Empty;
+
+        switch (savingType)
+        {
+            case SavingType.PlayerSave:
+                Path.Combine(loadingDirectory, "Achievement_Save");
+                break;
+
+            case SavingType.DefaultSave:
+                Path.Combine(loadingDirectory, "Default_Achievement_Save");
+                break;
+
+            default:
+                break;
+        }
+
+        loadingDirectory = loadingDirectory.Replace(@"\", @"/");
+
+        encryptedJson = File.ReadAllBytes(loadingDirectory);
+        decryptedJson = RijndaelEncryption.Decrypt(encryptedJson, ENCRYPTION_KEY);
+
+        AchievementManager.achivementDictionary.Clear();
+
+        foreach (_Achievement achievement in JsonUtility.FromJson<AchievementWrapper>(decryptedJson).achievements)
+        {
+            Achievement dictAchievement = new Achievement();
+
+            dictAchievement.name = achievement.name;
+            dictAchievement.description = achievement.description;
+            dictAchievement.achievementImage = Resources.Load<Sprite>(ACHIEVEMENT_ICON_PATH + '/' + achievement.achievementImageName);
+            dictAchievement.progress = achievement.progress;
+            dictAchievement.progressGoal = achievement.progressGoal;
+            dictAchievement.isCompleted = achievement.isCompleted;
+
+            AchievementManager.achivementDictionary.Add(achievement.name, dictAchievement);
+        }
     }
+
+    #endregion Achievement_Functions
+
+    #region Game_Saving_Functions
 
     public static void SaveSlot(SavingSlot slot)
     {
@@ -84,10 +148,13 @@ public static class SaveLoadManager {
         {
             case SavingSlot.Slot1:
                 break;
+
             case SavingSlot.Slot2:
                 break;
+
             case SavingSlot.Slot3:
                 break;
+
             default:
                 break;
         }
@@ -99,13 +166,17 @@ public static class SaveLoadManager {
         {
             case SavingSlot.Slot1:
                 break;
+
             case SavingSlot.Slot2:
                 break;
+
             case SavingSlot.Slot3:
                 break;
+
             default:
                 break;
         }
     }
 
+    #endregion Game_Saving_Functions
 }

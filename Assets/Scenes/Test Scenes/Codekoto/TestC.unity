@@ -234,11 +234,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 38505970}
   m_CullTransparentMesh: 0
---- !u!4 &60647420 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4514023778430806, guid: 02bb8ca9c11ca284684f61b67fd3b377,
-    type: 2}
-  m_PrefabInternal: {fileID: 1769605340}
 --- !u!1 &82267958
 GameObject:
   m_ObjectHideFlags: 0
@@ -2268,11 +2263,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lerpSpeed: 8
   content: {fileID: 869614448}
---- !u!1 &1066729061 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1193133273415038, guid: 0ffcbc95cf558ad47911a1f65d953b28,
-    type: 2}
-  m_PrefabInternal: {fileID: 1892082545}
 --- !u!224 &1066729062 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224136789988899178, guid: 0ffcbc95cf558ad47911a1f65d953b28,
@@ -2587,8 +2577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70938ec302664c4c83dea3febf64086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 60647420}
-  lerpSpeed: 8
+  playerTransform: {fileID: 0}
+  lerpSpeed: 1
   offset: {x: 0, y: 0}
 --- !u!1 &1250924948
 GameObject:
@@ -19450,9 +19440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3976b7d2cbc87dd44a07fa0f70fe78ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuObject: {fileID: 992372292}
-  achievementPanel: {fileID: 1066729061}
-  audioListener: {fileID: 2089467721}
+  menuObject: {fileID: 0}
+  achievementPanel: {fileID: 0}
+  audioListener: {fileID: 0}
   playerController: {fileID: 0}
 --- !u!1 &1616780455
 GameObject:
@@ -19696,7 +19686,7 @@ MonoBehaviour:
   - {fileID: 665151831}
   - {fileID: 812460445}
   itemStackNums: 00000000000000000000000000000000
-  slotScaleFactor: 1.25
+  slotScaleFactor: 1.1
 --- !u!114 &1756999261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19793,10 +19783,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievements:
-  - name: kek1
-    description: kek11
+  - name: Test
+    description: Test Description
     achievementImage: {fileID: 21300000, guid: 2f02bcc56b8b4ba429bec6af3d8a4ef5, type: 3}
-    progress: 0
+    progress: 5
     progressGoal: 10
     isCompleted: 0
 --- !u!1001 &1769605340
@@ -20958,11 +20948,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be6b8e81283d3db45b19023ce1890cd0, type: 2}
   m_IsPrefabAsset: 0
---- !u!81 &2089467721 stripped
-AudioListener:
-  m_CorrespondingSourceObject: {fileID: 81401285076663048, guid: 02bb8ca9c11ca284684f61b67fd3b377,
-    type: 2}
-  m_PrefabInternal: {fileID: 1769605340}
 --- !u!1 &2092667820
 GameObject:
   m_ObjectHideFlags: 0
