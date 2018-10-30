@@ -25,7 +25,6 @@ public class WeaponCollider : MonoBehaviour {
     };
     #endregion
 
-    private GameObject enemy = null;
     
     public void ChangeOffset(Vector2 lastDirection,TypeOfWeapon weaponType)
     {
@@ -53,9 +52,8 @@ public class WeaponCollider : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && enemy != collision.gameObject)
+        if ((bool)collision.GetComponent<Alive>()?.hostileTo.Contains(Alive.LivingBeings.Player))
         {
-            enemy = collision.gameObject;
             Alive livingThing = collision.GetComponent<Alive>();
             float damage = FindObjectOfType<PlayerController>().damage;
             livingThing.ReceiveDamage(damage);

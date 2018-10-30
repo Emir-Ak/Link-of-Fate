@@ -20,11 +20,17 @@ public class Explosion : MonoBehaviour
 
                 player.ReceiveKnockBack(transform.position, player.knockbackForce * 1.5f);
             }
-            else if (collision.CompareTag("Enemy"))
+            else if ((bool)collision.GetComponent<Alive>()?.hostileTo.Contains(Alive.LivingBeings.Player))
             {
-                Enemy enemy = collision.GetComponent<Enemy>();
-                enemy.ReceiveDamage(damage);
-                enemy.ReceiveKnockBack(transform.position, enemy.knockbackForce);
+                Alive livingThing = collision.GetComponent<Alive>();
+                livingThing.ReceiveDamage(damage);
+                livingThing.ReceiveKnockBack(transform.position, livingThing.knockbackForce);
+
+                if (livingThing.health <= 0)
+                {
+                    PlayerAchievementComponent.OnCreatureKilled(livingThing);
+                    Destroy(livingThing.gameObject, livingThing.knockbackTime);
+                }
             }
             else{
                 Damageable damageable = collision.GetComponent<Damageable>();

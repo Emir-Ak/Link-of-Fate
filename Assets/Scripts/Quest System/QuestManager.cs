@@ -50,6 +50,7 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+
     //Removes quest by stating name of the quest
     public void AbandonQuest(string questName)
     {
