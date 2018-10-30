@@ -80,12 +80,12 @@ public class Enemy : Alive
 
         #region Object_Destruction
 
-        if (health <= 0 && isDead == false)
-        {
-            isDead = true;
-            OnDeath.Invoke();
-            Destroy(gameObject, knockbackTime);
-        }
+        //if (health <= 0 && isDead == false)
+        //{
+        //    isDead = true;
+        //    OnDeath.Invoke();
+        //    Destroy(gameObject, knockbackTime);
+        //}
 
         #endregion Object_Destruction
 
@@ -151,7 +151,7 @@ public class Enemy : Alive
     {
         transform.position = Vector3.MoveTowards(transform.position, aimPos, speed * Time.deltaTime);
     }
-
+        
     private IEnumerator IdleMove()
     {
         isIdle = true;
@@ -216,7 +216,7 @@ public class Enemy : Alive
                 enemies.Add(collider.gameObject);
             }
         }
-
+        
         Transform temptarget = transform;
         if (enemies.Count > 0)
         {
@@ -226,14 +226,10 @@ public class Enemy : Alive
                 distanceArrays.Add(Vector3.Distance(transform.position, enemy.transform.position));
             }
 
-
             target = enemies?[distanceArrays.IndexOf(distanceArrays.Min())].GetComponentInParent<Alive>().transform;
             return true;
         }
         else return false;
-            
-
-
     }
 
     private IEnumerator BackToSpawn()

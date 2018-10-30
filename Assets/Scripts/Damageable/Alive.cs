@@ -50,6 +50,8 @@ public class Alive : Damageable
     [Space(12)]
     public LivingBeings LivingBeingType = new LivingBeings();// what type of living creature this object is.
 
+    bool dying = false;
+
     public virtual void Initialize()
     {
         if (textInst == null)
@@ -57,12 +59,13 @@ public class Alive : Damageable
             textInst = FindObjectOfType<TextInstantiator>();
         }
     }
+
     #region ReceiveDamage
-    /// <summary>
-    /// Alive object (referred to as "creature" later on) which the component is on will receive damage and may be knockbacked.
-    /// </summary>
-    /// <param name="damageTaken">Speaks for itseld (Damage the creature will take)</param>
-    /// <param name="relativeTransform">Transform of GameObject that will push the creature (assign "null" if it won't)</param>
+        /// <summary>
+        /// Alive object (referred to as "creature" later on) which the component is on will receive damage and may be knockbacked.
+        /// </summary>
+        /// <param name="damageTaken">Speaks for itseld (Damage the creature will take)</param>
+        /// <param name="relativeTransform">Transform of GameObject that will push the creature (assign "null" if it won't)</param>
     public override void ReceiveDamage(float damageTaken)
     {
         Initialize();
