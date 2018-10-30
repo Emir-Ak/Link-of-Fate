@@ -8,19 +8,15 @@ public class PlayerShieldComponent : Damageable
     #region Variables
 
     #region Components
-    [SerializeField]
-    private Animator barValueAnimator; 
-    [SerializeField]
-    private Stat barShieldHealth;
-    [SerializeField]
-    public Text barValueText;
 
-    [SerializeField]
-    private PlayerAttackComponent playerAttackComponent;//Component that has the functions for the Attack :3
-    [SerializeField]
-    private PlayerAnimatorController playerAnimatorController; //Script that controls the animations of the player and it's animaton
-    [SerializeField]
-    private PlayerController playerController; //Player Controller .-. (I want a cute waifu girlfriend D: (like inori or 02 ;/)) ...WELP WE ALL WANT SOMETHING UNREACHABLE SOMETIMES... Dreaming isn`t bad though :\
+    [SerializeField]  private Animator barValueAnimator;
+    [SerializeField]  private Stat barShieldHealth;
+    [SerializeField]  public Text barValueText;
+
+
+    [SerializeField]  private PlayerAttackComponent playerAttackComponent;//Component that has the functions for the Attack :3
+    [SerializeField]  private PlayerAnimatorController playerAnimatorController; //Script that controls the animations of the player and it's animaton
+    [SerializeField]  private PlayerController playerController; //Player Controller .-. (I want a cute waifu girlfriend D: (like inori or 02 ;/)) ...WELP WE ALL WANT SOMETHING UNREACHABLE SOMETIMES... Dreaming isn`t bad though :\
     #endregion
     
     private float maxShieldHealth; //Used to clamp the current shield health

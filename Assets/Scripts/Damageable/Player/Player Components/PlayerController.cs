@@ -33,13 +33,9 @@ public class PlayerController : Alive
     private Text barValueText;
 
     #region Components
-    [SerializeField]
-    internal PlayerShieldComponent playerShieldComponent;//Component that has the functions for the shield :3
-    [SerializeField]
-    private PlayerAttackComponent playerAttackComponent;//Component that has the functions for the Attack :3
-    [SerializeField]
-    private PlayerAnimatorController playerAnimatorController; //Script that controls the animations of the player and it's animator
-
+    [SerializeField] internal PlayerShieldComponent playerShieldComponent;//Component that has the functions for the shield :3
+    [SerializeField] private PlayerAttackComponent playerAttackComponent;//Component that has the functions for the Attack :3
+    [SerializeField]  private PlayerAnimatorController playerAnimatorController; //Script that controls the animations of the player and it's animator
     #endregion
 
 

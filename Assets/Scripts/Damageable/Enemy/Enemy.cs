@@ -14,7 +14,7 @@ public class Enemy : Alive
     
     //new TrackableFloat health = new TrackableFloat();
 
-    bool dying = false;
+    //bool dying = false;
 
     #region Range_Values
 
@@ -78,11 +78,11 @@ public class Enemy : Alive
 
         #region Object_Destruction
 
-        if (!dying && health <= 0)
-        {
-            dying = true;
-            Death(knockbackTime);
-        }
+        //if (!dying && health <= 0)
+        //{
+        //    dying = true;
+        //    Death(knockbackTime);
+        //}
 
         #endregion Object_Destruction
 
@@ -246,9 +246,8 @@ public class Enemy : Alive
         speed /= speedMultiplier;
     }
 
-    public void Death(float time)
-    {
-
-        Destroy(gameObject, time);
-    }
+    //public void Death(float time)
+    //{
+    //    Destroy(gameObject, time);
+    //}
 }
