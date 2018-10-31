@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778a48e475aaf244fa0cdceccb4b1727, type: 3}
+  m_Name: Portal
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 932dc2b282199f04cb39f734943b637a, type: 3}
+  itemObject: {fileID: 1132916260010656, guid: 7b4d15ae625a23d4fadf6534974b71df, type: 2}
+  itemName: Portal
+  itemDescription: 'Teleports you to a specific place (0,-20)
+
+    P.S.If Stephan is reading this, there could be portals to different zones so that
+    the player wont have to walk there or maybe the area is restricted.'
+  assignedID: 3
+  isStackable: 0

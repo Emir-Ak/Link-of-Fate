@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviour {
 
     public Animator anim;
     public AnimationClip closeAnim;
+    DialogueTrigger dialogueTrigger = null;
 
 	// Use this for initialization
 	void Start ()
@@ -31,8 +32,11 @@ public class DialogueManager : MonoBehaviour {
             
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue, DialogueTrigger _dialogueTrigger)
     {
+        //PlayerController player = FindObjectOfType<PlayerController>();
+        //player.enabled = false;
+
         sentences = new Queue<string>();
         
         nameText.text = dialogue.name;
@@ -45,12 +49,14 @@ public class DialogueManager : MonoBehaviour {
         }
 
 
+        dialogueTrigger = _dialogueTrigger;
+
         DisplayNextSentence();
 
  
     }
-  
-    
+
+
 
     private void DisplayNextSentence()
     {
@@ -76,18 +82,25 @@ public class DialogueManager : MonoBehaviour {
         {
             first = false;
             StartCoroutine(AZAnim.TypeWrite(dialogueText, sentence, 0.03f));
-        }  
+        }
     }
 
     private void EndDialogue()
     {
-        first = true;
-        PlayerController player = FindObjectOfType<PlayerController>();
+        if (!first)
+        {
+            first = true;
 
-        player.speed = player.standardMoveSpeed;
-        anim.SetBool("isOpen", false);
-        Destroy(gameObject,closeAnim.length - .2f);
-        
+            if (dialogueTrigger != null)
+            {
+                dialogueTrigger.EndDialogue();
+            }
+            dialogueTrigger = null;
+
+            anim.SetBool("isOpen", false);
+            Destroy(gameObject, closeAnim.length - .2f);
+
+        }
     }
 }
 

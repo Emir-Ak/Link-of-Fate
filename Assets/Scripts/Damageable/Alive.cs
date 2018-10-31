@@ -118,11 +118,19 @@ public class Alive : Damageable
 
     IEnumerator ApplyKnockback(Vector3 relatve, float force)
     {
+
         while (isKnocked)
         {
+            
             Vector3 direction = transform.position - relatve;
+
+            if (direction == Vector3.zero)
+            {
+                direction = Random.onUnitSphere;
+            }
             direction.Normalize();
             rb.AddForce(direction * (isInvincible ? force / 3.25f : force / 2.5f), ForceMode2D.Impulse);
+                
             yield return new WaitForEndOfFrame();
         }
         rb.velocity = Vector2.zero;

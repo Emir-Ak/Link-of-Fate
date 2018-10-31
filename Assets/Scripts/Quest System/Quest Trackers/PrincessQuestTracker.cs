@@ -5,7 +5,9 @@ public class PrincessQuestTracker : QuestTracker
     int goblinGuardsKilled = 0; //Need to kill 2
 
     public GameObject goblinGuards;
+    public GameObject princess;
 
+    public Item cloak;
     void Awake()
     {
         questManager = FindObjectOfType<QuestManager>();
@@ -23,7 +25,10 @@ public class PrincessQuestTracker : QuestTracker
     {
         goblinGuards.SetActive(false);
     }
-
+    public override void OnQuestComplete()
+    {
+        Destroy(gameObject);
+   }
     void CompleteQuest(int _completionWay)
     {
         completionWay = _completionWay;
@@ -40,4 +45,18 @@ public class PrincessQuestTracker : QuestTracker
         }
     }
 
+    public void FinishedPrincessTalk()
+    {
+        princess.SetActive(false);
+    }
+
+    public void BribedGoblins()
+    {
+        CompleteQuest(2);
+    }
+
+    public void GetCloak()
+    {
+        FindObjectOfType<Inventory>().AddItem(cloak);
+    }
 }

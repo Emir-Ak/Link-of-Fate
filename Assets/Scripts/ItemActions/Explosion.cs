@@ -11,12 +11,7 @@ public class Explosion : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 PlayerController player = collision.GetComponent<PlayerController>();
-                PlayerShieldComponent shield = player.playerShieldComponent;
-
-                if (shield.IsUsingShield == true)
-                    shield.ReceiveDamage(damage);
-                else
-                    player.ReceiveDamage(damage);
+                player.ReceiveDamage(damage, transform.position);
 
                 player.ReceiveKnockBack(transform.position, player.knockbackForce * 1.5f);
             }
@@ -26,7 +21,8 @@ public class Explosion : MonoBehaviour
                 enemy.ReceiveDamage(damage);
                 enemy.ReceiveKnockBack(transform.position, enemy.knockbackForce);
             }
-            else{
+            else
+            {
                 Damageable damageable = collision.GetComponent<Damageable>();
                 damageable.ReceiveDamage(damage);
             }

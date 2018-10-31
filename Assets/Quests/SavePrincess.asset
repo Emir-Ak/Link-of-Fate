@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b872d56ab95dc254da0957569ef2bc18, type: 3}
-  m_Name: Salvation
+  m_Name: SavePrincess
   m_EditorClassIdentifier: 
-  questName: Salvation
-  questTitle: Save The Princess
-  questDescription: placeholder
+  questName: Save Celestial Princess
+  questTitle: Swift Salvation
+  questDescription: Rescue the Great Celestial Princess.

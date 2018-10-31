@@ -57,7 +57,8 @@ public class PlayerController : Alive
     private float hInput; //Horizontal input
     private float vInput; //Vertical Input
 
-    
+    [HideInInspector]
+    public bool shouldFreeze = false;
 
     #region Properties
     public bool IsPlayerMoving { get { return this._isPlayerMoving; } set { this._isPlayerMoving = value; } }
@@ -100,10 +101,6 @@ public class PlayerController : Alive
     // Update is called once per frame
     private void Update()
     {
-        if (playerShieldComponent.IsUsingShield == true)
-            speed = standardMoveSpeed / 2;
-        else
-            speed = standardMoveSpeed;
 
         if (health <= 0)
         {
@@ -116,45 +113,47 @@ public class PlayerController : Alive
         #region Player_Attack
 
 
-
-        if (Input.GetKeyDown((KeyCode)PlayerControlKeys.AttackKey) && playerShieldComponent.IsUsingShield == false)
+        if (!shouldFreeze)
         {
-            playerAttackComponent.IsAttackButtonPressed = true;
-        }
-        else if (Input.GetKeyUp((KeyCode)PlayerControlKeys.AttackKey) || playerShieldComponent.IsUsingShield == true)
-        {
-            playerAttackComponent.IsAttackButtonPressed = false;
-        }
-        else if (playerShieldComponent.IsShieldButtonPressed == false && (Input.GetKey((KeyCode)PlayerControlKeys.AttackKey)))
-        {
-            playerAttackComponent.IsAttackButtonPressed = true;
-        }
+            if (Input.GetKeyDown((KeyCode)PlayerControlKeys.AttackKey) && playerShieldComponent.IsUsingShield == false)
+            {
+                playerAttackComponent.IsAttackButtonPressed = true;
+            }
+            else if (Input.GetKeyUp((KeyCode)PlayerControlKeys.AttackKey) || playerShieldComponent.IsUsingShield == true)
+            {
+                playerAttackComponent.IsAttackButtonPressed = false;
+            }
+            else if (playerShieldComponent.IsShieldButtonPressed == false && (Input.GetKey((KeyCode)PlayerControlKeys.AttackKey)))
+            {
+                playerAttackComponent.IsAttackButtonPressed = true;
+            }
 
-        #endregion Player_Attack
+            #endregion Player_Attack
 
-        #region Player_Shield
-
-
-        if (Input.GetKeyDown((KeyCode)PlayerControlKeys.ShieldKey) && playerShieldComponent.IsShieldButtonPressed == false)
-        {
-
-            playerShieldComponent.IsShieldButtonPressed = true;
-
-        }
-        else if (Input.GetKeyUp((KeyCode)PlayerControlKeys.ShieldKey))
-        {
-
-            playerShieldComponent.IsShieldButtonPressed = false;
-        }
+            #region Player_Shield
 
 
-        if (health < standardHealth / 2 - (standardHealth / 10) && barValueText.color != Color.red)
-        {
-            barValueText.color = Color.red;
-        }
-        else if (health >= standardHealth / 2 - (standardHealth / 10) && barValueText.color != Color.white)
-        {
-            barValueText.color = Color.white;
+            if (Input.GetKeyDown((KeyCode)PlayerControlKeys.ShieldKey) && playerShieldComponent.IsShieldButtonPressed == false)
+            {
+                speed = 0;
+                playerShieldComponent.IsShieldButtonPressed = true;
+
+            }
+            else if (Input.GetKeyUp((KeyCode)PlayerControlKeys.ShieldKey))
+            {
+                speed = standardMoveSpeed;
+                playerShieldComponent.IsShieldButtonPressed = false;
+            }
+
+
+            if (health < standardHealth / 2 - (standardHealth / 10) && barValueText.color != Color.red)
+            {
+                barValueText.color = Color.red;
+            }
+            else if (health >= standardHealth / 2 - (standardHealth / 10) && barValueText.color != Color.white)
+            {
+                barValueText.color = Color.white;
+            }
         }
 
         #endregion Player_Shield
@@ -217,9 +216,11 @@ public class PlayerController : Alive
             barValueText.text = ((int)health).ToString();
         }
 
-
-        playerAnimatorController.IsPlayerMoving = _isPlayerMoving;
-
+        if (shouldFreeze)
+        {
+            rb.velocity = Vector2.zero;
+        }
+            playerAnimatorController.IsPlayerMoving = _isPlayerMoving;
 
     }
 
@@ -228,19 +229,20 @@ public class PlayerController : Alive
     /// </summary>
     /// <param name="damageTaken">damage amount</param>
     /// <param name="positionOfAttack"> where from the attack is taking place (your(enemy)) position)</param>
-    public void ReceiveDamage(float damageTaken,Vector3 positionOfAttack)
+    public void ReceiveDamage(float damageTaken, Vector3 positionOfAttack)
     {
-        if (playerShieldComponent.CheckIfDefended(positionOfAttack) && playerShieldComponent.IsShieldButtonPressed == true)
-        {
-            playerShieldComponent.ReceiveDamage(damageTaken);
+        if (!shouldFreeze) {
+            if (playerShieldComponent.CheckIfDefended(positionOfAttack) && playerShieldComponent.IsShieldButtonPressed == true)
+            {
+                playerShieldComponent.ReceiveDamage(damageTaken);
+            }
+            else
+            {
+                base.ReceiveDamage(damageTaken);
+                barHealth.CurrentVal = health;
+                barValueText.text = health.ToString();
+            }
         }
-        else
-        {
-            base.ReceiveDamage(damageTaken);
-            barHealth.CurrentVal = health;
-            barValueText.text = health.ToString();
-        }
-
     }
 
 

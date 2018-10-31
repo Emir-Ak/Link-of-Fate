@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4569982492629976}
   m_Layer: 0
-  m_Name: SceneChange
+  m_Name: Portal_BearKiller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,8 +51,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1132916260010656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0179138, y: 2.0179138, z: 2.0179138}
+  m_LocalPosition: {x: 0, y: -14.08, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4804558976205768}
   m_Father: {fileID: 0}
@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1906020598105788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4569982492629976}
@@ -97,7 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0798077858ee8d84b9707d7031f4b7ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneID: 2
+  sceneID: 0
+  loadDestination: {x: -100, y: 0}
 --- !u!212 &212803809020742364
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -133,8 +134,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2b5a29084e0254d4891854cc300564e5, type: 3}
-  m_Color: {r: 0.8301887, g: 0.21537916, b: 0.21537916, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 932dc2b282199f04cb39f734943b637a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
