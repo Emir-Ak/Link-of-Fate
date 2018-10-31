@@ -44,7 +44,7 @@ public class Inventory : MonoBehaviour {
         interactionController = FindObjectOfType<InteractionController>();
       
         whiteBorder = GameObject.FindWithTag("WhiteBorder");
-        whiteBorder.SetActive(false);
+        whiteBorder.SetActive(true);
 
         SelectItemSlot();
         for (int i = 0; i < numItemSlots; i++)
@@ -76,19 +76,20 @@ public class Inventory : MonoBehaviour {
         return false;
     }
 
-    public void AddItem(Item itemToAdd) { 
+    public void AddItem(Item itemToAdd)
+    {
         for (int i = 0; i < items.Length; i++)
         {
-            if(items[i] != null && itemToAdd.assignedID == items[i].assignedID && items[i].isStackable)
+            if (items[i] != null && itemToAdd.assignedID == items[i].assignedID && items[i].isStackable)
             {
                 itemStackNums[i]++;
                 itemStackNumTexts[i]
-                    .text = 
+                    .text =
                     itemStackNums[i]
                     .ToString();
                 return;
             }
-            else if (items[i]  == null)
+            else if (items[i] == null)
             {
                 items[i] = itemToAdd;
                 itemImages[i].sprite = itemToAdd.sprite;
@@ -120,22 +121,37 @@ public class Inventory : MonoBehaviour {
             itemImages[i].enabled = false;
             itemStackNumTexts[i].gameObject.SetActive(false);        
         }
-
     }
 
-    
+    public void RemoveItem(Item itemToRemove)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == itemToRemove)
+            {
+                if (items[i].isStackable && itemStackNums[i] > 1)
+                {
+                    itemStackNums[i]--;
+                    itemStackNumTexts[i].text = itemStackNums[i].ToString();
+                    return;
+                }
+                else
+                {
+                    items[i] = null;
+                    itemStackNums[i]--;
+                    itemImages[i].sprite = null;
+                    itemImages[i].enabled = false;
+                    itemStackNumTexts[i].gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
+
 
     private void GetSelectionIndex()
     {
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
 
-        //}
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-
-
-        //}
         if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.E)) // forward
         {
             ResetScaledSlot();

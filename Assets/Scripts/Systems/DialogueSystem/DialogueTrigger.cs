@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 [System.Serializable]
 public class DialogueTrigger : MonoBehaviour {
 
@@ -12,45 +12,88 @@ public class DialogueTrigger : MonoBehaviour {
     private GameObject dialogueBox;
 
     public Dialogue dialogue;
-    [SerializeField]
+    
+    [Header("Leave null if no quest/items given")]
+    public Quest questToAccept = null;
+    public Item[] itemsToGive = null;
+    public Item[] itemsToTake = null;
 
+
+    PlayerController player;
+
+    public UnityEngine.Events.UnityEvent OnDialogueEnd;
+
+    public bool repeatable = true;
+
+    private bool isFirstTime = true;
+
+    public bool isCutscene = false;
+    private void Start()
+    {
+        player = FindObjectOfType<PlayerController>();
+    }
 
     public void TriggerDialogue()
     {
+        if (repeatable||isFirstTime)
+        {
+            player.shouldFreeze = true;
+            var dialogueManager = Instantiate(dialogueBox, transform.position, Quaternion.identity).GetComponentInChildren<DialogueManager>();
 
-        var dialogueManager = Instantiate(dialogueBox, transform.position, Quaternion.identity).GetComponentInChildren<DialogueManager>();
-        
-        dialogueManager.StartDialogue(dialogue);
-    }
-
-    
-
-    private void Update()
-    {
+            dialogueManager.StartDialogue(dialogue, this);
+        }
         
     }
-
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetKeyDown(KeyCode.X) && collision.gameObject.CompareTag("Player") && FindObjectOfType<DialogueManager>() == null)
+      
+        if (collision.gameObject.CompareTag("Player") && FindObjectOfType<DialogueManager>() == null)
         {
-            //keydown = false;
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().speed = 0;
-            TriggerDialogue();
-            
-            //if (gameObject.GetComponentInParent<PrincessQuestController>() != null)
-            //{
-            //    PrincessQuestController questOne = gameObject.GetComponentInParent<PrincessQuestController>();
-            //    questOne.dialogueInstantiated = true;
-            //}
-            //else
-            //{
-            //    Debug.Log("Not Princess quest");
-            //}
+            if (isCutscene)
+            {
+                TriggerDialogue();
+            }
+            else if (Input.GetKeyDown(KeyCode.X))
+            {
+                TriggerDialogue();
+            }
+           
         }
     }
 
-    
+    public void EndDialogue()
+    {
+        player.shouldFreeze = false;
+        if (isFirstTime)
+        {
+            if (questToAccept != null)
+            {
+                FindObjectOfType<QuestManager>().AcceptQuest(questToAccept);
+            }
+
+            Inventory inv = FindObjectOfType<Inventory>();
+            if (itemsToGive != null)
+            {
+               
+                foreach (Item itemToGive in itemsToGive)
+                {
+                    inv.AddItem(itemToGive);
+                }
+            }
+
+            if (itemsToTake != null)
+            {
+                foreach (Item itemToTake in itemsToTake)
+                {
+                    inv.RemoveItem(itemToTake);
+                }
+
+            }
+            isFirstTime = false;
+            OnDialogueEnd.Invoke();
+        }
+    }
+
 
 }

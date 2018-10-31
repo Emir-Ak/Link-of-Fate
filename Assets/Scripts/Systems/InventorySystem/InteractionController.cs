@@ -22,6 +22,11 @@ public class InteractionController : MonoBehaviour {
                     Instantiate(itemObj, transform.position, itemObj.transform.rotation); //Bombs action is to be instantiated
                     inventory.RemoveItem();
                     break;
+                case 2: //Use for exchange for princess
+                    break;
+                case 3: Instantiate(itemObj, transform.position + new Vector3(0f, 1f, 0f), itemObj.transform.rotation);
+                    inventory.RemoveItem();
+                    break; 
 
                 default:
                     Debug.Log("No item with the current ID yet, or case is not assigned...");

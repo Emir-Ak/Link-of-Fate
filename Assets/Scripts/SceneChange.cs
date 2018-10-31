@@ -17,7 +17,8 @@ public class SceneChange : MonoBehaviour {
             player = collision.gameObject;
             player.transform.position = loadDestination;
 
-            SceneManager.LoadScene(sceneID);
+            if (SceneManager.GetActiveScene().buildIndex != sceneID)
+                SceneManager.LoadScene(sceneID);           
         }
     }
 

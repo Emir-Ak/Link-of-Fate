@@ -7,6 +7,7 @@ public class QuestTracker : MonoBehaviour
 
     public virtual void OnQuestAccept() {}
     public virtual void OnQuestAbandon() {}
+    public virtual void OnQuestComplete() {}
 
     protected QuestManager questManager;
     protected bool isCompleted = false;

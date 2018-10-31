@@ -27,9 +27,10 @@ public class BarScript : MonoBehaviour {
 	}
 
 	private void HandleBar () {
-		if (fillAmount != content.fillAmount)
+        if (fillAmount != content.fillAmount)
 		{
-			content.fillAmount = Mathf.Lerp(content.fillAmount, fillAmount, Time.deltaTime * lerpSpeed);
+
+            content.fillAmount = Mathf.Lerp(content.fillAmount, fillAmount, Time.deltaTime * lerpSpeed);
 		}
 
 	}
