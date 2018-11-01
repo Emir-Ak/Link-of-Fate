@@ -2,9 +2,11 @@
 
 public class InteractionController : MonoBehaviour {
     Inventory inventory;
+    PlayerController player;
     private void Awake()
     {
         inventory = FindObjectOfType<Inventory>();
+        player = FindObjectOfType<PlayerController>();
     }
 
     public void ApplyInteraction(Item usedItem)
@@ -16,6 +18,7 @@ public class InteractionController : MonoBehaviour {
             GameObject itemObj = usedItem.itemObject;
 
             Debug.Log(itemName + " ID: " + itemID);
+
             switch (itemID)
             {
                 case 1:
@@ -26,8 +29,18 @@ public class InteractionController : MonoBehaviour {
                     break;
                 case 3: Instantiate(itemObj, transform.position + new Vector3(0f, 1f, 0f), itemObj.transform.rotation);
                     inventory.RemoveItem();
-                    break; 
-
+                    break;
+                case 4:
+                    if(player.LivingBeingType == Alive.LivingBeings.Player)
+                    {
+                        player.LivingBeingType = Alive.LivingBeings.Goblin;
+                    }
+                    else if(player.LivingBeingType == Alive.LivingBeings.Goblin)
+                    {
+                        player.LivingBeingType = Alive.LivingBeings.Player;
+                        inventory.RemoveItem(usedItem);
+                    }
+                    break;
                 default:
                     Debug.Log("No item with the current ID yet, or case is not assigned...");
                     break;

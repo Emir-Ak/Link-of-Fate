@@ -6,7 +6,7 @@ public class WeaponCollider : MonoBehaviour {
 
     public enum TypeOfWeapon
     {
-        Sword
+        Sword,
     }
 
     public Vector3 colliderOffset;
@@ -62,7 +62,7 @@ public class WeaponCollider : MonoBehaviour {
             if (livingThing.health <= 0)
             {
                 PlayerAchievementComponent.OnCreatureKilled(livingThing);
-                Destroy(livingThing.gameObject, livingThing.knockbackTime);
+               // Destroy(livingThing.gameObject, livingThing.knockbackTime);
             }
         }
     }

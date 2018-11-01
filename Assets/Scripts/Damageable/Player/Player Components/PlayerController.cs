@@ -55,7 +55,6 @@ public class PlayerController : Alive
 
     [HideInInspector]
     public bool shouldFreeze = false;
-
     #region Properties
     public bool IsPlayerMoving { get { return this._isPlayerMoving; } set { this._isPlayerMoving = value; } }
     #endregion

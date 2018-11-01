@@ -80,12 +80,12 @@ public class Enemy : Alive
 
         #region Object_Destruction
 
-        //if (health <= 0 && isDead == false)
-        //{
-        //    isDead = true;
-        //    OnDeath.Invoke();
-        //    Destroy(gameObject, knockbackTime);
-        //}
+        if (health <= 0 && isDead == false)
+        {
+            OnDeath.Invoke();
+            isDead = true;
+            Destroy(gameObject, knockbackTime);
+        }
 
         #endregion Object_Destruction
 

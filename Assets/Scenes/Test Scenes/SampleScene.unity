@@ -2948,8 +2948,8 @@ MonoBehaviour:
   isRunning: 0
   goblinGuardsToKillNum: 4
   goblinGuards: {fileID: 1941080284}
-  princess: {fileID: 0}
-  cloak: {fileID: 0}
+  princess: {fileID: 193493942}
+  cloak: {fileID: 11400000, guid: f357a9c4b75cb8148a2ead0f23e13c03, type: 2}
 --- !u!4 &892083840
 Transform:
   m_ObjectHideFlags: 0
@@ -3311,8 +3311,8 @@ MonoBehaviour:
   isInvincible: 1
   standardHealth: 100
   startColor: {r: 1, g: 1, b: 1, a: 1}
-  hostileTo: 00000000
-  LivingBeingType: 1
+  hostileTo: 01000000
+  LivingBeingType: 0
   barHealth:
     bar: {fileID: 900897819}
     maxVal: 100

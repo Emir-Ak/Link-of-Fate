@@ -27,8 +27,9 @@ public class PrincessQuestTracker : QuestTracker
     }
     public override void OnQuestComplete()
     {
-        Destroy(gameObject);
-   }
+        goblinGuards.SetActive(false);
+        princess.SetActive(true);
+    }
     void CompleteQuest(int _completionWay)
     {
         completionWay = _completionWay;
@@ -47,7 +48,7 @@ public class PrincessQuestTracker : QuestTracker
 
     public void FinishedPrincessTalk()
     {
-        princess.SetActive(false);
+        Destroy(gameObject);
     }
 
     public void BribedGoblins()

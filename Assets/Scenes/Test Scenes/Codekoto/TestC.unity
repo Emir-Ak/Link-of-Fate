@@ -1737,7 +1737,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 2b5a29084e0254d4891854cc300564e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 704b29934196d354a802b12c1fd4fb8e, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1866,6 +1866,15 @@ MonoBehaviour:
     name: 
     sentences: []
   questToAccept: {fileID: 0}
+  itemsToGive: []
+  itemsToTake: []
+  OnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  repeatable: 1
+  isCutscene: 0
 --- !u!58 &870173800
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2264,6 +2273,12 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ae5054b676fc4046887d96db134513a, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &1042456313 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114728376858697630, guid: 02bb8ca9c11ca284684f61b67fd3b377,
+    type: 2}
+  m_PrefabInternal: {fileID: 1769605340}
+  m_Script: {fileID: 11500000, guid: 7c876fd66fe995640955589496b1eda2, type: 3}
 --- !u!114 &1064006334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2519,6 +2534,7 @@ GameObject:
   - component: {fileID: 1236533194}
   - component: {fileID: 1236533193}
   - component: {fileID: 1236533195}
+  - component: {fileID: 1236533196}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -2600,6 +2616,18 @@ MonoBehaviour:
   target: {fileID: 60647420}
   smoothSpeed: 0.05
   offset: {x: 0, y: 0, z: 0}
+--- !u!114 &1236533196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1236533191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc01d95e038ebb479eec0ea68ee4486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievements: []
 --- !u!1 &1250924948
 GameObject:
   m_ObjectHideFlags: 0
@@ -19463,7 +19491,7 @@ MonoBehaviour:
   menuObject: {fileID: 992372292}
   achievementPanel: {fileID: 1066729061}
   audioListener: {fileID: 2089467721}
-  playerController: {fileID: 0}
+  playerController: {fileID: 1042456313}
 --- !u!1 &1616780455
 GameObject:
   m_ObjectHideFlags: 0
@@ -20558,7 +20586,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 2b5a29084e0254d4891854cc300564e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 704b29934196d354a802b12c1fd4fb8e, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -19,7 +19,7 @@ public class AchievementManager : MonoBehaviour
             achivementDictionary.Add(achievement.name, achievement);
         }
 
-        //SaveLoadManager.SaveAchievements(SaveLoadManager.SavingType.DefaultSave);
+      //  SaveLoadManager.SaveAchievements(SaveLoadManager.SavingType.DefaultSave);
         SaveLoadManager.LoadAchievements(SaveLoadManager.SavingType.DefaultSave);
 
         achievements = new Achievement[achivementDictionary.Count];
